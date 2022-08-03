@@ -1,0 +1,684 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Management.CLIScript"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.VerificationStatus">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="VERIFICATION_STATUS_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>VERIFICATION_STATUS_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="VERIFICATION_STATUS_NONE">
+					<xsd:annotation>
+						<xsd:documentation>VERIFICATION_STATUS_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="VERIFICATION_STATUS_SIGNATURE_NOT_VERIFIED">
+					<xsd:annotation>
+						<xsd:documentation>VERIFICATION_STATUS_SIGNATURE_NOT_VERIFIED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="VERIFICATION_STATUS_SIGNATURE_VERIFIED">
+					<xsd:annotation>
+						<xsd:documentation>VERIFICATION_STATUS_SIGNATURE_VERIFIED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="VERIFICATION_STATUS_CHECKSUM_NOT_VERIFIED">
+					<xsd:annotation>
+						<xsd:documentation>VERIFICATION_STATUS_CHECKSUM_NOT_VERIFIED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="VERIFICATION_STATUS_CHECKSUM_VERIFIED">
+					<xsd:annotation>
+						<xsd:documentation>VERIFICATION_STATUS_CHECKSUM_VERIFIED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.VerificationStatusSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.VerificationStatus[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Management.CLIScript.get_listRequest">
+</message>
+<message name="Management.CLIScript.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.CLIScript.createRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="definitions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.createResponse">
+</message>
+
+<message name="Management.CLIScript.delete_cli_scriptRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.delete_cli_scriptResponse">
+</message>
+
+<message name="Management.CLIScript.delete_all_cli_scriptsRequest">
+</message>
+<message name="Management.CLIScript.delete_all_cli_scriptsResponse">
+</message>
+
+<message name="Management.CLIScript.set_scriptRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="definitions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.set_scriptResponse">
+</message>
+
+<message name="Management.CLIScript.get_scriptRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.get_scriptResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.CLIScript.set_descriptionRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.set_descriptionResponse">
+</message>
+
+<message name="Management.CLIScript.get_descriptionRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.CLIScript.add_checksumRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.add_checksumResponse">
+</message>
+
+<message name="Management.CLIScript.add_signatureRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="signing_keys" type="tns:Common.StringSequence"/>
+	<part name="public_certs" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.add_signatureResponse">
+</message>
+
+<message name="Management.CLIScript.clear_verificationRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.clear_verificationResponse">
+</message>
+
+<message name="Management.CLIScript.set_ignore_verification_stateRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Management.CLIScript.set_ignore_verification_stateResponse">
+</message>
+
+<message name="Management.CLIScript.get_ignore_verification_stateRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.get_ignore_verification_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Management.CLIScript.get_verification_statusRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.CLIScript.get_verification_statusResponse">
+	<part name="return" type="tns:Common.VerificationStatusSequence"/>
+</message>
+
+<message name="Management.CLIScript.get_versionRequest">
+</message>
+<message name="Management.CLIScript.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Management.CLIScriptPortType">
+	<operation name="get_list">
+    	<documentation>
+ Gets the names of all CLI scripts.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.get_listRequest"/>
+		<output message="tns:Management.CLIScript.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified CLI scripts.
+ 
+        	</documentation>
+		<input message="tns:Management.CLIScript.createRequest"/>
+		<output message="tns:Management.CLIScript.createResponse"/>
+	</operation>
+	<operation name="delete_cli_script">
+	<documentation>
+ Deletes the specified CLI scripts. An exception will be 
+ raised when attempting to delete built-in CLI scripts.
+ 
+        	</documentation>
+		<input message="tns:Management.CLIScript.delete_cli_scriptRequest"/>
+		<output message="tns:Management.CLIScript.delete_cli_scriptResponse"/>
+	</operation>
+	<operation name="delete_all_cli_scripts">
+	<documentation>
+ Deletes all user-defined CLI scripts.
+ 
+        	</documentation>
+		<input message="tns:Management.CLIScript.delete_all_cli_scriptsRequest"/>
+		<output message="tns:Management.CLIScript.delete_all_cli_scriptsResponse"/>
+	</operation>
+	<operation name="set_script">
+	<documentation>
+ Sets the script definition/content for the specified CLI scripts.
+ 
+        	</documentation>
+		<input message="tns:Management.CLIScript.set_scriptRequest"/>
+		<output message="tns:Management.CLIScript.set_scriptResponse"/>
+	</operation>
+	<operation name="get_script">
+	<documentation>
+ Gets the script definition/content for the specified CLI scripts.
+ 
+        	</documentation>
+		<input message="tns:Management.CLIScript.get_scriptRequest"/>
+		<output message="tns:Management.CLIScript.get_scriptResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified CLI scripts. 
+ Description is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.set_descriptionRequest"/>
+		<output message="tns:Management.CLIScript.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified CLI scripts.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.get_descriptionRequest"/>
+		<output message="tns:Management.CLIScript.get_descriptionResponse"/>
+	</operation>
+	<operation name="add_checksum">
+	<documentation>
+ Computes and adds a checksum to each specified CLI script. To each
+ CLI script, either checksum or signature can be added but not both.
+ The system will throw an error if both algorithms are attempted on
+ one CLI script. Adding the checksum prevents any unauthorized/
+ accidental modification to the CLI script content.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.add_checksumRequest"/>
+		<output message="tns:Management.CLIScript.add_checksumResponse"/>
+	</operation>
+	<operation name="add_signature">
+	<documentation>
+ Computes and adds a signature to each specified CLI script.
+ The signature is used during CLI script validation to assure 
+ that the CLI script's content has not been modified. To each 
+ CLI script, either checksum or signature can be added but not 
+ both. The system will throw an error if both algorithms are 
+ attempted on one CLI script. Adding the signature prevents any 
+ unauthorized/accidental modification to the CLI script content.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.add_signatureRequest"/>
+		<output message="tns:Management.CLIScript.add_signatureResponse"/>
+	</operation>
+	<operation name="clear_verification">
+	<documentation>
+ Clear both signature and checksum fields for the specified
+ CLI scripts. The difference between enabling "ignore_verification"
+ and "clear_verification" is: "ignore" suspends the verification 
+ temporarily while leaving the signature and checksum fields intact.
+ Verification can be resumed. "clear" resets for good the signing 
+ information as if the CLI scripts had never been signed.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.clear_verificationRequest"/>
+		<output message="tns:Management.CLIScript.clear_verificationResponse"/>
+	</operation>
+	<operation name="set_ignore_verification_state">
+	<documentation>
+ Sets the ignore verification state for the specified CLI scripts.
+ If enabled, the system will ignore the signature or checksum. 
+ Otherwise the signature or checksum is used during CLI script 
+ validation to assure that the CLI script's content has not been
+ modified.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.set_ignore_verification_stateRequest"/>
+		<output message="tns:Management.CLIScript.set_ignore_verification_stateResponse"/>
+	</operation>
+	<operation name="get_ignore_verification_state">
+	<documentation>
+ Gets the state of ignoring the signature or checksum.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.get_ignore_verification_stateRequest"/>
+		<output message="tns:Management.CLIScript.get_ignore_verification_stateResponse"/>
+	</operation>
+	<operation name="get_verification_status">
+	<documentation>
+ Gets the verification status for the specified CLI scripts.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.get_verification_statusRequest"/>
+		<output message="tns:Management.CLIScript.get_verification_statusResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Management.CLIScript.get_versionRequest"/>
+		<output message="tns:Management.CLIScript.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Management.CLIScriptBinding" type="tns:Management.CLIScriptPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the names of all CLI scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified CLI scripts.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_cli_script">
+	<documentation>
+ Deletes the specified CLI scripts. An exception will be 
+ raised when attempting to delete built-in CLI scripts.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_cli_scripts">
+	<documentation>
+ Deletes all user-defined CLI scripts.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_script">
+	<documentation>
+ Sets the script definition/content for the specified CLI scripts.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_script">
+	<documentation>
+ Gets the script definition/content for the specified CLI scripts.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified CLI scripts. 
+ Description is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified CLI scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_checksum">
+	<documentation>
+ Computes and adds a checksum to each specified CLI script. To each
+ CLI script, either checksum or signature can be added but not both.
+ The system will throw an error if both algorithms are attempted on
+ one CLI script. Adding the checksum prevents any unauthorized/
+ accidental modification to the CLI script content.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_signature">
+	<documentation>
+ Computes and adds a signature to each specified CLI script.
+ The signature is used during CLI script validation to assure 
+ that the CLI script's content has not been modified. To each 
+ CLI script, either checksum or signature can be added but not 
+ both. The system will throw an error if both algorithms are 
+ attempted on one CLI script. Adding the signature prevents any 
+ unauthorized/accidental modification to the CLI script content.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="clear_verification">
+	<documentation>
+ Clear both signature and checksum fields for the specified
+ CLI scripts. The difference between enabling "ignore_verification"
+ and "clear_verification" is: "ignore" suspends the verification 
+ temporarily while leaving the signature and checksum fields intact.
+ Verification can be resumed. "clear" resets for good the signing 
+ information as if the CLI scripts had never been signed.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ignore_verification_state">
+	<documentation>
+ Sets the ignore verification state for the specified CLI scripts.
+ If enabled, the system will ignore the signature or checksum. 
+ Otherwise the signature or checksum is used during CLI script 
+ validation to assure that the CLI script's content has not been
+ modified.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ignore_verification_state">
+	<documentation>
+ Gets the state of ignoring the signature or checksum.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_verification_status">
+	<documentation>
+ Gets the verification status for the specified CLI scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/CLIScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/CLIScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Management.CLIScript">
+	<documentation>
+ CLI scripts are written using Tool Command Language (Tcl). It
+ is used to automate management of the BIG-IP system. CLI scripts
+ can be included in other CLI scripts. Procedures defined in a CLI 
+ script can be run by other CLI scripts. It makes common code reuse 
+ possible for application template implementations and CLI scripts.
+
+	</documentation>
+	<port name="Management.CLIScriptPort" binding="tns:Management.CLIScriptBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

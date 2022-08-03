@@ -1,0 +1,1393 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Security.IPIntelligencePolicy"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligencePolicy.IPIntelligencePolicyActionType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirection">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_SOURCE">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_SOURCE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_DESTINATION">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_DESTINATION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_SOURCE_AND_DESTINATION">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_MATCH_DIRECTION_SOURCE_AND_DESTINATION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Security.IPIntelligencePolicy.IPIntelligencePolicyActionType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_ACTION_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_ACTION_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_ACTION_TYPE_USE_PARENT">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_ACTION_TYPE_USE_PARENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_ACTION_TYPE_ALLOW">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_ACTION_TYPE_ALLOW</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_ACTION_TYPE_DROP">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_ACTION_TYPE_DROP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirectionSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirectionSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_USE_PARENT">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_USE_PARENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_YES">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_YES</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_NO">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_POLICY_BLACKLIST_CATEGORY_LOG_TYPE_NO</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirectionSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirection[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Security.IPIntelligencePolicy.get_listRequest">
+</message>
+<message name="Security.IPIntelligencePolicy.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.createRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.createResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.delete_policyRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.delete_policyResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.delete_all_policiesRequest">
+</message>
+<message name="Security.IPIntelligencePolicy.delete_all_policiesResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_default_action_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_default_action_typeResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_default_action_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_default_action_typeResponse">
+	<part name="return" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_log_blacklist_hit_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_log_blacklist_hit_stateResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_log_blacklist_hit_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_log_blacklist_hit_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_log_blacklist_whitelist_both_hit_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_log_blacklist_whitelist_both_hit_stateResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_log_blacklist_whitelist_both_hit_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_log_blacklist_whitelist_both_hit_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_descriptionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_descriptionResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_descriptionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_blacklist_categoryRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_blacklist_categoryResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.add_blacklist_categoryRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.add_blacklist_categoryResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.remove_blacklist_categoryRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.remove_blacklist_categoryResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.remove_all_blacklist_categoriesRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.remove_all_blacklist_categoriesResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_action_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+	<part name="types" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_action_typeResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_action_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_action_typeResponse">
+	<part name="return" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyActionTypeSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_hit_only_settingRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+	<part name="hits" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_hit_only_settingResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_hit_only_settingRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_hit_only_settingResponse">
+	<part name="return" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_whitelist_hit_settingRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+	<part name="hits" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_whitelist_hit_settingResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_whitelist_hit_settingRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_whitelist_hit_settingResponse">
+	<part name="return" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyBlacklistCategoryLogTypeSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_descriptionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_descriptionResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_descriptionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_feed_listRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_feed_listResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.add_feed_listRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="lists" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.add_feed_listResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.remove_feed_listRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="lists" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.remove_feed_listResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.remove_all_feed_listsRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.remove_all_feed_listsResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_match_directionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+	<part name="directions" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirectionSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.set_blacklist_category_match_directionResponse">
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_match_directionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligencePolicy.get_blacklist_category_match_directionResponse">
+	<part name="return" type="tns:Security.IPIntelligencePolicy.IPIntelligencePolicyMatchDirectionSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligencePolicy.get_versionRequest">
+</message>
+<message name="Security.IPIntelligencePolicy.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Security.IPIntelligencePolicyPortType">
+	<operation name="get_list">
+   	<documentation>
+ Gets a list of all policies.
+ An IP intelligence  policy is comprised of three logical groups
+ of settings: list of feed lists, enforcement and logging
+ settings per blacklist category, and default enforcement and
+ logging settings for blacklist categories.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_listRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.createRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.createResponse"/>
+	</operation>
+	<operation name="delete_policy">
+	<documentation>
+ Deletes the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.delete_policyRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.delete_policyResponse"/>
+	</operation>
+	<operation name="delete_all_policies">
+	<documentation>
+ Deletes all user defined policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.delete_all_policiesRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.delete_all_policiesResponse"/>
+	</operation>
+	<operation name="set_default_action_type">
+	<documentation>
+ Sets the default action types for the specified policies.
+ Specifies a default enforcement action which will be performed
+ on the matched packet unless an implicit action is specified for
+ one of the blacklist categories the packet's IP is categorized
+ with. If the packet's IP is listed in a white list the action is
+ always accept.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_default_action_typeRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_default_action_typeResponse"/>
+	</operation>
+	<operation name="get_default_action_type">
+	<documentation>
+ Gets the default action types for the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_default_action_typeRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_default_action_typeResponse"/>
+	</operation>
+	<operation name="set_log_blacklist_hit_state">
+	<documentation>
+ Sets the log blacklist hit states for the specified policies.
+ Specifies whether a log message will be generated if packet's
+ source IP is categorized with blacklist only (but not whitelist).
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_log_blacklist_hit_stateRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_log_blacklist_hit_stateResponse"/>
+	</operation>
+	<operation name="get_log_blacklist_hit_state">
+	<documentation>
+ Gets the log blacklist hit states for the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_log_blacklist_hit_stateRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_log_blacklist_hit_stateResponse"/>
+	</operation>
+	<operation name="set_log_blacklist_whitelist_both_hit_state">
+	<documentation>
+ Sets the log blacklist whitelist both hit states for the
+ specified policies.
+ Specifies whether log message will be generated if packet's
+ source IP is categorized with both blacklist and whitelist.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_log_blacklist_whitelist_both_hit_stateRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_log_blacklist_whitelist_both_hit_stateResponse"/>
+	</operation>
+	<operation name="get_log_blacklist_whitelist_both_hit_state">
+	<documentation>
+ Gets the log blacklist whitelist both hit states for the
+ specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_log_blacklist_whitelist_both_hit_stateRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_log_blacklist_whitelist_both_hit_stateResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified policies.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_blacklist_category">
+	<documentation>
+ Gets categories for the specified policies.
+ You can add or remove blacklist categories for the policy. Each
+ category specifies the action, the log message for blacklist hit
+ only setting, and the log message for blacklist and whitelist
+ both hit setting.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_blacklist_categoryRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_blacklist_categoryResponse"/>
+	</operation>
+	<operation name="add_blacklist_category">
+	<documentation>
+ Adds a list of categories for the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.add_blacklist_categoryRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.add_blacklist_categoryResponse"/>
+	</operation>
+	<operation name="remove_blacklist_category">
+	<documentation>
+ Removes a list of categories from the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.remove_blacklist_categoryRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.remove_blacklist_categoryResponse"/>
+	</operation>
+	<operation name="remove_all_blacklist_categories">
+	<documentation>
+ Removes all categories from the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.remove_all_blacklist_categoriesRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.remove_all_blacklist_categoriesResponse"/>
+	</operation>
+	<operation name="set_blacklist_category_action_type">
+	<documentation>
+ Sets the action types for the specified blacklist categories.
+ Specifies what enforcement action will be applied if the packet
+ is categorized with this blacklist category.  If the packet is
+ categorized with more than one blacklist the most restrictive
+ action will be applied.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_blacklist_category_action_typeRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_blacklist_category_action_typeResponse"/>
+	</operation>
+	<operation name="get_blacklist_category_action_type">
+	<documentation>
+ Gets the action types for the specified blacklist categories.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_blacklist_category_action_typeRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_blacklist_category_action_typeResponse"/>
+	</operation>
+	<operation name="set_blacklist_category_log_blacklist_hit_only_setting">
+	<documentation>
+ Sets the log blacklist hit only settings for the specified
+ blacklist categories.
+ Specifies if a log message will be generated if the packet is
+ categorized with this blacklist and no whitelists includes this
+ packet's IP.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_hit_only_settingRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_hit_only_settingResponse"/>
+	</operation>
+	<operation name="get_blacklist_category_log_blacklist_hit_only_setting">
+	<documentation>
+ Gets the log blacklist hit only settings for the specified
+ blacklist categories.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_hit_only_settingRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_hit_only_settingResponse"/>
+	</operation>
+	<operation name="set_blacklist_category_log_blacklist_whitelist_hit_setting">
+	<documentation>
+ Sets the log blacklist whitelist hit settings for the specified
+ blacklist categories.
+ Specifies if a log message will be generated if the packet is
+ categorized with this blacklist and the packet's IP is listed in
+ a whitelist.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_whitelist_hit_settingRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_blacklist_category_log_blacklist_whitelist_hit_settingResponse"/>
+	</operation>
+	<operation name="get_blacklist_category_log_blacklist_whitelist_hit_setting">
+	<documentation>
+ Gets the log blacklist whitelist hit settings for the specified
+ blacklist categories.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_whitelist_hit_settingRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_blacklist_category_log_blacklist_whitelist_hit_settingResponse"/>
+	</operation>
+	<operation name="set_blacklist_category_description">
+	<documentation>
+ Sets the descriptions for the specified blacklist categories.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_blacklist_category_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_blacklist_category_descriptionResponse"/>
+	</operation>
+	<operation name="get_blacklist_category_description">
+	<documentation>
+ Gets the descriptions for the specified blacklist categories.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_blacklist_category_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_blacklist_category_descriptionResponse"/>
+	</operation>
+	<operation name="get_feed_list">
+	<documentation>
+ Gets feed lists for the specified policies.
+ You can add or remove feed lists for the policy. A feed list is
+ a list of URL feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_feed_listRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_feed_listResponse"/>
+	</operation>
+	<operation name="add_feed_list">
+	<documentation>
+ Adds a list of feed lists for the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.add_feed_listRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.add_feed_listResponse"/>
+	</operation>
+	<operation name="remove_feed_list">
+	<documentation>
+ Removes a list of feed lists from the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.remove_feed_listRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.remove_feed_listResponse"/>
+	</operation>
+	<operation name="remove_all_feed_lists">
+	<documentation>
+ Removes all feed lists from the specified policies.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.remove_all_feed_listsRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.remove_all_feed_listsResponse"/>
+	</operation>
+	<operation name="set_blacklist_category_match_direction">
+	<documentation>
+ Sets the match directions for the specified blacklist categories.
+ Specifies the match direction for this blacklist category within
+ this policy. This can be set to source, destination, or both.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.set_blacklist_category_match_directionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.set_blacklist_category_match_directionResponse"/>
+	</operation>
+	<operation name="get_blacklist_category_match_direction">
+	<documentation>
+ Gets the match directions for the specified blacklist categories.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_blacklist_category_match_directionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_blacklist_category_match_directionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligencePolicy.get_versionRequest"/>
+		<output message="tns:Security.IPIntelligencePolicy.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Security.IPIntelligencePolicyBinding" type="tns:Security.IPIntelligencePolicyPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all policies.
+ An IP intelligence  policy is comprised of three logical groups
+ of settings: list of feed lists, enforcement and logging
+ settings per blacklist category, and default enforcement and
+ logging settings for blacklist categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_policy">
+	<documentation>
+ Deletes the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_policies">
+	<documentation>
+ Deletes all user defined policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_action_type">
+	<documentation>
+ Sets the default action types for the specified policies.
+ Specifies a default enforcement action which will be performed
+ on the matched packet unless an implicit action is specified for
+ one of the blacklist categories the packet's IP is categorized
+ with. If the packet's IP is listed in a white list the action is
+ always accept.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_action_type">
+	<documentation>
+ Gets the default action types for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_log_blacklist_hit_state">
+	<documentation>
+ Sets the log blacklist hit states for the specified policies.
+ Specifies whether a log message will be generated if packet's
+ source IP is categorized with blacklist only (but not whitelist).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_log_blacklist_hit_state">
+	<documentation>
+ Gets the log blacklist hit states for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_log_blacklist_whitelist_both_hit_state">
+	<documentation>
+ Sets the log blacklist whitelist both hit states for the
+ specified policies.
+ Specifies whether log message will be generated if packet's
+ source IP is categorized with both blacklist and whitelist.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_log_blacklist_whitelist_both_hit_state">
+	<documentation>
+ Gets the log blacklist whitelist both hit states for the
+ specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified policies.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_blacklist_category">
+	<documentation>
+ Gets categories for the specified policies.
+ You can add or remove blacklist categories for the policy. Each
+ category specifies the action, the log message for blacklist hit
+ only setting, and the log message for blacklist and whitelist
+ both hit setting.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_blacklist_category">
+	<documentation>
+ Adds a list of categories for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_blacklist_category">
+	<documentation>
+ Removes a list of categories from the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_blacklist_categories">
+	<documentation>
+ Removes all categories from the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_blacklist_category_action_type">
+	<documentation>
+ Sets the action types for the specified blacklist categories.
+ Specifies what enforcement action will be applied if the packet
+ is categorized with this blacklist category.  If the packet is
+ categorized with more than one blacklist the most restrictive
+ action will be applied.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_blacklist_category_action_type">
+	<documentation>
+ Gets the action types for the specified blacklist categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_blacklist_category_log_blacklist_hit_only_setting">
+	<documentation>
+ Sets the log blacklist hit only settings for the specified
+ blacklist categories.
+ Specifies if a log message will be generated if the packet is
+ categorized with this blacklist and no whitelists includes this
+ packet's IP.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_blacklist_category_log_blacklist_hit_only_setting">
+	<documentation>
+ Gets the log blacklist hit only settings for the specified
+ blacklist categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_blacklist_category_log_blacklist_whitelist_hit_setting">
+	<documentation>
+ Sets the log blacklist whitelist hit settings for the specified
+ blacklist categories.
+ Specifies if a log message will be generated if the packet is
+ categorized with this blacklist and the packet's IP is listed in
+ a whitelist.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_blacklist_category_log_blacklist_whitelist_hit_setting">
+	<documentation>
+ Gets the log blacklist whitelist hit settings for the specified
+ blacklist categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_blacklist_category_description">
+	<documentation>
+ Sets the descriptions for the specified blacklist categories.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_blacklist_category_description">
+	<documentation>
+ Gets the descriptions for the specified blacklist categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_list">
+	<documentation>
+ Gets feed lists for the specified policies.
+ You can add or remove feed lists for the policy. A feed list is
+ a list of URL feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_feed_list">
+	<documentation>
+ Adds a list of feed lists for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_feed_list">
+	<documentation>
+ Removes a list of feed lists from the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_feed_lists">
+	<documentation>
+ Removes all feed lists from the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_blacklist_category_match_direction">
+	<documentation>
+ Sets the match directions for the specified blacklist categories.
+ Specifies the match direction for this blacklist category within
+ this policy. This can be set to source, destination, or both.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_blacklist_category_match_direction">
+	<documentation>
+ Gets the match directions for the specified blacklist categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligencePolicy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligencePolicy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Security.IPIntelligencePolicy">
+	<documentation>
+ The IPIntelligencePolicy interface enables you to manipulate an
+ IP Intelligence policy. The IP Intelligence policy is a
+ functionally enriched generalization of the IP Intelligence
+ profile (the latter has been immediately deprecated in this
+ release). As opposed to the deprecated profile, policy can be
+ applied to route domains and globally in addition to virtual
+ servers. When packet passes through the system first the global
+ policy is applied, then route domain's one and then virtual's
+ one provided the configured policies are applicable to the
+ packet's source IP. In addition to the predefined blacklist
+ categories (see the IPIntelligenceBlacklistCategory interface)
+ and 3rd party integrated IP reputation database coming with the
+ system the IP Intelligence policy provides an ability to
+ configure dynamic IP whitelists and blacklists downloaded from
+ external web feeds (see IPIntelligenceFeedList interface). The
+ IP Intelligence policy is comprised of three logical groups of
+ settings: 1) List of feed lists create the union set of IP
+ addresses/subnets with their blacklist/whitelist categorization.
+ The policy is applied on the packet only if packet's source IP
+ is found in that set. 2. Enforcement and logging settings per
+ blacklist category. If the policy applies to the packet and the
+ packet's source IP's blacklist category is explicitly confgured
+ in the policy, the configuration settings will be applied to
+ that packet. When the packet's source IP is categorized with
+ more than one category the most restrictive action and logging
+ settings will apply. 3. Default policy enforcement and logging
+ settings are used when the packet to which the policy applied is
+ categorized with the blacklist which isn't explicitly configured
+ in this policy or it is configured and the corresponding setting
+ is set with the option "use policy setting".
+
+        	</documentation>
+	<port name="Security.IPIntelligencePolicyPort" binding="tns:Security.IPIntelligencePolicyBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

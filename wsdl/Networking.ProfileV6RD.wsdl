@@ -1,0 +1,861 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.ProfileV6RD"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ProfileULong[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileIPAddressSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ProfileIPAddress[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileIPAddress">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:string"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileULong">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:long"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.ProfileV6RD.get_listRequest">
+</message>
+<message name="Networking.ProfileV6RD.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.createRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="v4_prefixes" type="tns:Common.ProfileIPAddressSequence"/>
+	<part name="v4_prefix_lengths" type="tns:Common.ProfileULongSequence"/>
+	<part name="v6_prefixes" type="tns:Common.ProfileIPAddressSequence"/>
+	<part name="v6_prefix_lengths" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.createResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.delete_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.delete_profileResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.delete_all_profilesRequest">
+</message>
+<message name="Networking.ProfileV6RD.delete_all_profilesResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.is_base_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.is_base_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.is_system_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.is_system_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="defaults" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_default_profileResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.get_default_profileResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_descriptionResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_v4_prefixRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="prefixes" type="tns:Common.ProfileIPAddressSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_v4_prefixResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_v4_prefixRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.get_v4_prefixResponse">
+	<part name="return" type="tns:Common.ProfileIPAddressSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_v4_prefix_lengthRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="lengths" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_v4_prefix_lengthResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_v4_prefix_lengthRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.get_v4_prefix_lengthResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_v6_prefixRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="prefixes" type="tns:Common.ProfileIPAddressSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_v6_prefixResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_v6_prefixRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.get_v6_prefixResponse">
+	<part name="return" type="tns:Common.ProfileIPAddressSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_v6_prefix_lengthRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="lengths" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_v6_prefix_lengthResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_v6_prefix_lengthRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.get_v6_prefix_lengthResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileV6RD.set_v4_prefix_and_lengthRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="prefixes" type="tns:Common.ProfileIPAddressSequence"/>
+	<part name="lengths" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_v4_prefix_and_lengthResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.set_v6_prefix_and_lengthRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="prefixes" type="tns:Common.ProfileIPAddressSequence"/>
+	<part name="lengths" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileV6RD.set_v6_prefix_and_lengthResponse">
+</message>
+
+<message name="Networking.ProfileV6RD.get_versionRequest">
+</message>
+<message name="Networking.ProfileV6RD.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.ProfileV6RDPortType">
+	<operation name="get_list">
+  	<documentation>
+ Gets the names for all 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_listRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.createRequest"/>
+		<output message="tns:Networking.ProfileV6RD.createResponse"/>
+	</operation>
+	<operation name="delete_profile">
+	<documentation>
+ Deletes a set of 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.delete_profileRequest"/>
+		<output message="tns:Networking.ProfileV6RD.delete_profileResponse"/>
+	</operation>
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all non-system 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.delete_all_profilesRequest"/>
+		<output message="tns:Networking.ProfileV6RD.delete_all_profilesResponse"/>
+	</operation>
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified 6RD tunnel profiles are
+ base profiles.  A base profile sits at the base of the
+ profile's inheritance tree, supplying the defaults for
+ every profile derived from it.  (See also
+ is_system_profile).
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.is_base_profileRequest"/>
+		<output message="tns:Networking.ProfileV6RD.is_base_profileResponse"/>
+	</operation>
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified 6RD tunnel profiles are
+ system profiles.  A system profile is a profile
+ pre-configured on the system, ready for use.  Non-system
+ profiles are profiles created or modified by a user.  Note
+ that if a system profile is modified, it is no longer
+ considered a system profile.  (See also is_base_profile).
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.is_system_profileRequest"/>
+		<output message="tns:Networking.ProfileV6RD.is_system_profileResponse"/>
+	</operation>
+	<operation name="set_default_profile">
+	<documentation>
+ Sets an existing 6RD tunnel profile as the default profile
+ from which this set of 6RD tunnel profiles inherits their
+ unspecified attribute values.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_default_profileRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_default_profileResponse"/>
+	</operation>
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the 6RD tunnel profile that is assigned as the default
+ profile from which this set of 6RD tunnel profiles inherits
+ its unspecified attribute values.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_default_profileRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_default_profileResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of 6RD tunnel profiles.
+ This is an arbitrary field which can be used to describe
+ the 6RD tunnel profile.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_descriptionRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_descriptionRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_v4_prefix">
+	<documentation>
+ Sets the 6RD domain IPv4 prefixes for 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_v4_prefixRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_v4_prefixResponse"/>
+	</operation>
+	<operation name="get_v4_prefix">
+	<documentation>
+ Gets the 6RD domain IPv4 prefixes for the 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_v4_prefixRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_v4_prefixResponse"/>
+	</operation>
+	<operation name="set_v4_prefix_length">
+	<documentation>
+ Sets the 6RD domain IPv4 prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_v4_prefix_lengthRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_v4_prefix_lengthResponse"/>
+	</operation>
+	<operation name="get_v4_prefix_length">
+	<documentation>
+ Gets the 6RD domain IPv4 prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_v4_prefix_lengthRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_v4_prefix_lengthResponse"/>
+	</operation>
+	<operation name="set_v6_prefix">
+	<documentation>
+ Sets the 6RD prefixes for 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_v6_prefixRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_v6_prefixResponse"/>
+	</operation>
+	<operation name="get_v6_prefix">
+	<documentation>
+ Gets the 6RD domain prefixes for the 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_v6_prefixRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_v6_prefixResponse"/>
+	</operation>
+	<operation name="set_v6_prefix_length">
+	<documentation>
+ Sets the 6RD prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_v6_prefix_lengthRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_v6_prefix_lengthResponse"/>
+	</operation>
+	<operation name="get_v6_prefix_length">
+	<documentation>
+ Gets the 6RD prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_v6_prefix_lengthRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_v6_prefix_lengthResponse"/>
+	</operation>
+	<operation name="set_v4_prefix_and_length">
+	<documentation>
+ Sets both the IPv4 address prefixes and lengths of 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_v4_prefix_and_lengthRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_v4_prefix_and_lengthResponse"/>
+	</operation>
+	<operation name="set_v6_prefix_and_length">
+	<documentation>
+ Sets both the IPv6 address prefixes and lengths of 6RD tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.set_v6_prefix_and_lengthRequest"/>
+		<output message="tns:Networking.ProfileV6RD.set_v6_prefix_and_lengthResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileV6RD.get_versionRequest"/>
+		<output message="tns:Networking.ProfileV6RD.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.ProfileV6RDBinding" type="tns:Networking.ProfileV6RDPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the names for all 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_profile">
+	<documentation>
+ Deletes a set of 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all non-system 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified 6RD tunnel profiles are
+ base profiles.  A base profile sits at the base of the
+ profile's inheritance tree, supplying the defaults for
+ every profile derived from it.  (See also
+ is_system_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified 6RD tunnel profiles are
+ system profiles.  A system profile is a profile
+ pre-configured on the system, ready for use.  Non-system
+ profiles are profiles created or modified by a user.  Note
+ that if a system profile is modified, it is no longer
+ considered a system profile.  (See also is_base_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_profile">
+	<documentation>
+ Sets an existing 6RD tunnel profile as the default profile
+ from which this set of 6RD tunnel profiles inherits their
+ unspecified attribute values.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the 6RD tunnel profile that is assigned as the default
+ profile from which this set of 6RD tunnel profiles inherits
+ its unspecified attribute values.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of 6RD tunnel profiles.
+ This is an arbitrary field which can be used to describe
+ the 6RD tunnel profile.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_v4_prefix">
+	<documentation>
+ Sets the 6RD domain IPv4 prefixes for 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_v4_prefix">
+	<documentation>
+ Gets the 6RD domain IPv4 prefixes for the 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_v4_prefix_length">
+	<documentation>
+ Sets the 6RD domain IPv4 prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_v4_prefix_length">
+	<documentation>
+ Gets the 6RD domain IPv4 prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_v6_prefix">
+	<documentation>
+ Sets the 6RD prefixes for 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_v6_prefix">
+	<documentation>
+ Gets the 6RD domain prefixes for the 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_v6_prefix_length">
+	<documentation>
+ Sets the 6RD prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_v6_prefix_length">
+	<documentation>
+ Gets the 6RD prefix lengths for 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_v4_prefix_and_length">
+	<documentation>
+ Sets both the IPv4 address prefixes and lengths of 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_v6_prefix_and_length">
+	<documentation>
+ Sets both the IPv6 address prefixes and lengths of 6RD tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileV6RD"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileV6RD"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.ProfileV6RD">
+	<documentation>
+ The 6RD interface profile allows you to set up the 6RD tunnel
+ configuration for 6RD CE and BR gateways. 6RD is
+ yet-another-v6-transition solution, and is used to tunnel IPv6
+ packets over an IPv4 network by deterministically mapping IPv6
+ addresses to the underlying SP's IPv4 addresses. As the address
+ mapping information is embedded in the packet itself, 6RD is
+ stateless.
+
+        	</documentation>
+	<port name="Networking.ProfileV6RDPort" binding="tns:Networking.ProfileV6RDBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

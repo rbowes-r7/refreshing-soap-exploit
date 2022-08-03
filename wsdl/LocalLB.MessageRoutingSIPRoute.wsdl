@@ -1,0 +1,838 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.MessageRoutingSIPRoute"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.MessageRoutingSIPRoute.SelectionModeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingSIPRoute.SelectionMode[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.MessageRoutingSIPRoute.SelectionMode">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SELECTION_MODE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SELECTION_MODE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SELECTION_MODE_SEQUENTIAL">
+					<xsd:annotation>
+						<xsd:documentation>SELECTION_MODE_SEQUENTIAL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SELECTION_MODE_RATIO">
+					<xsd:annotation>
+						<xsd:documentation>SELECTION_MODE_RATIO</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_listRequest">
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.createRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.createResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.delete_sip_routeRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.delete_sip_routeResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.delete_all_sip_routesRequest">
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.delete_all_sip_routesResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.set_descriptionRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_descriptionRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.set_request_uriRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="uris" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.set_request_uriResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_request_uriRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_request_uriResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.set_to_uriRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="uris" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.set_to_uriResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_to_uriRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_to_uriResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.set_from_uriRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="uris" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.set_from_uriResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_from_uriRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_from_uriResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.set_virtual_serverRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="virtual_servers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.set_virtual_serverResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_virtual_serverRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_virtual_serverResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.set_selection_modeRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="modes" type="tns:LocalLB.MessageRoutingSIPRoute.SelectionModeSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.set_selection_modeResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_selection_modeRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_selection_modeResponse">
+	<part name="return" type="tns:LocalLB.MessageRoutingSIPRoute.SelectionModeSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_peerRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_peerResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.replace_peerRequest">
+	<part name="sip_routes" type="tns:Common.StringSequence"/>
+	<part name="peers" type="tns:Common.StringSequenceSequence"/>
+	<part name="priorities" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.replace_peerResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingSIPRoute.get_versionRequest">
+</message>
+<message name="LocalLB.MessageRoutingSIPRoute.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.MessageRoutingSIPRoutePortType">
+	<operation name="get_list">
+  	<documentation>
+ Gets a list of all SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_listRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.createRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.createResponse"/>
+	</operation>
+	<operation name="delete_sip_route">
+	<documentation>
+ Deletes the specified list of SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.delete_sip_routeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.delete_sip_routeResponse"/>
+	</operation>
+	<operation name="delete_all_sip_routes">
+	<documentation>
+ Deletes all SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.delete_all_sip_routesRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.delete_all_sip_routesResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of SIP routes.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.set_descriptionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_descriptionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_request_uri">
+	<documentation>
+ Sets the patterns to be matched against the request-uri field of a SIP
+ message. This URI will be matched as a case insensitive method.
+ It should be in the form of user&amp;#64;domain. The "sip:" prefix should
+ not be present. Any additional modifiers (for example port or
+ transport) should also not be present. It may begin with a wildcard,
+ "*". If empty, it will be treated as if the entire URI was a
+ wildcard (matching all Request-URIs).
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.set_request_uriRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.set_request_uriResponse"/>
+	</operation>
+	<operation name="get_request_uri">
+	<documentation>
+ Gets the patterns to be matched against the request-uri field of a SIP
+ message.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_request_uriRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_request_uriResponse"/>
+	</operation>
+	<operation name="set_to_uri">
+	<documentation>
+ Sets the patterns to be matched against the To field of a SIP message.
+ This URI will be matched as a case insensitive method. It should be
+ in the form of user&amp;#64;domain. The "sip:" prefix should not be present.
+ Any additional modifiers (for example port or transport) should also
+ not be present. It may begin with a wildcard, "*". If empty, it will
+ be treated as if the entire URI was a wildcard (matching all To-URIs).
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.set_to_uriRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.set_to_uriResponse"/>
+	</operation>
+	<operation name="get_to_uri">
+	<documentation>
+ Gets the patterns to be matched against the To field of a SIP message.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_to_uriRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_to_uriResponse"/>
+	</operation>
+	<operation name="set_from_uri">
+	<documentation>
+ Sets the patterns to be matched against the From field of a SIP
+ message. This URI will be matched as a case insignificant method.
+ It should be in the form of user&amp;#64;domain. The "sip:" prefix should not
+ be present. Any additional modifiers (for example port or transport)
+ should also not be present. It may begin with a wildcard, "*".
+ If empty, it will be treated as if the entire URI was a wildcard
+ (matching all From-URIs).
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.set_from_uriRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.set_from_uriResponse"/>
+	</operation>
+	<operation name="get_from_uri">
+	<documentation>
+ Gets the patterns to be matched against the From field of a SIP
+ message.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_from_uriRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_from_uriResponse"/>
+	</operation>
+	<operation name="set_virtual_server">
+	<documentation>
+ Sets the virtual servers on which connections will be routed to the
+ specified SIP routes.  If the virtual server is unset, messages
+ originating on any connection may be routed to the SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.set_virtual_serverRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.set_virtual_serverResponse"/>
+	</operation>
+	<operation name="get_virtual_server">
+	<documentation>
+ Gets the virtual servers on which connections will be routed to the
+ specified SIP routes.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_virtual_serverRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_virtual_serverResponse"/>
+	</operation>
+	<operation name="set_selection_mode">
+	<documentation>
+ Sets the modes of selecting a peer from a list of peers.
+ See LocalLB::SelectionMode for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.set_selection_modeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.set_selection_modeResponse"/>
+	</operation>
+	<operation name="get_selection_mode">
+	<documentation>
+ Gets the modes of selecting a peer from a list of peers.
+ See LocalLB::SelectionMode for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_selection_modeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_selection_modeResponse"/>
+	</operation>
+	<operation name="get_peer">
+	<documentation>
+ Gets the list of message routing peers for the specified SIP routes.
+ Peers are responsible for forwarding messages.
+ See LocalLB::MessageRoutingPeer for more details about peers.
+ See LocalLB::SelectionMode for more details about how the mode
+ determines peer selection.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_peerRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_peerResponse"/>
+	</operation>
+	<operation name="replace_peer">
+	<documentation>
+ Replace the peer list associated with the specified SIP route
+ with the specified list of peers.
+ Peers are responsible for forwarding messages.
+ See LocalLB::MessageRoutingPeer for more details about peers.
+ See LocalLB::SelectionMode for more details about how the mode
+ determines peer selection.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.replace_peerRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.replace_peerResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingSIPRoute.get_versionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingSIPRoute.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.MessageRoutingSIPRouteBinding" type="tns:LocalLB.MessageRoutingSIPRoutePortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_sip_route">
+	<documentation>
+ Deletes the specified list of SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_sip_routes">
+	<documentation>
+ Deletes all SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of SIP routes.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_request_uri">
+	<documentation>
+ Sets the patterns to be matched against the request-uri field of a SIP
+ message. This URI will be matched as a case insensitive method.
+ It should be in the form of user&amp;#64;domain. The "sip:" prefix should
+ not be present. Any additional modifiers (for example port or
+ transport) should also not be present. It may begin with a wildcard,
+ "*". If empty, it will be treated as if the entire URI was a
+ wildcard (matching all Request-URIs).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_request_uri">
+	<documentation>
+ Gets the patterns to be matched against the request-uri field of a SIP
+ message.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_to_uri">
+	<documentation>
+ Sets the patterns to be matched against the To field of a SIP message.
+ This URI will be matched as a case insensitive method. It should be
+ in the form of user&amp;#64;domain. The "sip:" prefix should not be present.
+ Any additional modifiers (for example port or transport) should also
+ not be present. It may begin with a wildcard, "*". If empty, it will
+ be treated as if the entire URI was a wildcard (matching all To-URIs).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_to_uri">
+	<documentation>
+ Gets the patterns to be matched against the To field of a SIP message.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_from_uri">
+	<documentation>
+ Sets the patterns to be matched against the From field of a SIP
+ message. This URI will be matched as a case insignificant method.
+ It should be in the form of user&amp;#64;domain. The "sip:" prefix should not
+ be present. Any additional modifiers (for example port or transport)
+ should also not be present. It may begin with a wildcard, "*".
+ If empty, it will be treated as if the entire URI was a wildcard
+ (matching all From-URIs).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_from_uri">
+	<documentation>
+ Gets the patterns to be matched against the From field of a SIP
+ message.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_virtual_server">
+	<documentation>
+ Sets the virtual servers on which connections will be routed to the
+ specified SIP routes.  If the virtual server is unset, messages
+ originating on any connection may be routed to the SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_virtual_server">
+	<documentation>
+ Gets the virtual servers on which connections will be routed to the
+ specified SIP routes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_selection_mode">
+	<documentation>
+ Sets the modes of selecting a peer from a list of peers.
+ See LocalLB::SelectionMode for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_selection_mode">
+	<documentation>
+ Gets the modes of selecting a peer from a list of peers.
+ See LocalLB::SelectionMode for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_peer">
+	<documentation>
+ Gets the list of message routing peers for the specified SIP routes.
+ Peers are responsible for forwarding messages.
+ See LocalLB::MessageRoutingPeer for more details about peers.
+ See LocalLB::SelectionMode for more details about how the mode
+ determines peer selection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="replace_peer">
+	<documentation>
+ Replace the peer list associated with the specified SIP route
+ with the specified list of peers.
+ Peers are responsible for forwarding messages.
+ See LocalLB::MessageRoutingPeer for more details about peers.
+ See LocalLB::SelectionMode for more details about how the mode
+ determines peer selection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingSIPRoute"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingSIPRoute"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.MessageRoutingSIPRoute">
+	<documentation>
+
+ The MessageRoutingSIPRoute interface specifies the static routes to use
+ for SIP message routing. A route specifies an ordered list of peers to
+ use for forwarding messages.  See LocalLB::MessageRoutingPeer for more
+ details.
+
+        	</documentation>
+	<port name="LocalLB.MessageRoutingSIPRoutePort" binding="tns:LocalLB.MessageRoutingSIPRouteBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

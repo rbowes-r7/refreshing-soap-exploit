@@ -1,0 +1,606 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.CipherRule"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.CipherRule.get_listRequest">
+</message>
+<message name="LocalLB.CipherRule.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherRule.createRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+	<part name="ciphers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.createResponse">
+</message>
+
+<message name="LocalLB.CipherRule.create_v2Request">
+	<part name="rules" type="tns:Common.StringSequence"/>
+	<part name="cipher_suites" type="tns:Common.StringSequence"/>
+	<part name="dh_groups" type="tns:Common.StringSequence"/>
+	<part name="signature_algorithms" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.create_v2Response">
+</message>
+
+<message name="LocalLB.CipherRule.delete_cipher_ruleRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.delete_cipher_ruleResponse">
+</message>
+
+<message name="LocalLB.CipherRule.delete_all_cipher_rulesRequest">
+</message>
+<message name="LocalLB.CipherRule.delete_all_cipher_rulesResponse">
+</message>
+
+<message name="LocalLB.CipherRule.set_descriptionRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.CipherRule.get_descriptionRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherRule.set_cipherRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+	<part name="ciphers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.set_cipherResponse">
+</message>
+
+<message name="LocalLB.CipherRule.get_cipherRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.get_cipherResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherRule.set_dh_groupsRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+	<part name="dh_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.set_dh_groupsResponse">
+</message>
+
+<message name="LocalLB.CipherRule.get_dh_groupsRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.get_dh_groupsResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherRule.set_signature_algorithmsRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+	<part name="signature_algorithms" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.set_signature_algorithmsResponse">
+</message>
+
+<message name="LocalLB.CipherRule.get_signature_algorithmsRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.get_signature_algorithmsResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherRule.get_result_listRequest">
+	<part name="rules" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherRule.get_result_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherRule.get_versionRequest">
+</message>
+<message name="LocalLB.CipherRule.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.CipherRulePortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets a list of all cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_listRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+
+ Creates a cipher rule.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.createRequest"/>
+		<output message="tns:LocalLB.CipherRule.createResponse"/>
+	</operation>
+	<operation name="create_v2">
+	<documentation>
+
+ Creates a cipher rule.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.create_v2Request"/>
+		<output message="tns:LocalLB.CipherRule.create_v2Response"/>
+	</operation>
+	<operation name="delete_cipher_rule">
+	<documentation>
+ Deletes the specified cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.delete_cipher_ruleRequest"/>
+		<output message="tns:LocalLB.CipherRule.delete_cipher_ruleResponse"/>
+	</operation>
+	<operation name="delete_all_cipher_rules">
+	<documentation>
+ Deletes all non-system cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.delete_all_cipher_rulesRequest"/>
+		<output message="tns:LocalLB.CipherRule.delete_all_cipher_rulesResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of cipher rules.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.set_descriptionRequest"/>
+		<output message="tns:LocalLB.CipherRule.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_descriptionRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_cipher">
+	<documentation>
+ Sets the cipher string expression for a set of cipher rules.
+
+ Specifies the cipher expression the rule supports.
+ Please see SOL17370 for cipher string examples.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.set_cipherRequest"/>
+		<output message="tns:LocalLB.CipherRule.set_cipherResponse"/>
+	</operation>
+	<operation name="get_cipher">
+	<documentation>
+ Gets the cipher strings for a set of cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_cipherRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_cipherResponse"/>
+	</operation>
+	<operation name="set_dh_groups">
+	<documentation>
+ Sets the allowed DH Groups for a set of cipher rules.
+
+ Specifies the DH Groups the rule supports.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.set_dh_groupsRequest"/>
+		<output message="tns:LocalLB.CipherRule.set_dh_groupsResponse"/>
+	</operation>
+	<operation name="get_dh_groups">
+	<documentation>
+ Gets the allowed DH Groups for a set of cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_dh_groupsRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_dh_groupsResponse"/>
+	</operation>
+	<operation name="set_signature_algorithms">
+	<documentation>
+ Sets the Signature Algorithms allowed for a set of cipher rules.
+
+ Specifies the Signature Algorithms the rule supports.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.set_signature_algorithmsRequest"/>
+		<output message="tns:LocalLB.CipherRule.set_signature_algorithmsResponse"/>
+	</operation>
+	<operation name="get_signature_algorithms">
+	<documentation>
+ Gets the Signature Algorithms for a set of cipher rules.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_signature_algorithmsRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_signature_algorithmsResponse"/>
+	</operation>
+	<operation name="get_result_list">
+	<documentation>
+ Gets the fully expanded list of ciphers from the cipher string
+ expression above.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_result_listRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_result_listResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherRule.get_versionRequest"/>
+		<output message="tns:LocalLB.CipherRule.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.CipherRuleBinding" type="tns:LocalLB.CipherRulePortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+
+ Creates a cipher rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create_v2">
+	<documentation>
+
+ Creates a cipher rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_cipher_rule">
+	<documentation>
+ Deletes the specified cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_cipher_rules">
+	<documentation>
+ Deletes all non-system cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of cipher rules.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_cipher">
+	<documentation>
+ Sets the cipher string expression for a set of cipher rules.
+
+ Specifies the cipher expression the rule supports.
+ Please see SOL17370 for cipher string examples.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_cipher">
+	<documentation>
+ Gets the cipher strings for a set of cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_dh_groups">
+	<documentation>
+ Sets the allowed DH Groups for a set of cipher rules.
+
+ Specifies the DH Groups the rule supports.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_dh_groups">
+	<documentation>
+ Gets the allowed DH Groups for a set of cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_signature_algorithms">
+	<documentation>
+ Sets the Signature Algorithms allowed for a set of cipher rules.
+
+ Specifies the Signature Algorithms the rule supports.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_signature_algorithms">
+	<documentation>
+ Gets the Signature Algorithms for a set of cipher rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_result_list">
+	<documentation>
+ Gets the fully expanded list of ciphers from the cipher string
+ expression above.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherRule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherRule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.CipherRule">
+	<documentation>
+ The CipherRule interface enables you to manipulate the cipher rule
+ parameters. Cipher Rules are bundled together in Cipher Groups
+ which ultimately determines the ciphers (and their order) available
+ to client-ssl and server-ssl profiles.
+
+        	</documentation>
+	<port name="LocalLB.CipherRulePort" binding="tns:LocalLB.CipherRuleBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

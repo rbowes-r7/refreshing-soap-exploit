@@ -1,0 +1,436 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Classification.SignatureUpdateSchedule"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Classification.SignatureUpdateSchedule.SignatureUpdateIntervalType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SIGNATURE_UPDATE_INTERVAL_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SIGNATURE_UPDATE_INTERVAL_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SIGNATURE_UPDATE_INTERVAL_TYPE_DAILY">
+					<xsd:annotation>
+						<xsd:documentation>SIGNATURE_UPDATE_INTERVAL_TYPE_DAILY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SIGNATURE_UPDATE_INTERVAL_TYPE_WEEKLY">
+					<xsd:annotation>
+						<xsd:documentation>SIGNATURE_UPDATE_INTERVAL_TYPE_WEEKLY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SIGNATURE_UPDATE_INTERVAL_TYPE_MONTHLY">
+					<xsd:annotation>
+						<xsd:documentation>SIGNATURE_UPDATE_INTERVAL_TYPE_MONTHLY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Classification.SignatureUpdateSchedule.SignatureUpdateIntervalTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Classification.SignatureUpdateSchedule.SignatureUpdateIntervalType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Classification.SignatureUpdateSchedule.get_listRequest">
+</message>
+<message name="Classification.SignatureUpdateSchedule.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.set_auto_update_interval_typeRequest">
+	<part name="schedules" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:Classification.SignatureUpdateSchedule.SignatureUpdateIntervalTypeSequence"/>
+</message>
+<message name="Classification.SignatureUpdateSchedule.set_auto_update_interval_typeResponse">
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.get_auto_update_interval_typeRequest">
+	<part name="schedules" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.SignatureUpdateSchedule.get_auto_update_interval_typeResponse">
+	<part name="return" type="tns:Classification.SignatureUpdateSchedule.SignatureUpdateIntervalTypeSequence"/>
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.set_update_mode_automatic_stateRequest">
+	<part name="schedules" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Classification.SignatureUpdateSchedule.set_update_mode_automatic_stateResponse">
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.get_update_mode_automatic_stateRequest">
+	<part name="schedules" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.SignatureUpdateSchedule.get_update_mode_automatic_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.update_signaturesRequest">
+</message>
+<message name="Classification.SignatureUpdateSchedule.update_signaturesResponse">
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.import_signaturesRequest">
+	<part name="filename" type="xsd:string"/>
+</message>
+<message name="Classification.SignatureUpdateSchedule.import_signaturesResponse">
+</message>
+
+<message name="Classification.SignatureUpdateSchedule.get_versionRequest">
+</message>
+<message name="Classification.SignatureUpdateSchedule.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Classification.SignatureUpdateSchedulePortType">
+	<operation name="get_list">
+  	<documentation>
+ Gets a list of all signature update schedules.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.get_listRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.get_listResponse"/>
+	</operation>
+	<operation name="set_auto_update_interval_type">
+	<documentation>
+ Sets the signature update interval types for the specified  
+ signature update schedules when auto update is enabled. 
+ You can configure the following options: daily, weekly, and  
+ monthly. The default value is weekly.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.set_auto_update_interval_typeRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.set_auto_update_interval_typeResponse"/>
+	</operation>
+	<operation name="get_auto_update_interval_type">
+	<documentation>
+ Gets the signature update interval types for the specified  
+ signature update schedules.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.get_auto_update_interval_typeRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.get_auto_update_interval_typeResponse"/>
+	</operation>
+	<operation name="set_update_mode_automatic_state">
+	<documentation>
+ Sets the update mode states for the specified signature update 
+ schedules. The state specifies whether the update scheduler is 
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.set_update_mode_automatic_stateRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.set_update_mode_automatic_stateResponse"/>
+	</operation>
+	<operation name="get_update_mode_automatic_state">
+	<documentation>
+ Gets the update mode states for the specified signature update 
+ schedules.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.get_update_mode_automatic_stateRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.get_update_mode_automatic_stateResponse"/>
+	</operation>
+	<operation name="update_signatures">
+	<documentation>
+ Update classification signatures. This can be used to 
+ automatically download the signature file, and automatically 
+ update classification signatures with this file.
+ Only administrators can run this command.
+
+ This method does not support transactions.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.update_signaturesRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.update_signaturesResponse"/>
+	</operation>
+	<operation name="import_signatures">
+	<documentation>
+ Import classification signatures from a file. This can be used 
+ to import signatures manually.
+ Only administrators can run this command.
+ Different from update_signatures which automatically downloads 
+ the signature file, this import_signatures method allows users to 
+ to specify their own signature files.
+
+ This method does not support transactions.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.import_signaturesRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.import_signaturesResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureUpdateSchedule.get_versionRequest"/>
+		<output message="tns:Classification.SignatureUpdateSchedule.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Classification.SignatureUpdateScheduleBinding" type="tns:Classification.SignatureUpdateSchedulePortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all signature update schedules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_auto_update_interval_type">
+	<documentation>
+ Sets the signature update interval types for the specified  
+ signature update schedules when auto update is enabled. 
+ You can configure the following options: daily, weekly, and  
+ monthly. The default value is weekly.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_auto_update_interval_type">
+	<documentation>
+ Gets the signature update interval types for the specified  
+ signature update schedules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_update_mode_automatic_state">
+	<documentation>
+ Sets the update mode states for the specified signature update 
+ schedules. The state specifies whether the update scheduler is 
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_update_mode_automatic_state">
+	<documentation>
+ Gets the update mode states for the specified signature update 
+ schedules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="update_signatures">
+	<documentation>
+ Update classification signatures. This can be used to 
+ automatically download the signature file, and automatically 
+ update classification signatures with this file.
+ Only administrators can run this command.
+
+ This method does not support transactions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="import_signatures">
+	<documentation>
+ Import classification signatures from a file. This can be used 
+ to import signatures manually.
+ Only administrators can run this command.
+ Different from update_signatures which automatically downloads 
+ the signature file, this import_signatures method allows users to 
+ to specify their own signature files.
+
+ This method does not support transactions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureUpdateSchedule"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureUpdateSchedule"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Classification.SignatureUpdateSchedule">
+	<documentation>
+ The classification methods have some signatures, and these signatures 
+ change with time. For example, the signatures to identify the Skype 
+ traffic working now may not work later. Thus the classification  
+ signatures need to be updated. This signature update schedule  
+ interface enables you to configure the schedule for classification 
+ signature updates. The signatures can be updated automatically or 
+ manually. If the automatic update is set to disabled, the user can  
+ update the classification signatures using the browser-based BIG-IP 
+ Configuration utility. If the automatic update is set to enabled, the 
+ update schedules daily, weekly, or monthly then takes effect. Both 
+ the automatic update and schedule can be configured through this 
+ interface.
+
+ Please specify the following key in all methods in the interface: 
+ '/Common/signature-update-schedule'.
+
+        	</documentation>
+	<port name="Classification.SignatureUpdateSchedulePort" binding="tns:Classification.SignatureUpdateScheduleBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

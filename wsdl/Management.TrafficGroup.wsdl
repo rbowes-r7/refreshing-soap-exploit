@@ -1,0 +1,1217 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Management.TrafficGroup"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Management.TrafficGroup.HAOrder">
+			<xsd:sequence>
+				<xsd:element name="device" type="xsd:string"/>
+				<xsd:element name="order" type="xsd:long"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="Management.TrafficGroup.FailoverMethod">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="TRAFFIC_GROUP_FAILOVER_METHOD_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>TRAFFIC_GROUP_FAILOVER_METHOD_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="TRAFFIC_GROUP_FAILOVER_METHOD_HA_SCORE">
+					<xsd:annotation>
+						<xsd:documentation>TRAFFIC_GROUP_FAILOVER_METHOD_HA_SCORE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="TRAFFIC_GROUP_FAILOVER_METHOD_HA_ORDER">
+					<xsd:annotation>
+						<xsd:documentation>TRAFFIC_GROUP_FAILOVER_METHOD_HA_ORDER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Management.TrafficGroup.FailoverMethodSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Management.TrafficGroup.FailoverMethod[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Management.TrafficGroup.HAOrderSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Management.TrafficGroup.HAOrderSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Management.TrafficGroup.HAOrderSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Management.TrafficGroup.HAOrder[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Management.TrafficGroup.get_listRequest">
+</message>
+<message name="Management.TrafficGroup.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.createRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.createResponse">
+</message>
+
+<message name="Management.TrafficGroup.delete_traffic_groupRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.delete_traffic_groupResponse">
+</message>
+
+<message name="Management.TrafficGroup.set_descriptionRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_descriptionResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_descriptionRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.get_is_floatingRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_is_floatingResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.get_unit_idRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_unit_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_default_deviceRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="devices" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_default_deviceResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_default_deviceRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_default_deviceResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_mac_masquerade_addressRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_mac_masquerade_addressResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_mac_masquerade_addressRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_mac_masquerade_addressResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_auto_failback_enabled_stateRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_auto_failback_enabled_stateResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_auto_failback_enabled_stateRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_auto_failback_enabled_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_auto_failback_timeRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="times" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_auto_failback_timeResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_auto_failback_timeRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_auto_failback_timeResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_ha_load_factorRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="loads" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_ha_load_factorResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_ha_load_factorRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_ha_load_factorResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.get_ha_orderRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_ha_orderResponse">
+	<part name="return" type="tns:Management.TrafficGroup.HAOrderSequenceSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.add_ha_orderRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="orders" type="tns:Management.TrafficGroup.HAOrderSequenceSequence"/>
+</message>
+<message name="Management.TrafficGroup.add_ha_orderResponse">
+</message>
+
+<message name="Management.TrafficGroup.remove_ha_orderRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="orders" type="tns:Management.TrafficGroup.HAOrderSequenceSequence"/>
+</message>
+<message name="Management.TrafficGroup.remove_ha_orderResponse">
+</message>
+
+<message name="Management.TrafficGroup.remove_all_ha_ordersRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.remove_all_ha_ordersResponse">
+</message>
+
+<message name="Management.TrafficGroup.set_ha_groupRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="ha_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_ha_groupResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_ha_groupRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_ha_groupResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_monitor_ha_groupRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="ha_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_monitor_ha_groupResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_monitor_ha_groupRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_monitor_ha_groupResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.set_failover_methodRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+	<part name="failover_methods" type="tns:Management.TrafficGroup.FailoverMethodSequence"/>
+</message>
+<message name="Management.TrafficGroup.set_failover_methodResponse">
+</message>
+
+<message name="Management.TrafficGroup.get_failover_methodRequest">
+	<part name="traffic_groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.TrafficGroup.get_failover_methodResponse">
+	<part name="return" type="tns:Management.TrafficGroup.FailoverMethodSequence"/>
+</message>
+
+<message name="Management.TrafficGroup.get_versionRequest">
+</message>
+<message name="Management.TrafficGroup.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Management.TrafficGroupPortType">
+	<operation name="get_list">
+ 	<documentation>
+ Gets a list of all traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_listRequest"/>
+		<output message="tns:Management.TrafficGroup.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.createRequest"/>
+		<output message="tns:Management.TrafficGroup.createResponse"/>
+	</operation>
+	<operation name="delete_traffic_group">
+	<documentation>
+ Deletes traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.delete_traffic_groupRequest"/>
+		<output message="tns:Management.TrafficGroup.delete_traffic_groupResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified traffic groups.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_descriptionRequest"/>
+		<output message="tns:Management.TrafficGroup.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_descriptionRequest"/>
+		<output message="tns:Management.TrafficGroup.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_is_floating">
+	<documentation>
+ Gets the is floating state of the specified traffic group.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_is_floatingRequest"/>
+		<output message="tns:Management.TrafficGroup.get_is_floatingResponse"/>
+	</operation>
+	<operation name="get_unit_id">
+	<documentation>
+ Gets the unit IDs for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_unit_idRequest"/>
+		<output message="tns:Management.TrafficGroup.get_unit_idResponse"/>
+	</operation>
+	<operation name="set_default_device">
+	<documentation>
+ This method has been deprecated, please use add_ha_order
+ instead.
+
+ Sets the default devices for the specified traffic groups.
+
+ The traffic group default device was used in earlier versions
+ to indicate the device that had the highest priority to become
+ active when a new active device needed to be chosen.
+
+ This functionality has been subsumed and enhanced by a new
+ traffic group attribute, the HA order.  The HA order allows
+ the user to specify a list of devices from the failover
+ device group in the order in which they should become active
+ for the traffic group (see the new HA order methods).
+
+ The concept of default device has been replaced by the 
+ first device in the HA order list.  Therefore, this 
+ set_default_device method places the device first in 
+ the HA order list after deleting any prior entries in the 
+ HA order list.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_default_deviceRequest"/>
+		<output message="tns:Management.TrafficGroup.set_default_deviceResponse"/>
+	</operation>
+	<operation name="get_default_device">
+	<documentation>
+ This method has been deprecated, replaced by get_ha_order.
+
+ Gets the default devices for the specified traffic groups.
+
+ See the comments in the set_default_device method.
+
+ The default device methods still work. The concept of
+ default device has been replaced by the first device in
+ the HA order list.  Therefore, this get_default_device
+ method returns the device in the HA order list that has
+ order zero if there is such an entry.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_default_deviceRequest"/>
+		<output message="tns:Management.TrafficGroup.get_default_deviceResponse"/>
+	</operation>
+	<operation name="set_mac_masquerade_address">
+	<documentation>
+ Sets the MAC masquerade addresses for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_mac_masquerade_addressRequest"/>
+		<output message="tns:Management.TrafficGroup.set_mac_masquerade_addressResponse"/>
+	</operation>
+	<operation name="get_mac_masquerade_address">
+	<documentation>
+ Gets the MAC masquerade addresses for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_mac_masquerade_addressRequest"/>
+		<output message="tns:Management.TrafficGroup.get_mac_masquerade_addressResponse"/>
+	</operation>
+	<operation name="set_auto_failback_enabled_state">
+	<documentation>
+ Sets the auto failback states for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_auto_failback_enabled_stateRequest"/>
+		<output message="tns:Management.TrafficGroup.set_auto_failback_enabled_stateResponse"/>
+	</operation>
+	<operation name="get_auto_failback_enabled_state">
+	<documentation>
+ Gets the auto failback enabled states for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_auto_failback_enabled_stateRequest"/>
+		<output message="tns:Management.TrafficGroup.get_auto_failback_enabled_stateResponse"/>
+	</operation>
+	<operation name="set_auto_failback_time">
+	<documentation>
+ Sets the auto failback times for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_auto_failback_timeRequest"/>
+		<output message="tns:Management.TrafficGroup.set_auto_failback_timeResponse"/>
+	</operation>
+	<operation name="get_auto_failback_time">
+	<documentation>
+ Gets the traffic group auto failback times for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_auto_failback_timeRequest"/>
+		<output message="tns:Management.TrafficGroup.get_auto_failback_timeResponse"/>
+	</operation>
+	<operation name="set_ha_load_factor">
+	<documentation>
+ Sets the HA load factor for the specified traffic groups.
+ The HA load factor has a value between 1 and 1000 inclusive
+ and represents the amount of load (traffic, etc) the
+ traffic group presents to the system.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_ha_load_factorRequest"/>
+		<output message="tns:Management.TrafficGroup.set_ha_load_factorResponse"/>
+	</operation>
+	<operation name="get_ha_load_factor">
+	<documentation>
+ Gets the traffic group HA load factors for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_ha_load_factorRequest"/>
+		<output message="tns:Management.TrafficGroup.get_ha_load_factorResponse"/>
+	</operation>
+	<operation name="get_ha_order">
+	<documentation>
+ Gets the lists of HA orders the specified traffic groups are 
+ associated with. If a specified traffic group is not associated 
+ with any HA order, then the list of HA order entries for that 
+ traffic group will be empty.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_ha_orderRequest"/>
+		<output message="tns:Management.TrafficGroup.get_ha_orderResponse"/>
+	</operation>
+	<operation name="add_ha_order">
+	<documentation>
+ Adds/associates HA orders to the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.add_ha_orderRequest"/>
+		<output message="tns:Management.TrafficGroup.add_ha_orderResponse"/>
+	</operation>
+	<operation name="remove_ha_order">
+	<documentation>
+ Removes HA order entries from the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.remove_ha_orderRequest"/>
+		<output message="tns:Management.TrafficGroup.remove_ha_orderResponse"/>
+	</operation>
+	<operation name="remove_all_ha_orders">
+	<documentation>
+ Removes all HA order entries from the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.remove_all_ha_ordersRequest"/>
+		<output message="tns:Management.TrafficGroup.remove_all_ha_ordersResponse"/>
+	</operation>
+	<operation name="set_ha_group">
+	<documentation>
+ This method has been deprecated. Please use set_monitor_ha_group instead.
+ Using this deprecated method will also set the failover method to HA score.
+
+ Sets and hence associates the HA groups with the specified traffic groups.
+ If there is no such assocation, set the HA group name to "".
+
+ HA group must exist before this association.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_ha_groupRequest"/>
+		<output message="tns:Management.TrafficGroup.set_ha_groupResponse"/>
+	</operation>
+	<operation name="get_ha_group">
+	<documentation>
+ This method has been deprecated. Please use get_monitor_ha_group instead.
+
+ Gets the HA group for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_ha_groupRequest"/>
+		<output message="tns:Management.TrafficGroup.get_ha_groupResponse"/>
+	</operation>
+	<operation name="set_monitor_ha_group">
+	<documentation>
+ Sets a HA group as monitor for the specified traffic groups. This attribute
+ together with the failover method attribute determine the algorithm used to
+ decide when the current device is not healthy enough and the new device that
+ will take take over the respective traffic groups. The HA group must exist
+ before this association.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_monitor_ha_groupRequest"/>
+		<output message="tns:Management.TrafficGroup.set_monitor_ha_groupResponse"/>
+	</operation>
+	<operation name="get_monitor_ha_group">
+	<documentation>
+ Gets the HA group monitor for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_monitor_ha_groupRequest"/>
+		<output message="tns:Management.TrafficGroup.get_monitor_ha_groupResponse"/>
+	</operation>
+	<operation name="set_failover_method">
+	<documentation>
+ Sets the failover method for the specified traffic groups.
+
+ HA group must exist before this association.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.set_failover_methodRequest"/>
+		<output message="tns:Management.TrafficGroup.set_failover_methodResponse"/>
+	</operation>
+	<operation name="get_failover_method">
+	<documentation>
+ Gets the failover method for the specified traffic groups.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_failover_methodRequest"/>
+		<output message="tns:Management.TrafficGroup.get_failover_methodResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the interface version.
+
+        	</documentation>
+		<input message="tns:Management.TrafficGroup.get_versionRequest"/>
+		<output message="tns:Management.TrafficGroup.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Management.TrafficGroupBinding" type="tns:Management.TrafficGroupPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_traffic_group">
+	<documentation>
+ Deletes traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified traffic groups.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_is_floating">
+	<documentation>
+ Gets the is floating state of the specified traffic group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_unit_id">
+	<documentation>
+ Gets the unit IDs for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_device">
+	<documentation>
+ This method has been deprecated, please use add_ha_order
+ instead.
+
+ Sets the default devices for the specified traffic groups.
+
+ The traffic group default device was used in earlier versions
+ to indicate the device that had the highest priority to become
+ active when a new active device needed to be chosen.
+
+ This functionality has been subsumed and enhanced by a new
+ traffic group attribute, the HA order.  The HA order allows
+ the user to specify a list of devices from the failover
+ device group in the order in which they should become active
+ for the traffic group (see the new HA order methods).
+
+ The concept of default device has been replaced by the 
+ first device in the HA order list.  Therefore, this 
+ set_default_device method places the device first in 
+ the HA order list after deleting any prior entries in the 
+ HA order list.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_device">
+	<documentation>
+ This method has been deprecated, replaced by get_ha_order.
+
+ Gets the default devices for the specified traffic groups.
+
+ See the comments in the set_default_device method.
+
+ The default device methods still work. The concept of
+ default device has been replaced by the first device in
+ the HA order list.  Therefore, this get_default_device
+ method returns the device in the HA order list that has
+ order zero if there is such an entry.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_mac_masquerade_address">
+	<documentation>
+ Sets the MAC masquerade addresses for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_mac_masquerade_address">
+	<documentation>
+ Gets the MAC masquerade addresses for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_auto_failback_enabled_state">
+	<documentation>
+ Sets the auto failback states for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_auto_failback_enabled_state">
+	<documentation>
+ Gets the auto failback enabled states for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_auto_failback_time">
+	<documentation>
+ Sets the auto failback times for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_auto_failback_time">
+	<documentation>
+ Gets the traffic group auto failback times for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ha_load_factor">
+	<documentation>
+ Sets the HA load factor for the specified traffic groups.
+ The HA load factor has a value between 1 and 1000 inclusive
+ and represents the amount of load (traffic, etc) the
+ traffic group presents to the system.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ha_load_factor">
+	<documentation>
+ Gets the traffic group HA load factors for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ha_order">
+	<documentation>
+ Gets the lists of HA orders the specified traffic groups are 
+ associated with. If a specified traffic group is not associated 
+ with any HA order, then the list of HA order entries for that 
+ traffic group will be empty.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_ha_order">
+	<documentation>
+ Adds/associates HA orders to the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_ha_order">
+	<documentation>
+ Removes HA order entries from the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_ha_orders">
+	<documentation>
+ Removes all HA order entries from the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ha_group">
+	<documentation>
+ This method has been deprecated. Please use set_monitor_ha_group instead.
+ Using this deprecated method will also set the failover method to HA score.
+
+ Sets and hence associates the HA groups with the specified traffic groups.
+ If there is no such assocation, set the HA group name to "".
+
+ HA group must exist before this association.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ha_group">
+	<documentation>
+ This method has been deprecated. Please use get_monitor_ha_group instead.
+
+ Gets the HA group for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_monitor_ha_group">
+	<documentation>
+ Sets a HA group as monitor for the specified traffic groups. This attribute
+ together with the failover method attribute determine the algorithm used to
+ decide when the current device is not healthy enough and the new device that
+ will take take over the respective traffic groups. The HA group must exist
+ before this association.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_monitor_ha_group">
+	<documentation>
+ Gets the HA group monitor for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_failover_method">
+	<documentation>
+ Sets the failover method for the specified traffic groups.
+
+ HA group must exist before this association.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_failover_method">
+	<documentation>
+ Gets the failover method for the specified traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the interface version.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/TrafficGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/TrafficGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Management.TrafficGroup">
+	<documentation>
+ The Traffic Group interface contains the methods for creating and manipulating
+ traffic groups.  Traffic groups are a means to associate network objects with 
+ devices used in device failover.
+
+        	</documentation>
+	<port name="Management.TrafficGroupPort" binding="tns:Management.TrafficGroupBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

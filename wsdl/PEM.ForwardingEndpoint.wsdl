@@ -1,0 +1,959 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="PEM.ForwardingEndpoint"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.SourcePortBehaviorSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.SourcePortBehavior[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="PEM.ForwardingEndpoint.ForwardingEndpointTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.ForwardingEndpoint.ForwardingEndpointType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.ForwardingEndpoint.ForwardingEndpointType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="FORWARDING_ENDPOINT_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ENDPOINT_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FORWARDING_ENDPOINT_TRANSPARENT">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ENDPOINT_TRANSPARENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FORWARDING_ENDPOINT_NONTRANSPARENT">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ENDPOINT_NONTRANSPARENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.PersistenceTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.PersistenceType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.SourcePortBehavior">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SOURCE_PORT_PRESERVE">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_PRESERVE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_PORT_PRESERVE_STRICT">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_PRESERVE_STRICT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_PORT_CHANGE">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_CHANGE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_PORT_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="PEM.PersistenceType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="PERSISTENCE_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PERSISTENCE_TYPE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PERSISTENCE_TYPE_SOURCE_IP">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_SOURCE_IP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PERSISTENCE_TYPE_DESTINATION_IP">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_DESTINATION_IP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="PEM.ForwardingEndpoint.get_listRequest">
+</message>
+<message name="PEM.ForwardingEndpoint.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.createRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.createResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.delete_forwarding_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.delete_forwarding_endpointResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.delete_all_forwarding_endpointsRequest">
+</message>
+<message name="PEM.ForwardingEndpoint.delete_all_forwarding_endpointsResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_poolResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_persistence_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:PEM.PersistenceTypeSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_persistence_typeResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_persistence_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_persistence_typeResponse">
+	<part name="return" type="tns:PEM.PersistenceTypeSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_lsn_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_lsn_poolResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_lsn_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_lsn_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_snat_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_snat_poolResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_snat_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_snat_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_source_port_behaviorRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="behaviors" type="tns:Common.SourcePortBehaviorSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_source_port_behaviorResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_source_port_behaviorRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_source_port_behaviorResponse">
+	<part name="return" type="tns:Common.SourcePortBehaviorSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_translate_address_stateRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_translate_address_stateResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_translate_address_stateRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_translate_address_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_translate_service_stateRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_translate_service_stateResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_translate_service_stateRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_translate_service_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.set_forwarding_endpoint_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:PEM.ForwardingEndpoint.ForwardingEndpointTypeSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.set_forwarding_endpoint_typeResponse">
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_forwarding_endpoint_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ForwardingEndpoint.get_forwarding_endpoint_typeResponse">
+	<part name="return" type="tns:PEM.ForwardingEndpoint.ForwardingEndpointTypeSequence"/>
+</message>
+
+<message name="PEM.ForwardingEndpoint.get_versionRequest">
+</message>
+<message name="PEM.ForwardingEndpoint.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="PEM.ForwardingEndpointPortType">
+	<operation name="get_list">
+  	<documentation>
+ Gets a list of all forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_listRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.createRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.createResponse"/>
+	</operation>
+	<operation name="delete_forwarding_endpoint">
+	<documentation>
+ Deletes the specified forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.delete_forwarding_endpointRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.delete_forwarding_endpointResponse"/>
+	</operation>
+	<operation name="delete_all_forwarding_endpoints">
+	<documentation>
+ Deletes all user defined forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.delete_all_forwarding_endpointsRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.delete_all_forwarding_endpointsResponse"/>
+	</operation>
+	<operation name="set_pool">
+	<documentation>
+ Sets the pools for the specified forwarding endpoints.
+ The forwarding endpoint will always point to a single pool.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_poolRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_poolResponse"/>
+	</operation>
+	<operation name="get_pool">
+	<documentation>
+ Gets the pools for the specified forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_poolRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_poolResponse"/>
+	</operation>
+	<operation name="set_persistence_type">
+	<documentation>
+ Sets the persistence types of the specified forwarding endpoints
+ which specifies whether traffic persists with pool members.
+ If you want specific traffic to go to the same pool member,
+ set the persistence type to source or destination IP address.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_persistence_typeRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_persistence_typeResponse"/>
+	</operation>
+	<operation name="get_persistence_type">
+	<documentation>
+ Gets the persistence types of the specified forwarding endpoints. 
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_persistence_typeRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_persistence_typeResponse"/>
+	</operation>
+	<operation name="set_lsn_pool">
+	<documentation>
+ Sets the LSN pools for the specified forwarding endpoints.
+ An LSN pool specifies the name of an existing LSN pool to which 
+ the forwarding endpoint will automatically forward traffic. 
+ The default value is empty string (no pool).
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_lsn_poolRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_lsn_poolResponse"/>
+	</operation>
+	<operation name="get_lsn_pool">
+	<documentation>
+ Gets the LSN pools for the specified forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_lsn_poolRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_lsn_poolResponse"/>
+	</operation>
+	<operation name="set_snat_pool">
+	<documentation>
+ Sets the SNAT pools for the specified forwarding endpoints.
+ A SNAT pool specifies the name of an existing SNAT pool used for 
+ translating the client ip address to the self-ip address of the 
+ BIG-IP system. The default value is empty string (no pool).
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_snat_poolRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_snat_poolResponse"/>
+	</operation>
+	<operation name="get_snat_pool">
+	<documentation>
+ Gets the SNAT pools for the specified forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_snat_poolRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_snat_poolResponse"/>
+	</operation>
+	<operation name="set_source_port_behavior">
+	<documentation>
+ Sets the source port behaviors of the specified forwarding 
+ endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_source_port_behaviorRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_source_port_behaviorResponse"/>
+	</operation>
+	<operation name="get_source_port_behavior">
+	<documentation>
+ Gets the source port behaviors of the specified forwarding endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_source_port_behaviorRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_source_port_behaviorResponse"/>
+	</operation>
+	<operation name="set_translate_address_state">
+	<documentation>
+ Sets the translate address states of the specified 
+ forwarding endpoints. A translate address specifies, 
+ when enabled, that the system translates the original 
+ destination address of the virtual server.
+ The default value is disabled.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_translate_address_stateRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_translate_address_stateResponse"/>
+	</operation>
+	<operation name="get_translate_address_state">
+	<documentation>
+ Gets the translate address states of the specified 
+ forwarding endpoints. 
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_translate_address_stateRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_translate_address_stateResponse"/>
+	</operation>
+	<operation name="set_translate_service_state">
+	<documentation>
+ Sets the translate service states of the specified 
+ forwarding endpoints. A translate service specifies, 
+ when enabled, that the system translates the original 
+ destination port. The default value is disabled. 
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_translate_service_stateRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_translate_service_stateResponse"/>
+	</operation>
+	<operation name="get_translate_service_state">
+	<documentation>
+ Gets the translate service states of the specified 
+ forwarding endpoints.  
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_translate_service_stateRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_translate_service_stateResponse"/>
+	</operation>
+	<operation name="set_forwarding_endpoint_type">
+	<documentation>
+ Sets the forwarding endpoint types for the specified forwarding 
+ endpoints.
+ When an endpoint is defined, flow is forwarded to the member in 
+ pool associated with the endpoint. If an endpoint is transparent 
+ then the proxy is not supposed to modify the flow contents. If 
+ an endpoint is non-transparent then proxy can modify the flow 
+ contents.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.set_forwarding_endpoint_typeRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.set_forwarding_endpoint_typeResponse"/>
+	</operation>
+	<operation name="get_forwarding_endpoint_type">
+	<documentation>
+ Gets the forwarding endpoint types for the specified forwarding 
+ endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_forwarding_endpoint_typeRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_forwarding_endpoint_typeResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:PEM.ForwardingEndpoint.get_versionRequest"/>
+		<output message="tns:PEM.ForwardingEndpoint.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="PEM.ForwardingEndpointBinding" type="tns:PEM.ForwardingEndpointPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_forwarding_endpoint">
+	<documentation>
+ Deletes the specified forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_forwarding_endpoints">
+	<documentation>
+ Deletes all user defined forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_pool">
+	<documentation>
+ Sets the pools for the specified forwarding endpoints.
+ The forwarding endpoint will always point to a single pool.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_pool">
+	<documentation>
+ Gets the pools for the specified forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_persistence_type">
+	<documentation>
+ Sets the persistence types of the specified forwarding endpoints
+ which specifies whether traffic persists with pool members.
+ If you want specific traffic to go to the same pool member,
+ set the persistence type to source or destination IP address.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_persistence_type">
+	<documentation>
+ Gets the persistence types of the specified forwarding endpoints. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_lsn_pool">
+	<documentation>
+ Sets the LSN pools for the specified forwarding endpoints.
+ An LSN pool specifies the name of an existing LSN pool to which 
+ the forwarding endpoint will automatically forward traffic. 
+ The default value is empty string (no pool).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_lsn_pool">
+	<documentation>
+ Gets the LSN pools for the specified forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_snat_pool">
+	<documentation>
+ Sets the SNAT pools for the specified forwarding endpoints.
+ A SNAT pool specifies the name of an existing SNAT pool used for 
+ translating the client ip address to the self-ip address of the 
+ BIG-IP system. The default value is empty string (no pool).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_snat_pool">
+	<documentation>
+ Gets the SNAT pools for the specified forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_port_behavior">
+	<documentation>
+ Sets the source port behaviors of the specified forwarding 
+ endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_port_behavior">
+	<documentation>
+ Gets the source port behaviors of the specified forwarding endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_translate_address_state">
+	<documentation>
+ Sets the translate address states of the specified 
+ forwarding endpoints. A translate address specifies, 
+ when enabled, that the system translates the original 
+ destination address of the virtual server.
+ The default value is disabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_translate_address_state">
+	<documentation>
+ Gets the translate address states of the specified 
+ forwarding endpoints. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_translate_service_state">
+	<documentation>
+ Sets the translate service states of the specified 
+ forwarding endpoints. A translate service specifies, 
+ when enabled, that the system translates the original 
+ destination port. The default value is disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_translate_service_state">
+	<documentation>
+ Gets the translate service states of the specified 
+ forwarding endpoints.  
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_forwarding_endpoint_type">
+	<documentation>
+ Sets the forwarding endpoint types for the specified forwarding 
+ endpoints.
+ When an endpoint is defined, flow is forwarded to the member in 
+ pool associated with the endpoint. If an endpoint is transparent 
+ then the proxy is not supposed to modify the flow contents. If 
+ an endpoint is non-transparent then proxy can modify the flow 
+ contents.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_forwarding_endpoint_type">
+	<documentation>
+ Gets the forwarding endpoint types for the specified forwarding 
+ endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ForwardingEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ForwardingEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="PEM.ForwardingEndpoint">
+	<documentation>
+ You can use the forwarding endpoint interface to configure 
+ forwarding endpoint definitions for the Policy Enforcement 
+ Manager. A forwarding endpoint represents the final destination of 
+ the traffic flow. The endpoint will always point to a single pool; 
+ it optionally points to a single SNAT pool and/or a single LSN pool. 
+ According to source-ip or destination-ip, the subsequent traffic 
+ can be directed to the same pool member, which is called persistence.
+ The persistence feature can be disabled.
+ Note: Before you can create a forwarding endpoint you must create a 
+ valid pool with at least one member.
+
+        	</documentation>
+	<port name="PEM.ForwardingEndpointPort" binding="tns:PEM.ForwardingEndpointBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

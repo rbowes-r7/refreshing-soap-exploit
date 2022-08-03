@@ -1,0 +1,4687 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="PEM.Policy"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="PEM.Policy.ReportGranularityTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ReportGranularityType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ModifyHTTPHeaderOperationTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ModifyHTTPHeaderOperationTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.PortSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.Policy.ReportGranularityType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="REPORT_GRANULARITY_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>REPORT_GRANULARITY_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="REPORT_GRANULARITY_TYPE_SESSION">
+					<xsd:annotation>
+						<xsd:documentation>REPORT_GRANULARITY_TYPE_SESSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="REPORT_GRANULARITY_TYPE_FLOW">
+					<xsd:annotation>
+						<xsd:documentation>REPORT_GRANULARITY_TYPE_FLOW</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="PEM.Policy.GateStatusTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.GateStatusType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPNetmask">
+			<xsd:sequence>
+				<xsd:element name="address" type="xsd:string"/>
+				<xsd:element name="netmask" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="PEM.Policy.L2EndpointTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.L2EndpointType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.Policy.ModifyHTTPHeaderValueType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_VALUE_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_VALUE_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_VALUE_TYPE_STRING">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_VALUE_TYPE_STRING</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_VALUE_TYPE_TCL_SNIPPET">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_VALUE_TYPE_TCL_SNIPPET</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="PEM.Policy.FilterOperationType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="FILTER_OPERATION_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>FILTER_OPERATION_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FILTER_OPERATION_TYPE_NOMATCH">
+					<xsd:annotation>
+						<xsd:documentation>FILTER_OPERATION_TYPE_NOMATCH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FILTER_OPERATION_TYPE_MATCH">
+					<xsd:annotation>
+						<xsd:documentation>FILTER_OPERATION_TYPE_MATCH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="PEM.Policy.ProtocolTypeSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ProtocolTypeSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ForwardingActionTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ForwardingActionType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.L2EndpointTypeSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.L2EndpointTypeSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ModifyHTTPHeaderValueTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ModifyHTTPHeaderValueType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.FilterOperationTypeSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.FilterOperationTypeSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ModifyHTTPHeaderOperationTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ModifyHTTPHeaderOperationType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ReportGranularityTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ReportGranularityTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPNetmaskSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.IPNetmaskSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ProtocolTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ProtocolType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.GateStatusTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.GateStatusTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.Policy.GateStatusType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="GATE_STATUS_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>GATE_STATUS_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="GATE_STATUS_TYPE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>GATE_STATUS_TYPE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="GATE_STATUS_TYPE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>GATE_STATUS_TYPE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="PEM.Policy.ModifyHTTPHeaderValueTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ModifyHTTPHeaderValueTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.FilterOperationTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.FilterOperationType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPNetmaskSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.IPNetmaskSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.FilterOperationTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.FilterOperationTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.Policy.ProtocolType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="RULE_PROTOCOL_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>RULE_PROTOCOL_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="RULE_PROTOCOL_TYPE_ANY">
+					<xsd:annotation>
+						<xsd:documentation>RULE_PROTOCOL_TYPE_ANY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="RULE_PROTOCOL_TYPE_TCP">
+					<xsd:annotation>
+						<xsd:documentation>RULE_PROTOCOL_TYPE_TCP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="RULE_PROTOCOL_TYPE_UDP">
+					<xsd:annotation>
+						<xsd:documentation>RULE_PROTOCOL_TYPE_UDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="PEM.Policy.ForwardingActionTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ForwardingActionTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.ProtocolTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.ProtocolTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.Policy.L2EndpointTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.Policy.L2EndpointTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.Policy.ModifyHTTPHeaderOperationType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_OPERATION_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_OPERATION_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_OPERATION_TYPE_NONE">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_OPERATION_TYPE_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_OPERATION_TYPE_INSERT">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_OPERATION_TYPE_INSERT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MODIFY_HTTP_HEADER_OPERATION_TYPE_REMOVE">
+					<xsd:annotation>
+						<xsd:documentation>MODIFY_HTTP_HEADER_OPERATION_TYPE_REMOVE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.IPNetmaskSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.IPNetmask[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.Policy.ForwardingActionType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="FORWARDING_ACTION_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ACTION_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FORWARDING_ACTION_TYPE_NONE">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ACTION_TYPE_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FORWARDING_ACTION_TYPE_ROUTE_TO_NETWORK">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ACTION_TYPE_ROUTE_TO_NETWORK</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FORWARDING_ACTION_TYPE_POOL">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ACTION_TYPE_POOL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="FORWARDING_ACTION_TYPE_ICAP">
+					<xsd:annotation>
+						<xsd:documentation>FORWARDING_ACTION_TYPE_ICAP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="PEM.Policy.L2EndpointType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="L2_ENDPOINT_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>L2_ENDPOINT_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="L2_ENDPOINT_TYPE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>L2_ENDPOINT_TYPE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="L2_ENDPOINT_TYPE_VLAN">
+					<xsd:annotation>
+						<xsd:documentation>L2_ENDPOINT_TYPE_VLAN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="PEM.Policy.get_listRequest">
+</message>
+<message name="PEM.Policy.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.Policy.createRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.createResponse">
+</message>
+
+<message name="PEM.Policy.delete_policyRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.delete_policyResponse">
+</message>
+
+<message name="PEM.Policy.delete_all_policiesRequest">
+</message>
+<message name="PEM.Policy.delete_all_policiesResponse">
+</message>
+
+<message name="PEM.Policy.set_enabled_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="PEM.Policy.set_enabled_stateResponse">
+</message>
+
+<message name="PEM.Policy.get_enabled_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.get_enabled_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="PEM.Policy.set_descriptionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.set_descriptionResponse">
+</message>
+
+<message name="PEM.Policy.get_descriptionRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.Policy.get_ruleRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.get_ruleResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.add_ruleRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="precedences" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.add_ruleResponse">
+</message>
+
+<message name="PEM.Policy.remove_ruleRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.remove_ruleResponse">
+</message>
+
+<message name="PEM.Policy.remove_all_rulesRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Policy.remove_all_rulesResponse">
+</message>
+
+<message name="PEM.Policy.set_rule_forwarding_endpointRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_forwarding_endpointResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_forwarding_endpointRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_forwarding_endpointResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_qos_rate_pir_downlinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="controls" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_qos_rate_pir_downlinkResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_qos_rate_pir_downlinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_qos_rate_pir_downlinkResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_qos_rate_pir_uplinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="controls" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_qos_rate_pir_uplinkResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_qos_rate_pir_uplinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_qos_rate_pir_uplinkResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_sub_policy_downlinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="sub_policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_sub_policy_downlinkResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_sub_policy_downlinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_sub_policy_downlinkResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_sub_policy_uplinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="sub_policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_sub_policy_uplinkResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_sub_policy_uplinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_sub_policy_uplinkResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_service_chainRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="chains" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_service_chainResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_service_chainRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_service_chainResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_interceptRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="intercepts" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_interceptResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_interceptRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_interceptResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_hsl_format_scriptRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="scripts" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_hsl_format_scriptResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_hsl_format_scriptRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_hsl_format_scriptResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_hsl_endpointRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_hsl_endpointResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_hsl_endpointRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_hsl_endpointResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_http_redirectRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="redirects" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_http_redirectResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_http_redirectRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_http_redirectResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_gx_monitoring_keyRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="keys" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_gx_monitoring_keyResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_gx_monitoring_keyRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_gx_monitoring_keyResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_report_granularityRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="types" type="tns:PEM.Policy.ReportGranularityTypeSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_report_granularityResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_report_granularityRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_report_granularityResponse">
+	<part name="return" type="tns:PEM.Policy.ReportGranularityTypeSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_gate_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="states" type="tns:PEM.Policy.GateStatusTypeSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_gate_stateResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_gate_stateRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_gate_stateResponse">
+	<part name="return" type="tns:PEM.Policy.GateStatusTypeSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_precedenceRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="precedences" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_precedenceResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_precedenceRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_precedenceResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_total_volume_thresholdRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="thresholds" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_total_volume_thresholdResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_total_volume_thresholdRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_total_volume_thresholdResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_uplink_volume_thresholdRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="thresholds" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_uplink_volume_thresholdResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_uplink_volume_thresholdRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_uplink_volume_thresholdResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_downlink_volume_thresholdRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="thresholds" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_downlink_volume_thresholdResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_downlink_volume_thresholdRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_downlink_volume_thresholdResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_intervalRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="intervals" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_intervalResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_intervalRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_intervalResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_l2_marking_downlink_levelRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="levels" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_l2_marking_downlink_levelResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_l2_marking_downlink_levelRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_l2_marking_downlink_levelResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_l2_marking_uplink_levelRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="levels" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_l2_marking_uplink_levelResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_l2_marking_uplink_levelRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_l2_marking_uplink_levelResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_dscp_marking_downlinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="markings" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_dscp_marking_downlinkResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_dscp_marking_downlinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_dscp_marking_downlinkResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_dscp_marking_uplinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="markings" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_dscp_marking_uplinkResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_dscp_marking_uplinkRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_dscp_marking_uplinkResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_tcl_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_tcl_filterResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_tcl_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_tcl_filterResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.get_classification_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_classification_filterResponse">
+	<part name="return" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.add_classification_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="applications" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.add_classification_filterResponse">
+</message>
+
+<message name="PEM.Policy.remove_classification_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.remove_classification_filterResponse">
+</message>
+
+<message name="PEM.Policy.remove_all_classification_filtersRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.remove_all_classification_filtersResponse">
+</message>
+
+<message name="PEM.Policy.set_classification_filter_applicationRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="applications" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_classification_filter_applicationResponse">
+</message>
+
+<message name="PEM.Policy.get_classification_filter_applicationRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_classification_filter_applicationResponse">
+	<part name="return" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_classification_filter_categoryRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="applications" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_classification_filter_categoryResponse">
+</message>
+
+<message name="PEM.Policy.get_classification_filter_categoryRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_classification_filter_categoryResponse">
+	<part name="return" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_classification_filter_operation_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="types" type="tns:PEM.Policy.FilterOperationTypeSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_classification_filter_operation_typeResponse">
+</message>
+
+<message name="PEM.Policy.get_classification_filter_operation_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_classification_filter_operation_typeResponse">
+	<part name="return" type="tns:PEM.Policy.FilterOperationTypeSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.get_flow_info_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filterResponse">
+	<part name="return" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.add_flow_info_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.add_flow_info_filterResponse">
+</message>
+
+<message name="PEM.Policy.remove_flow_info_filterRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.remove_flow_info_filterResponse">
+</message>
+
+<message name="PEM.Policy.remove_all_flow_info_filtersRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.remove_all_flow_info_filtersResponse">
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_from_vlanRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="vlans" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_from_vlanResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_from_vlanRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_from_vlanResponse">
+	<part name="return" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_operation_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="types" type="tns:PEM.Policy.FilterOperationTypeSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_operation_typeResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_operation_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_operation_typeResponse">
+	<part name="return" type="tns:PEM.Policy.FilterOperationTypeSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_source_ipRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="ip_netmasks" type="tns:Common.IPNetmaskSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_source_ipResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_source_ipRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_source_ipResponse">
+	<part name="return" type="tns:Common.IPNetmaskSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_source_portRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="ports" type="tns:Common.PortSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_source_portResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_source_portRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_source_portResponse">
+	<part name="return" type="tns:Common.PortSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_destination_ipRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="ip_netmasks" type="tns:Common.IPNetmaskSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_destination_ipResponse">
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_source_ip_and_destination_ipRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="source_ip_netmasks" type="tns:Common.IPNetmaskSequenceSequenceSequence"/>
+	<part name="destination_ip_netmasks" type="tns:Common.IPNetmaskSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_source_ip_and_destination_ipResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_destination_ipRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_destination_ipResponse">
+	<part name="return" type="tns:Common.IPNetmaskSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_destination_portRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="ports" type="tns:Common.PortSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_destination_portResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_destination_portRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_destination_portResponse">
+	<part name="return" type="tns:Common.PortSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_l2_endpoint_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="types" type="tns:PEM.Policy.L2EndpointTypeSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_l2_endpoint_typeResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_l2_endpoint_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_l2_endpoint_typeResponse">
+	<part name="return" type="tns:PEM.Policy.L2EndpointTypeSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_dscp_codeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="codes" type="tns:Common.ULongSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_dscp_codeResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_dscp_codeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_dscp_codeResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_flow_info_filter_protocol_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+	<part name="types" type="tns:PEM.Policy.ProtocolTypeSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_flow_info_filter_protocol_typeResponse">
+</message>
+
+<message name="PEM.Policy.get_flow_info_filter_protocol_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="filters" type="tns:Common.StringSequenceSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_flow_info_filter_protocol_typeResponse">
+	<part name="return" type="tns:PEM.Policy.ProtocolTypeSequenceSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_forwarding_action_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="values" type="tns:PEM.Policy.ForwardingActionTypeSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_forwarding_action_typeResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_forwarding_action_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_forwarding_action_typeResponse">
+	<part name="return" type="tns:PEM.Policy.ForwardingActionTypeSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_internal_virtual_serverRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="virtual_servers" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_internal_virtual_serverResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_internal_virtual_serverRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_internal_virtual_serverResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_modify_http_header_nameRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="values" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_modify_http_header_nameResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_modify_http_header_nameRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_modify_http_header_nameResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_modify_http_header_operationRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="values" type="tns:PEM.Policy.ModifyHTTPHeaderOperationTypeSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_modify_http_header_operationResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_modify_http_header_operationRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_modify_http_header_operationResponse">
+	<part name="return" type="tns:PEM.Policy.ModifyHTTPHeaderOperationTypeSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_modify_http_header_value_contentRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="values" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_modify_http_header_value_contentResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_modify_http_header_value_contentRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_modify_http_header_value_contentResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.set_rule_modify_http_header_value_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="values" type="tns:PEM.Policy.ModifyHTTPHeaderValueTypeSequenceSequence"/>
+</message>
+<message name="PEM.Policy.set_rule_modify_http_header_value_typeResponse">
+</message>
+
+<message name="PEM.Policy.get_rule_modify_http_header_value_typeRequest">
+	<part name="policies" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Policy.get_rule_modify_http_header_value_typeResponse">
+	<part name="return" type="tns:PEM.Policy.ModifyHTTPHeaderValueTypeSequenceSequence"/>
+</message>
+
+<message name="PEM.Policy.get_versionRequest">
+</message>
+<message name="PEM.Policy.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="PEM.PolicyPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets a list of all policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_listRequest"/>
+		<output message="tns:PEM.Policy.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.createRequest"/>
+		<output message="tns:PEM.Policy.createResponse"/>
+	</operation>
+	<operation name="delete_policy">
+	<documentation>
+ Deletes the specified policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.delete_policyRequest"/>
+		<output message="tns:PEM.Policy.delete_policyResponse"/>
+	</operation>
+	<operation name="delete_all_policies">
+	<documentation>
+ Deletes all user defined policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.delete_all_policiesRequest"/>
+		<output message="tns:PEM.Policy.delete_all_policiesResponse"/>
+	</operation>
+	<operation name="set_enabled_state">
+	<documentation>
+ Sets the states indicating if the specified policies are  
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_enabled_stateRequest"/>
+		<output message="tns:PEM.Policy.set_enabled_stateResponse"/>
+	</operation>
+	<operation name="get_enabled_state">
+	<documentation>
+ Gets the states indicating if the specified policies are  
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_enabled_stateRequest"/>
+		<output message="tns:PEM.Policy.get_enabled_stateResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_descriptionRequest"/>
+		<output message="tns:PEM.Policy.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_descriptionRequest"/>
+		<output message="tns:PEM.Policy.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_rule">
+	<documentation>
+ Gets a set of rules for the specified policies.
+ A set of rules form a policy. These rules are used to match 
+ traffic flow and apply actions. A rule has filters and actions 
+ configuration. All configured filters must match before the 
+ actions can be applied to the traffic flow.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_ruleRequest"/>
+		<output message="tns:PEM.Policy.get_ruleResponse"/>
+	</operation>
+	<operation name="add_rule">
+	<documentation>
+ Adds a set of rules for the specified policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.add_ruleRequest"/>
+		<output message="tns:PEM.Policy.add_ruleResponse"/>
+	</operation>
+	<operation name="remove_rule">
+	<documentation>
+ Removes a set of rules for the specified policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.remove_ruleRequest"/>
+		<output message="tns:PEM.Policy.remove_ruleResponse"/>
+	</operation>
+	<operation name="remove_all_rules">
+	<documentation>
+ Removes all rules for the specified policies.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.remove_all_rulesRequest"/>
+		<output message="tns:PEM.Policy.remove_all_rulesResponse"/>
+	</operation>
+	<operation name="set_rule_forwarding_endpoint">
+	<documentation>
+ Sets the forwarding endpoints for the specified rules. 
+ A forwarding endpoint specifies where to send the traffic.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_forwarding_endpointRequest"/>
+		<output message="tns:PEM.Policy.set_rule_forwarding_endpointResponse"/>
+	</operation>
+	<operation name="get_rule_forwarding_endpoint">
+	<documentation>
+ Gets the forwarding endpoints for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_forwarding_endpointRequest"/>
+		<output message="tns:PEM.Policy.get_rule_forwarding_endpointResponse"/>
+	</operation>
+	<operation name="set_rule_qos_rate_pir_downlink">
+	<documentation>
+ Sets the QoS rate for Peak Information Rate (PIR) in downlink 
+ traffic for the specified rules. This specifies the configured
+ bandwidth control policy for Peak Information Rate (PIR) to 
+ apply to downlink traffic that matches this rule. An empty string 
+ specifies that there is no QoS rate for PIR in downlink 
+ traffic for this rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_qos_rate_pir_downlinkRequest"/>
+		<output message="tns:PEM.Policy.set_rule_qos_rate_pir_downlinkResponse"/>
+	</operation>
+	<operation name="get_rule_qos_rate_pir_downlink">
+	<documentation>
+ Gets the QoS rate for Peak Information Rate (PIR) in downlink 
+ traffic for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_qos_rate_pir_downlinkRequest"/>
+		<output message="tns:PEM.Policy.get_rule_qos_rate_pir_downlinkResponse"/>
+	</operation>
+	<operation name="set_rule_qos_rate_pir_uplink">
+	<documentation>
+ Sets the QoS rate for Peak Information Rate (PIR) in uplink 
+ traffic for the specified rules. This specifies the configured 
+ bandwidth control policy for Peak Information Rate (PIR) to apply 
+ to uplink traffic that matches this rule. An empty string 
+ specifies that there is no QoS rate for PIR in uplink 
+ traffic for this rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_qos_rate_pir_uplinkRequest"/>
+		<output message="tns:PEM.Policy.set_rule_qos_rate_pir_uplinkResponse"/>
+	</operation>
+	<operation name="get_rule_qos_rate_pir_uplink">
+	<documentation>
+ Gets the QoS rate for Peak Information Rate (PIR) in uplink 
+ traffic for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_qos_rate_pir_uplinkRequest"/>
+		<output message="tns:PEM.Policy.get_rule_qos_rate_pir_uplinkResponse"/>
+	</operation>
+	<operation name="set_rule_sub_policy_downlink">
+	<documentation>
+ Sets the QoS rate control sub-policies in downlink traffic for 
+ the specified rules. A sub-policy specifies a category in 
+ downlink traffic within the bandwidth control policy; the rule is 
+ applied to the specified category. This option provides more 
+ specific rate control to a certain type in downlink traffic. 
+ The category must be defined in the specified bandwidth control 
+ policy. The default value is Disabled, meaning that rate control 
+ applies to all downlink traffic that matches the rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_sub_policy_downlinkRequest"/>
+		<output message="tns:PEM.Policy.set_rule_sub_policy_downlinkResponse"/>
+	</operation>
+	<operation name="get_rule_sub_policy_downlink">
+	<documentation>
+ Gets the QoS rate control sub-policies in downlink traffic for 
+ the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_sub_policy_downlinkRequest"/>
+		<output message="tns:PEM.Policy.get_rule_sub_policy_downlinkResponse"/>
+	</operation>
+	<operation name="set_rule_sub_policy_uplink">
+	<documentation>
+ Sets the QoS rate control sub-policies in uplink traffic for 
+ the specified rules. A sub-policy specifies a category in 
+ uplink traffic within the bandwidth control policy; the rule is 
+ applied to the specified category. This option provides more 
+ specific rate control to a certain type in uplink traffic. 
+ The category must be defined in the specified bandwidth control 
+ policy. The default value is Disabled, meaning that rate control 
+ applies to all uplink traffic that matches the rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_sub_policy_uplinkRequest"/>
+		<output message="tns:PEM.Policy.set_rule_sub_policy_uplinkResponse"/>
+	</operation>
+	<operation name="get_rule_sub_policy_uplink">
+	<documentation>
+ Gets the QoS rate control sub-policies in uplink traffic for the 
+ specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_sub_policy_uplinkRequest"/>
+		<output message="tns:PEM.Policy.get_rule_sub_policy_uplinkResponse"/>
+	</operation>
+	<operation name="set_rule_service_chain">
+	<documentation>
+ Sets the service chains for the rules.   
+ The service chain is essentially a list of endpoints for traffic 
+ to stop at on its way to the server it is headed to.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_service_chainRequest"/>
+		<output message="tns:PEM.Policy.set_rule_service_chainResponse"/>
+	</operation>
+	<operation name="get_rule_service_chain">
+	<documentation>
+ Gets the service chains for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_service_chainRequest"/>
+		<output message="tns:PEM.Policy.get_rule_service_chainResponse"/>
+	</operation>
+	<operation name="set_rule_intercept">
+	<documentation>
+ Sets the intercepts for the specified rules. 
+ An intercept specifies the traffic that subscribers are trying 
+ to send.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_interceptRequest"/>
+		<output message="tns:PEM.Policy.set_rule_interceptResponse"/>
+	</operation>
+	<operation name="get_rule_intercept">
+	<documentation>
+ Gets the intercepts for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_interceptRequest"/>
+		<output message="tns:PEM.Policy.get_rule_interceptResponse"/>
+	</operation>
+	<operation name="set_rule_hsl_format_script">
+	<documentation>
+ Sets the HSL format scripts for the specified rules. 
+ An HSL format script allows you to report usage data to an 
+ external analytics server.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_hsl_format_scriptRequest"/>
+		<output message="tns:PEM.Policy.set_rule_hsl_format_scriptResponse"/>
+	</operation>
+	<operation name="get_rule_hsl_format_script">
+	<documentation>
+ Gets the HSL format scripts for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_hsl_format_scriptRequest"/>
+		<output message="tns:PEM.Policy.get_rule_hsl_format_scriptResponse"/>
+	</operation>
+	<operation name="set_rule_hsl_endpoint">
+	<documentation>
+ Sets the HSL endpoints for the specified rules. 
+ An HSL endpoint specifies the server or pool of remote HSL 
+ servers to send the logs.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_hsl_endpointRequest"/>
+		<output message="tns:PEM.Policy.set_rule_hsl_endpointResponse"/>
+	</operation>
+	<operation name="get_rule_hsl_endpoint">
+	<documentation>
+ Gets the HSL endpoints for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_hsl_endpointRequest"/>
+		<output message="tns:PEM.Policy.get_rule_hsl_endpointResponse"/>
+	</operation>
+	<operation name="set_rule_http_redirect">
+	<documentation>
+ Sets the http redirects for the specified rules. 
+ An http redirect specifies the URL where the traffic affected by 
+ this rule should be redirected to. The default value is empty 
+ string (no http redirect).
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_http_redirectRequest"/>
+		<output message="tns:PEM.Policy.set_rule_http_redirectResponse"/>
+	</operation>
+	<operation name="get_rule_http_redirect">
+	<documentation>
+ Gets the http redirects for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_http_redirectRequest"/>
+		<output message="tns:PEM.Policy.get_rule_http_redirectResponse"/>
+	</operation>
+	<operation name="set_rule_gx_monitoring_key">
+	<documentation>
+ Sets the Gx monitoring keys for the specified rules.
+ The Gx monitoring key is used for usage monitoring of the 
+ service data that the enforcement policy rule or dynamic policy 
+ and charging control (PCC) rule controls.
+ 
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_gx_monitoring_keyRequest"/>
+		<output message="tns:PEM.Policy.set_rule_gx_monitoring_keyResponse"/>
+	</operation>
+	<operation name="get_rule_gx_monitoring_key">
+	<documentation>
+ Gets the Gx monitoring keys for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_gx_monitoring_keyRequest"/>
+		<output message="tns:PEM.Policy.get_rule_gx_monitoring_keyResponse"/>
+	</operation>
+	<operation name="set_rule_report_granularity">
+	<documentation>
+ Sets the report granularity types for the specified rules.
+ The default value is session.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_report_granularityRequest"/>
+		<output message="tns:PEM.Policy.set_rule_report_granularityResponse"/>
+	</operation>
+	<operation name="get_rule_report_granularity">
+	<documentation>
+ Gets the report granularity types for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_report_granularityRequest"/>
+		<output message="tns:PEM.Policy.get_rule_report_granularityResponse"/>
+	</operation>
+	<operation name="set_rule_gate_state">
+	<documentation>
+ Sets the gate status states for the specified rules. 
+ This specifies whether the traffic passes through the system. 
+ If gate status is enabled, then the traffic passes through the 
+ system. If gate status is disabled, then the traffic is not 
+ allowed to pass through. The default value is enabled.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_gate_stateRequest"/>
+		<output message="tns:PEM.Policy.set_rule_gate_stateResponse"/>
+	</operation>
+	<operation name="get_rule_gate_state">
+	<documentation>
+ Gets the gate status states for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_gate_stateRequest"/>
+		<output message="tns:PEM.Policy.get_rule_gate_stateResponse"/>
+	</operation>
+	<operation name="set_rule_precedence">
+	<documentation>
+ Sets the precedences for the specified rules.
+ A precedence specifies the precedence for the rule in relation to 
+ the other rules. The range is 1 to 4294967295 where 1 has the 
+ highest precedence. A rule with higher precedence is evaluated  
+ before other rules with lower precedence. It is mandatory to  
+ specify precedence when creating a rule in a policy.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_precedenceRequest"/>
+		<output message="tns:PEM.Policy.set_rule_precedenceResponse"/>
+	</operation>
+	<operation name="get_rule_precedence">
+	<documentation>
+ Gets the precedences for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_precedenceRequest"/>
+		<output message="tns:PEM.Policy.get_rule_precedenceResponse"/>
+	</operation>
+	<operation name="set_rule_total_volume_threshold">
+	<documentation>
+ Sets the volume threshold, in total octets, for the specified 
+ rules. The report is generated if the amount of total octets 
+ exceeds the threshold. The default value is 0 which indicates   
+ this feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ octets uplink, octets downlink, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, octets uplink 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when octets uplink reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_total_volume_thresholdRequest"/>
+		<output message="tns:PEM.Policy.set_rule_total_volume_thresholdResponse"/>
+	</operation>
+	<operation name="get_rule_total_volume_threshold">
+	<documentation>
+ Gets the volume total octets for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_total_volume_thresholdRequest"/>
+		<output message="tns:PEM.Policy.get_rule_total_volume_thresholdResponse"/>
+	</operation>
+	<operation name="set_rule_uplink_volume_threshold">
+	<documentation>
+ Sets the volume threshold in uplink traffic, in octets, for the  
+ specified rules. The report is generated if the amount of octets 
+ in uplink traffic exceeds the threshold. The default value is 0 
+ which indicates this feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ uplink octets, downlink octets, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, uplink octets 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when uplink octets reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_uplink_volume_thresholdRequest"/>
+		<output message="tns:PEM.Policy.set_rule_uplink_volume_thresholdResponse"/>
+	</operation>
+	<operation name="get_rule_uplink_volume_threshold">
+	<documentation>
+ Gets the volume threshold in uplink traffic, in octet, for the  
+ specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_uplink_volume_thresholdRequest"/>
+		<output message="tns:PEM.Policy.get_rule_uplink_volume_thresholdResponse"/>
+	</operation>
+	<operation name="set_rule_downlink_volume_threshold">
+	<documentation>
+ Sets the volume threshold in downlink traffic, in octets, for the  
+ specified rules. The report is generated if the amount of octets  
+ in downlink traffic exceeds the threshold. The default value is 0 
+ which indicates this feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ uplink octets, downlink octets, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, uplink octets 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when uplink octets reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_downlink_volume_thresholdRequest"/>
+		<output message="tns:PEM.Policy.set_rule_downlink_volume_thresholdResponse"/>
+	</operation>
+	<operation name="get_rule_downlink_volume_threshold">
+	<documentation>
+ Gets the volume threshold in downlink traffic, in octets, for the  
+ specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_downlink_volume_thresholdRequest"/>
+		<output message="tns:PEM.Policy.get_rule_downlink_volume_thresholdResponse"/>
+	</operation>
+	<operation name="set_rule_interval">
+	<documentation>
+ Sets the intervals for the specified rules.
+ An interval specifies the time interval in seconds when the 
+ report is generated. The default value is 0 which indicates this 
+ feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ uplink octets, downlink octets, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, uplink octets 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when uplink octets reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_intervalRequest"/>
+		<output message="tns:PEM.Policy.set_rule_intervalResponse"/>
+	</operation>
+	<operation name="get_rule_interval">
+	<documentation>
+ Gets the intervals for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_intervalRequest"/>
+		<output message="tns:PEM.Policy.get_rule_intervalResponse"/>
+	</operation>
+	<operation name="set_rule_l2_marking_downlink_level">
+	<documentation>
+ Sets the L2 marking levels in downlink traffic for the specified rules.
+ This sets Layer-2 Quality of Service Marking in downlink traffic 
+ that matches a rule. Setting an L2 QoS Marking affects the packet 
+ delivery priority. The range is 0 to 7, or pass-through (value 8).  
+ The default value is pass-through, indicating the L2 QoS Marking 
+ of the packet will not be changed when the packet matches the rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_l2_marking_downlink_levelRequest"/>
+		<output message="tns:PEM.Policy.set_rule_l2_marking_downlink_levelResponse"/>
+	</operation>
+	<operation name="get_rule_l2_marking_downlink_level">
+	<documentation>
+ Gets the L2 marking levels in downlink traffic for the specified 
+ rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_l2_marking_downlink_levelRequest"/>
+		<output message="tns:PEM.Policy.get_rule_l2_marking_downlink_levelResponse"/>
+	</operation>
+	<operation name="set_rule_l2_marking_uplink_level">
+	<documentation>
+ Sets the L2 marking levels in uplink traffic for the specified rules.
+ This sets Layer-2 Quality of Service Marking in uplink traffic 
+ that matches a rule. Setting an L2 QoS marking affects the packet 
+ delivery priority. The range is 0 to 7, or pass-through (value 8). 
+ The default value is pass-through, indicating the L2 QoS Marking 
+ of the packet will not be changed when the packet matches the rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_l2_marking_uplink_levelRequest"/>
+		<output message="tns:PEM.Policy.set_rule_l2_marking_uplink_levelResponse"/>
+	</operation>
+	<operation name="get_rule_l2_marking_uplink_level">
+	<documentation>
+ Gets the L2 marking levels in uplink traffic for the specified 
+ rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_l2_marking_uplink_levelRequest"/>
+		<output message="tns:PEM.Policy.get_rule_l2_marking_uplink_levelResponse"/>
+	</operation>
+	<operation name="set_rule_dscp_marking_downlink">
+	<documentation>
+ Sets the types of DSCP markings in downlink traffic for the specified rules. 
+ This specifies the action to modify the DSCP code in the downlink 
+ packet when the traffic flow matches the rule matching criteria. 
+ The range is 0 to 63, or pass-through (value 64). The default 
+ value is pass-through, indicating the DSCP code of the downlink 
+ packet will not be changed when the traffic flow matches the 
+ rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_dscp_marking_downlinkRequest"/>
+		<output message="tns:PEM.Policy.set_rule_dscp_marking_downlinkResponse"/>
+	</operation>
+	<operation name="get_rule_dscp_marking_downlink">
+	<documentation>
+ Gets the types of DSCP markings in downlink traffic for the 
+ specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_dscp_marking_downlinkRequest"/>
+		<output message="tns:PEM.Policy.get_rule_dscp_marking_downlinkResponse"/>
+	</operation>
+	<operation name="set_rule_dscp_marking_uplink">
+	<documentation>
+ Sets the types of DSCP markings in uplink traffic for the specified rules. 
+ This specifies the action to modify the DSCP code in the uplink 
+ packet when the traffic flow matches the rule matching criteria. 
+ The range is 0 to 63, or pass-through (value 64). The default 
+ value is pass-through, indicating the DSCP code of the uplink 
+ packet will not be changed when the traffic flow matches the 
+ rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_dscp_marking_uplinkRequest"/>
+		<output message="tns:PEM.Policy.set_rule_dscp_marking_uplinkResponse"/>
+	</operation>
+	<operation name="get_rule_dscp_marking_uplink">
+	<documentation>
+ Gets the types of DSCP markings in uplink traffic for the 
+ specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_dscp_marking_uplinkRequest"/>
+		<output message="tns:PEM.Policy.get_rule_dscp_marking_uplinkResponse"/>
+	</operation>
+	<operation name="set_rule_tcl_filter">
+	<documentation>
+ Sets the tcl-filters for the specified rules.
+ A tcl-filter specifies the tcl expression which uses iRule 
+ commands to filter the packet. It is a match if tcl-filter 
+ returns TRUE/1 or nomatch if FALSE/0. All configured filters 
+ (flow-info-filters, classification-filters, and tcl-filter) 
+ must match before rule actions are applied.
+ For example, to classify traffic as xxx_app, a custom 
+ classification application that you created, you can use this 
+ iRule:
+ when HTTP_REQUEST {
+   if { [HTTP::header "Host"] contains "xxx" }
+   {
+     CLASSIFY::application set xxx_app
+   }
+ }
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_tcl_filterRequest"/>
+		<output message="tns:PEM.Policy.set_rule_tcl_filterResponse"/>
+	</operation>
+	<operation name="get_rule_tcl_filter">
+	<documentation>
+ Gets the tcl-filters for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_tcl_filterRequest"/>
+		<output message="tns:PEM.Policy.get_rule_tcl_filterResponse"/>
+	</operation>
+	<operation name="get_classification_filter">
+	<documentation>
+ Gets a set of classification filters for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_classification_filterRequest"/>
+		<output message="tns:PEM.Policy.get_classification_filterResponse"/>
+	</operation>
+	<operation name="add_classification_filter">
+	<documentation>
+ Adds a set of classification filters for the specified rules.
+ No more than 100,000 entries is supported in one call. 
+ For example, 100 policies, each policy has 100 rules, and 
+ each rule has 10 classification filters, then there are
+ total 100,000 filters. If there are more than 100,000 entries,
+ call this function more than once.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.add_classification_filterRequest"/>
+		<output message="tns:PEM.Policy.add_classification_filterResponse"/>
+	</operation>
+	<operation name="remove_classification_filter">
+	<documentation>
+ Removes a set of classification filters for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.remove_classification_filterRequest"/>
+		<output message="tns:PEM.Policy.remove_classification_filterResponse"/>
+	</operation>
+	<operation name="remove_all_classification_filters">
+	<documentation>
+ Removes all classification filters for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.remove_all_classification_filtersRequest"/>
+		<output message="tns:PEM.Policy.remove_all_classification_filtersResponse"/>
+	</operation>
+	<operation name="set_classification_filter_application">
+	<documentation>
+ Sets the applications for the specified classification filters. 
+ This specifies the application that the rule applies to the 
+ traffic. The default value is empty string (no application).
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_classification_filter_applicationRequest"/>
+		<output message="tns:PEM.Policy.set_classification_filter_applicationResponse"/>
+	</operation>
+	<operation name="get_classification_filter_application">
+	<documentation>
+ Gets the applications for the specified classification filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_classification_filter_applicationRequest"/>
+		<output message="tns:PEM.Policy.get_classification_filter_applicationResponse"/>
+	</operation>
+	<operation name="set_classification_filter_category">
+	<documentation>
+ Sets the categories for the specified classification filters. 
+ This specifies the category of applications where the rule 
+ applies to the traffic. The default value is empty string 
+ (no category).
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_classification_filter_categoryRequest"/>
+		<output message="tns:PEM.Policy.set_classification_filter_categoryResponse"/>
+	</operation>
+	<operation name="get_classification_filter_category">
+	<documentation>
+ Gets the categories for the specified classification filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_classification_filter_categoryRequest"/>
+		<output message="tns:PEM.Policy.get_classification_filter_categoryResponse"/>
+	</operation>
+	<operation name="set_classification_filter_operation_type">
+	<documentation>
+ Sets the filter operation types for the specified classification 
+ filters.  A filter operation type specifies whether the rule 
+ applies to traffic that matches (match) or does not match 
+ (nomatch) the traffic flow defined here. The options are match 
+ and nomatch. The default value is match.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_classification_filter_operation_typeRequest"/>
+		<output message="tns:PEM.Policy.set_classification_filter_operation_typeResponse"/>
+	</operation>
+	<operation name="get_classification_filter_operation_type">
+	<documentation>
+ Gets the filter operation types for the specified classification 
+ filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_classification_filter_operation_typeRequest"/>
+		<output message="tns:PEM.Policy.get_classification_filter_operation_typeResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter">
+	<documentation>
+ Gets a set of flow info filters for the specified rules.
+ The flow info filter defines the flow conditions (Layer 4) that 
+ the traffic should meet (or not meet) for this enforcement 
+ policy rule to apply. 
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filterRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filterResponse"/>
+	</operation>
+	<operation name="add_flow_info_filter">
+	<documentation>
+ Adds a set of flow info filters for the specified rules.
+ No more than 100,000 entries is supported in one call. 
+ For example, 100 policies, each policy has 100 rules, and 
+ each rule has 10 flow info filters, then there are
+ total 100,000 filters. If there are more than 100,000 entries,
+ call this function more than once.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.add_flow_info_filterRequest"/>
+		<output message="tns:PEM.Policy.add_flow_info_filterResponse"/>
+	</operation>
+	<operation name="remove_flow_info_filter">
+	<documentation>
+ Removes a set of flow info filters for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.remove_flow_info_filterRequest"/>
+		<output message="tns:PEM.Policy.remove_flow_info_filterResponse"/>
+	</operation>
+	<operation name="remove_all_flow_info_filters">
+	<documentation>
+ Removes all flow info filters for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.remove_all_flow_info_filtersRequest"/>
+		<output message="tns:PEM.Policy.remove_all_flow_info_filtersResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_from_vlan">
+	<documentation>
+ Sets the from-vlans for the specified flow info filters. 
+ A from-vlan specifies the name of the source vlan to match the 
+ ingress flow arriving from that vlan.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_from_vlanRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_from_vlanResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_from_vlan">
+	<documentation>
+ Gets the from-vlans for the specified flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_from_vlanRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_from_vlanResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_operation_type">
+	<documentation>
+ Sets the filter operation types for the specified flow info 
+ filters. A filter operation type specifies whether the rule 
+ applies to traffic that matches (match) or does not match 
+ (nomatch) the traffic flow defined here. The options are match 
+ and nomatch. The default value is match.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_operation_typeRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_operation_typeResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_operation_type">
+	<documentation>
+ Gets the filter operation types for the specified flow info 
+ filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_operation_typeRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_operation_typeResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_source_ip">
+	<documentation>
+ Sets the source IP address/netmasks for the specified 
+ flow info filters. They specify the source IP address/netmask of 
+ the network you want the rule to affect. The default value is 
+ 0.0.0.0/0. 
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_source_ipRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_source_ipResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_source_ip">
+	<documentation>
+ Gets the source IP address/netmasks for the specified flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_source_ipRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_source_ipResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_source_port">
+	<documentation>
+ Sets the source ports for the specified flow info filters. 
+ A source port specifies the source port of the network you want 
+ the rule to affect. The default value is any (value 0).
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_source_portRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_source_portResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_source_port">
+	<documentation>
+ Gets the source ports for the specified flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_source_portRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_source_portResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_destination_ip">
+	<documentation>
+ Sets the destination IP address/netmasks for the specified 
+ flow info filters. They specify the destination IP address/netmask of 
+ the network you want the rule to affect. The default value is 
+ 0.0.0.0/0. 
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_destination_ipRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_destination_ipResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_source_ip_and_destination_ip">
+	<documentation>
+ Sets the source IP address/netmasks and destination IP 
+ address/netmasks for the specified flow info filters. 
+ If either source or destination address family needs to be 
+ changed, this method provides a convenient way to change both.  
+
+ This method is a convenience to allow you to avoid using a 
+ transaction, because both source IP and destination IP must be 
+ the same type, either both IPv4 or both IPv6. (Either a 
+ transaction or this method are good ways of satisfying this 
+ validation).
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_source_ip_and_destination_ipRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_source_ip_and_destination_ipResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_destination_ip">
+	<documentation>
+ Gets the destination IP address/netmasks for the specified 
+ flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_destination_ipRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_destination_ipResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_destination_port">
+	<documentation>
+ Sets the destination ports for the specified flow info filters. 
+ A destination port specifies the destination port of the network 
+ you want the rule to affect. The default value is any (value 0).
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_destination_portRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_destination_portResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_destination_port">
+	<documentation>
+ Gets the destination ports for the specified flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_destination_portRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_destination_portResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_l2_endpoint_type">
+	<documentation>
+ Sets the L2 endpoint (vlan tag) types for the specified flow 
+ info filters. The default value is disabled.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_l2_endpoint_typeRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_l2_endpoint_typeResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_l2_endpoint_type">
+	<documentation>
+ Gets the L2 endpoint types for the specified flow info 
+ filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_l2_endpoint_typeRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_l2_endpoint_typeResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_dscp_code">
+	<documentation>
+ Sets the DSCP code types for the specified flow info filters.
+ A DSCP code specifies the value of DSCP code which matches 
+ incoming traffic based on a value in the DSCP field in the 
+ IP header. The range is 0 to 63, or disabled (value 64). The  
+ default value is disabled, indicating that the DSCP code will  
+ not be used to filter the packet in the flow info filter.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_dscp_codeRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_dscp_codeResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_dscp_code">
+	<documentation>
+ Gets the DSCP codes for the specified flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_dscp_codeRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_dscp_codeResponse"/>
+	</operation>
+	<operation name="set_flow_info_filter_protocol_type">
+	<documentation>
+ Sets the protocol types for the specified flow info filters.
+ A protocol type specifies the protocol that this rule applies to. 
+ The options are any, tcp, and udp. The default value is any. 
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_flow_info_filter_protocol_typeRequest"/>
+		<output message="tns:PEM.Policy.set_flow_info_filter_protocol_typeResponse"/>
+	</operation>
+	<operation name="get_flow_info_filter_protocol_type">
+	<documentation>
+ Gets the protocol types for the specified flow info filters.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_flow_info_filter_protocol_typeRequest"/>
+		<output message="tns:PEM.Policy.get_flow_info_filter_protocol_typeResponse"/>
+	</operation>
+	<operation name="set_rule_forwarding_action_type">
+	<documentation>
+ Sets the forwarding action types for the specified rules.
+ Specifies the forwarding action type. Depending on the type flow 
+ is steered to icap server, forwarding endpoint or to the network.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_forwarding_action_typeRequest"/>
+		<output message="tns:PEM.Policy.set_rule_forwarding_action_typeResponse"/>
+	</operation>
+	<operation name="get_rule_forwarding_action_type">
+	<documentation>
+ Gets the forwarding action types for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_forwarding_action_typeRequest"/>
+		<output message="tns:PEM.Policy.get_rule_forwarding_action_typeResponse"/>
+	</operation>
+	<operation name="set_rule_internal_virtual_server">
+	<documentation>
+ Sets the internal virtual servers for the specified rules.
+ Specifies the internal virtual server name if the type selected 
+ is icap.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_internal_virtual_serverRequest"/>
+		<output message="tns:PEM.Policy.set_rule_internal_virtual_serverResponse"/>
+	</operation>
+	<operation name="get_rule_internal_virtual_server">
+	<documentation>
+ Gets the internal virtual servers for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_internal_virtual_serverRequest"/>
+		<output message="tns:PEM.Policy.get_rule_internal_virtual_serverResponse"/>
+	</operation>
+	<operation name="set_rule_modify_http_header_name">
+	<documentation>
+ Sets the modify HTTP header names for the specified rules.
+ Specifies the HTTP header name to insert or remove in an HTTP 
+ request that matches the policy rule.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_modify_http_header_nameRequest"/>
+		<output message="tns:PEM.Policy.set_rule_modify_http_header_nameResponse"/>
+	</operation>
+	<operation name="get_rule_modify_http_header_name">
+	<documentation>
+ Gets the modify HTTP header names for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_modify_http_header_nameRequest"/>
+		<output message="tns:PEM.Policy.get_rule_modify_http_header_nameResponse"/>
+	</operation>
+	<operation name="set_rule_modify_http_header_operation">
+	<documentation>
+ Sets the modify HTTP header operations for the specified rules.
+ Specifies the type of operation used to modify an HTTP request 
+ header when the action is applied to traffic that matches the 
+ policy rule. The default value is none.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_modify_http_header_operationRequest"/>
+		<output message="tns:PEM.Policy.set_rule_modify_http_header_operationResponse"/>
+	</operation>
+	<operation name="get_rule_modify_http_header_operation">
+	<documentation>
+ Gets the modify HTTP header operations for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_modify_http_header_operationRequest"/>
+		<output message="tns:PEM.Policy.get_rule_modify_http_header_operationResponse"/>
+	</operation>
+	<operation name="set_rule_modify_http_header_value_content">
+	<documentation>
+ Sets the modify HTTP header value contents for the specified 
+ rules.
+ Specifies the HTTP header value content used to modify the HTTP 
+ header.  Based on the selected "Value Type" option, the "Value 
+ Content" format will be interpreted either as a string or a TCL 
+ snippet.  Note:  This field is applicable only when the 
+ "Operation" option is set to insert.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_modify_http_header_value_contentRequest"/>
+		<output message="tns:PEM.Policy.set_rule_modify_http_header_value_contentResponse"/>
+	</operation>
+	<operation name="get_rule_modify_http_header_value_content">
+	<documentation>
+ Gets the modify HTTP header value contents for the specified 
+ rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_modify_http_header_value_contentRequest"/>
+		<output message="tns:PEM.Policy.get_rule_modify_http_header_value_contentResponse"/>
+	</operation>
+	<operation name="set_rule_modify_http_header_value_type">
+	<documentation>
+ Sets the modify HTTP header value types for the specified rules.
+ Specifies the data type used in the "Value Content" field.  The 
+ options are string and tcl-snippet. If the string option is 
+ selected, the data entered in the "Value Content" field is 
+ interpreted as a literal string. If the tcl-snippet option is 
+ selected, the data entered in the "Value Content" field is 
+ interpreted as a TCL snippet. The default value is string.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.set_rule_modify_http_header_value_typeRequest"/>
+		<output message="tns:PEM.Policy.set_rule_modify_http_header_value_typeResponse"/>
+	</operation>
+	<operation name="get_rule_modify_http_header_value_type">
+	<documentation>
+ Gets the modify HTTP header value types for the specified rules.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_rule_modify_http_header_value_typeRequest"/>
+		<output message="tns:PEM.Policy.get_rule_modify_http_header_value_typeResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:PEM.Policy.get_versionRequest"/>
+		<output message="tns:PEM.Policy.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="PEM.PolicyBinding" type="tns:PEM.PolicyPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_policy">
+	<documentation>
+ Deletes the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_policies">
+	<documentation>
+ Deletes all user defined policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_enabled_state">
+	<documentation>
+ Sets the states indicating if the specified policies are  
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_enabled_state">
+	<documentation>
+ Gets the states indicating if the specified policies are  
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule">
+	<documentation>
+ Gets a set of rules for the specified policies.
+ A set of rules form a policy. These rules are used to match 
+ traffic flow and apply actions. A rule has filters and actions 
+ configuration. All configured filters must match before the 
+ actions can be applied to the traffic flow.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_rule">
+	<documentation>
+ Adds a set of rules for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_rule">
+	<documentation>
+ Removes a set of rules for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_rules">
+	<documentation>
+ Removes all rules for the specified policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_forwarding_endpoint">
+	<documentation>
+ Sets the forwarding endpoints for the specified rules. 
+ A forwarding endpoint specifies where to send the traffic.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_forwarding_endpoint">
+	<documentation>
+ Gets the forwarding endpoints for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_qos_rate_pir_downlink">
+	<documentation>
+ Sets the QoS rate for Peak Information Rate (PIR) in downlink 
+ traffic for the specified rules. This specifies the configured
+ bandwidth control policy for Peak Information Rate (PIR) to 
+ apply to downlink traffic that matches this rule. An empty string 
+ specifies that there is no QoS rate for PIR in downlink 
+ traffic for this rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_qos_rate_pir_downlink">
+	<documentation>
+ Gets the QoS rate for Peak Information Rate (PIR) in downlink 
+ traffic for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_qos_rate_pir_uplink">
+	<documentation>
+ Sets the QoS rate for Peak Information Rate (PIR) in uplink 
+ traffic for the specified rules. This specifies the configured 
+ bandwidth control policy for Peak Information Rate (PIR) to apply 
+ to uplink traffic that matches this rule. An empty string 
+ specifies that there is no QoS rate for PIR in uplink 
+ traffic for this rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_qos_rate_pir_uplink">
+	<documentation>
+ Gets the QoS rate for Peak Information Rate (PIR) in uplink 
+ traffic for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_sub_policy_downlink">
+	<documentation>
+ Sets the QoS rate control sub-policies in downlink traffic for 
+ the specified rules. A sub-policy specifies a category in 
+ downlink traffic within the bandwidth control policy; the rule is 
+ applied to the specified category. This option provides more 
+ specific rate control to a certain type in downlink traffic. 
+ The category must be defined in the specified bandwidth control 
+ policy. The default value is Disabled, meaning that rate control 
+ applies to all downlink traffic that matches the rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_sub_policy_downlink">
+	<documentation>
+ Gets the QoS rate control sub-policies in downlink traffic for 
+ the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_sub_policy_uplink">
+	<documentation>
+ Sets the QoS rate control sub-policies in uplink traffic for 
+ the specified rules. A sub-policy specifies a category in 
+ uplink traffic within the bandwidth control policy; the rule is 
+ applied to the specified category. This option provides more 
+ specific rate control to a certain type in uplink traffic. 
+ The category must be defined in the specified bandwidth control 
+ policy. The default value is Disabled, meaning that rate control 
+ applies to all uplink traffic that matches the rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_sub_policy_uplink">
+	<documentation>
+ Gets the QoS rate control sub-policies in uplink traffic for the 
+ specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_service_chain">
+	<documentation>
+ Sets the service chains for the rules.   
+ The service chain is essentially a list of endpoints for traffic 
+ to stop at on its way to the server it is headed to.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_service_chain">
+	<documentation>
+ Gets the service chains for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_intercept">
+	<documentation>
+ Sets the intercepts for the specified rules. 
+ An intercept specifies the traffic that subscribers are trying 
+ to send.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_intercept">
+	<documentation>
+ Gets the intercepts for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_hsl_format_script">
+	<documentation>
+ Sets the HSL format scripts for the specified rules. 
+ An HSL format script allows you to report usage data to an 
+ external analytics server.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_hsl_format_script">
+	<documentation>
+ Gets the HSL format scripts for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_hsl_endpoint">
+	<documentation>
+ Sets the HSL endpoints for the specified rules. 
+ An HSL endpoint specifies the server or pool of remote HSL 
+ servers to send the logs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_hsl_endpoint">
+	<documentation>
+ Gets the HSL endpoints for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_http_redirect">
+	<documentation>
+ Sets the http redirects for the specified rules. 
+ An http redirect specifies the URL where the traffic affected by 
+ this rule should be redirected to. The default value is empty 
+ string (no http redirect).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_http_redirect">
+	<documentation>
+ Gets the http redirects for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_gx_monitoring_key">
+	<documentation>
+ Sets the Gx monitoring keys for the specified rules.
+ The Gx monitoring key is used for usage monitoring of the 
+ service data that the enforcement policy rule or dynamic policy 
+ and charging control (PCC) rule controls.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_gx_monitoring_key">
+	<documentation>
+ Gets the Gx monitoring keys for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_report_granularity">
+	<documentation>
+ Sets the report granularity types for the specified rules.
+ The default value is session.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_report_granularity">
+	<documentation>
+ Gets the report granularity types for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_gate_state">
+	<documentation>
+ Sets the gate status states for the specified rules. 
+ This specifies whether the traffic passes through the system. 
+ If gate status is enabled, then the traffic passes through the 
+ system. If gate status is disabled, then the traffic is not 
+ allowed to pass through. The default value is enabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_gate_state">
+	<documentation>
+ Gets the gate status states for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_precedence">
+	<documentation>
+ Sets the precedences for the specified rules.
+ A precedence specifies the precedence for the rule in relation to 
+ the other rules. The range is 1 to 4294967295 where 1 has the 
+ highest precedence. A rule with higher precedence is evaluated  
+ before other rules with lower precedence. It is mandatory to  
+ specify precedence when creating a rule in a policy.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_precedence">
+	<documentation>
+ Gets the precedences for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_total_volume_threshold">
+	<documentation>
+ Sets the volume threshold, in total octets, for the specified 
+ rules. The report is generated if the amount of total octets 
+ exceeds the threshold. The default value is 0 which indicates   
+ this feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ octets uplink, octets downlink, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, octets uplink 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when octets uplink reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_total_volume_threshold">
+	<documentation>
+ Gets the volume total octets for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_uplink_volume_threshold">
+	<documentation>
+ Sets the volume threshold in uplink traffic, in octets, for the  
+ specified rules. The report is generated if the amount of octets 
+ in uplink traffic exceeds the threshold. The default value is 0 
+ which indicates this feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ uplink octets, downlink octets, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, uplink octets 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when uplink octets reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_uplink_volume_threshold">
+	<documentation>
+ Gets the volume threshold in uplink traffic, in octet, for the  
+ specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_downlink_volume_threshold">
+	<documentation>
+ Sets the volume threshold in downlink traffic, in octets, for the  
+ specified rules. The report is generated if the amount of octets  
+ in downlink traffic exceeds the threshold. The default value is 0 
+ which indicates this feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ uplink octets, downlink octets, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, uplink octets 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when uplink octets reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_downlink_volume_threshold">
+	<documentation>
+ Gets the volume threshold in downlink traffic, in octets, for the  
+ specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_interval">
+	<documentation>
+ Sets the intervals for the specified rules.
+ An interval specifies the time interval in seconds when the 
+ report is generated. The default value is 0 which indicates this 
+ feature is disabled.
+
+ If the reporting destination is set, at least one of the 
+ following reporting properties must be set to non-zero: 
+ uplink octets, downlink octets, total octets  
+ (sum of the previous two), and/or interval. If any one of these
+ thresholds is met, the report will be generated. If multiple 
+ thresholds are met, reports will be generated for all of them.
+ For example, if interval is set to 5 seconds, uplink octets 
+ volume threshold is set to 8, and total octets volume threshold 
+ is set to 10, then reports will be generated every 5 seconds,  
+ when uplink octets reach 8, and when total octets reach 10.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_interval">
+	<documentation>
+ Gets the intervals for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_l2_marking_downlink_level">
+	<documentation>
+ Sets the L2 marking levels in downlink traffic for the specified rules.
+ This sets Layer-2 Quality of Service Marking in downlink traffic 
+ that matches a rule. Setting an L2 QoS Marking affects the packet 
+ delivery priority. The range is 0 to 7, or pass-through (value 8).  
+ The default value is pass-through, indicating the L2 QoS Marking 
+ of the packet will not be changed when the packet matches the rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_l2_marking_downlink_level">
+	<documentation>
+ Gets the L2 marking levels in downlink traffic for the specified 
+ rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_l2_marking_uplink_level">
+	<documentation>
+ Sets the L2 marking levels in uplink traffic for the specified rules.
+ This sets Layer-2 Quality of Service Marking in uplink traffic 
+ that matches a rule. Setting an L2 QoS marking affects the packet 
+ delivery priority. The range is 0 to 7, or pass-through (value 8). 
+ The default value is pass-through, indicating the L2 QoS Marking 
+ of the packet will not be changed when the packet matches the rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_l2_marking_uplink_level">
+	<documentation>
+ Gets the L2 marking levels in uplink traffic for the specified 
+ rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_dscp_marking_downlink">
+	<documentation>
+ Sets the types of DSCP markings in downlink traffic for the specified rules. 
+ This specifies the action to modify the DSCP code in the downlink 
+ packet when the traffic flow matches the rule matching criteria. 
+ The range is 0 to 63, or pass-through (value 64). The default 
+ value is pass-through, indicating the DSCP code of the downlink 
+ packet will not be changed when the traffic flow matches the 
+ rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_dscp_marking_downlink">
+	<documentation>
+ Gets the types of DSCP markings in downlink traffic for the 
+ specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_dscp_marking_uplink">
+	<documentation>
+ Sets the types of DSCP markings in uplink traffic for the specified rules. 
+ This specifies the action to modify the DSCP code in the uplink 
+ packet when the traffic flow matches the rule matching criteria. 
+ The range is 0 to 63, or pass-through (value 64). The default 
+ value is pass-through, indicating the DSCP code of the uplink 
+ packet will not be changed when the traffic flow matches the 
+ rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_dscp_marking_uplink">
+	<documentation>
+ Gets the types of DSCP markings in uplink traffic for the 
+ specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_tcl_filter">
+	<documentation>
+ Sets the tcl-filters for the specified rules.
+ A tcl-filter specifies the tcl expression which uses iRule 
+ commands to filter the packet. It is a match if tcl-filter 
+ returns TRUE/1 or nomatch if FALSE/0. All configured filters 
+ (flow-info-filters, classification-filters, and tcl-filter) 
+ must match before rule actions are applied.
+ For example, to classify traffic as xxx_app, a custom 
+ classification application that you created, you can use this 
+ iRule:
+ when HTTP_REQUEST {
+   if { [HTTP::header "Host"] contains "xxx" }
+   {
+     CLASSIFY::application set xxx_app
+   }
+ }
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_tcl_filter">
+	<documentation>
+ Gets the tcl-filters for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_classification_filter">
+	<documentation>
+ Gets a set of classification filters for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_classification_filter">
+	<documentation>
+ Adds a set of classification filters for the specified rules.
+ No more than 100,000 entries is supported in one call. 
+ For example, 100 policies, each policy has 100 rules, and 
+ each rule has 10 classification filters, then there are
+ total 100,000 filters. If there are more than 100,000 entries,
+ call this function more than once.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_classification_filter">
+	<documentation>
+ Removes a set of classification filters for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_classification_filters">
+	<documentation>
+ Removes all classification filters for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_classification_filter_application">
+	<documentation>
+ Sets the applications for the specified classification filters. 
+ This specifies the application that the rule applies to the 
+ traffic. The default value is empty string (no application).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_classification_filter_application">
+	<documentation>
+ Gets the applications for the specified classification filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_classification_filter_category">
+	<documentation>
+ Sets the categories for the specified classification filters. 
+ This specifies the category of applications where the rule 
+ applies to the traffic. The default value is empty string 
+ (no category).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_classification_filter_category">
+	<documentation>
+ Gets the categories for the specified classification filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_classification_filter_operation_type">
+	<documentation>
+ Sets the filter operation types for the specified classification 
+ filters.  A filter operation type specifies whether the rule 
+ applies to traffic that matches (match) or does not match 
+ (nomatch) the traffic flow defined here. The options are match 
+ and nomatch. The default value is match.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_classification_filter_operation_type">
+	<documentation>
+ Gets the filter operation types for the specified classification 
+ filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter">
+	<documentation>
+ Gets a set of flow info filters for the specified rules.
+ The flow info filter defines the flow conditions (Layer 4) that 
+ the traffic should meet (or not meet) for this enforcement 
+ policy rule to apply. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_flow_info_filter">
+	<documentation>
+ Adds a set of flow info filters for the specified rules.
+ No more than 100,000 entries is supported in one call. 
+ For example, 100 policies, each policy has 100 rules, and 
+ each rule has 10 flow info filters, then there are
+ total 100,000 filters. If there are more than 100,000 entries,
+ call this function more than once.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_flow_info_filter">
+	<documentation>
+ Removes a set of flow info filters for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_flow_info_filters">
+	<documentation>
+ Removes all flow info filters for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_from_vlan">
+	<documentation>
+ Sets the from-vlans for the specified flow info filters. 
+ A from-vlan specifies the name of the source vlan to match the 
+ ingress flow arriving from that vlan.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_from_vlan">
+	<documentation>
+ Gets the from-vlans for the specified flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_operation_type">
+	<documentation>
+ Sets the filter operation types for the specified flow info 
+ filters. A filter operation type specifies whether the rule 
+ applies to traffic that matches (match) or does not match 
+ (nomatch) the traffic flow defined here. The options are match 
+ and nomatch. The default value is match.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_operation_type">
+	<documentation>
+ Gets the filter operation types for the specified flow info 
+ filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_source_ip">
+	<documentation>
+ Sets the source IP address/netmasks for the specified 
+ flow info filters. They specify the source IP address/netmask of 
+ the network you want the rule to affect. The default value is 
+ 0.0.0.0/0. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_source_ip">
+	<documentation>
+ Gets the source IP address/netmasks for the specified flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_source_port">
+	<documentation>
+ Sets the source ports for the specified flow info filters. 
+ A source port specifies the source port of the network you want 
+ the rule to affect. The default value is any (value 0).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_source_port">
+	<documentation>
+ Gets the source ports for the specified flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_destination_ip">
+	<documentation>
+ Sets the destination IP address/netmasks for the specified 
+ flow info filters. They specify the destination IP address/netmask of 
+ the network you want the rule to affect. The default value is 
+ 0.0.0.0/0. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_source_ip_and_destination_ip">
+	<documentation>
+ Sets the source IP address/netmasks and destination IP 
+ address/netmasks for the specified flow info filters. 
+ If either source or destination address family needs to be 
+ changed, this method provides a convenient way to change both.  
+
+ This method is a convenience to allow you to avoid using a 
+ transaction, because both source IP and destination IP must be 
+ the same type, either both IPv4 or both IPv6. (Either a 
+ transaction or this method are good ways of satisfying this 
+ validation).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_destination_ip">
+	<documentation>
+ Gets the destination IP address/netmasks for the specified 
+ flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_destination_port">
+	<documentation>
+ Sets the destination ports for the specified flow info filters. 
+ A destination port specifies the destination port of the network 
+ you want the rule to affect. The default value is any (value 0).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_destination_port">
+	<documentation>
+ Gets the destination ports for the specified flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_l2_endpoint_type">
+	<documentation>
+ Sets the L2 endpoint (vlan tag) types for the specified flow 
+ info filters. The default value is disabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_l2_endpoint_type">
+	<documentation>
+ Gets the L2 endpoint types for the specified flow info 
+ filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_dscp_code">
+	<documentation>
+ Sets the DSCP code types for the specified flow info filters.
+ A DSCP code specifies the value of DSCP code which matches 
+ incoming traffic based on a value in the DSCP field in the 
+ IP header. The range is 0 to 63, or disabled (value 64). The  
+ default value is disabled, indicating that the DSCP code will  
+ not be used to filter the packet in the flow info filter.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_dscp_code">
+	<documentation>
+ Gets the DSCP codes for the specified flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_flow_info_filter_protocol_type">
+	<documentation>
+ Sets the protocol types for the specified flow info filters.
+ A protocol type specifies the protocol that this rule applies to. 
+ The options are any, tcp, and udp. The default value is any. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_flow_info_filter_protocol_type">
+	<documentation>
+ Gets the protocol types for the specified flow info filters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_forwarding_action_type">
+	<documentation>
+ Sets the forwarding action types for the specified rules.
+ Specifies the forwarding action type. Depending on the type flow 
+ is steered to icap server, forwarding endpoint or to the network.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_forwarding_action_type">
+	<documentation>
+ Gets the forwarding action types for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_internal_virtual_server">
+	<documentation>
+ Sets the internal virtual servers for the specified rules.
+ Specifies the internal virtual server name if the type selected 
+ is icap.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_internal_virtual_server">
+	<documentation>
+ Gets the internal virtual servers for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_modify_http_header_name">
+	<documentation>
+ Sets the modify HTTP header names for the specified rules.
+ Specifies the HTTP header name to insert or remove in an HTTP 
+ request that matches the policy rule.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_modify_http_header_name">
+	<documentation>
+ Gets the modify HTTP header names for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_modify_http_header_operation">
+	<documentation>
+ Sets the modify HTTP header operations for the specified rules.
+ Specifies the type of operation used to modify an HTTP request 
+ header when the action is applied to traffic that matches the 
+ policy rule. The default value is none.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_modify_http_header_operation">
+	<documentation>
+ Gets the modify HTTP header operations for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_modify_http_header_value_content">
+	<documentation>
+ Sets the modify HTTP header value contents for the specified 
+ rules.
+ Specifies the HTTP header value content used to modify the HTTP 
+ header.  Based on the selected "Value Type" option, the "Value 
+ Content" format will be interpreted either as a string or a TCL 
+ snippet.  Note:  This field is applicable only when the 
+ "Operation" option is set to insert.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_modify_http_header_value_content">
+	<documentation>
+ Gets the modify HTTP header value contents for the specified 
+ rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule_modify_http_header_value_type">
+	<documentation>
+ Sets the modify HTTP header value types for the specified rules.
+ Specifies the data type used in the "Value Content" field.  The 
+ options are string and tcl-snippet. If the string option is 
+ selected, the data entered in the "Value Content" field is 
+ interpreted as a literal string. If the tcl-snippet option is 
+ selected, the data entered in the "Value Content" field is 
+ interpreted as a TCL snippet. The default value is string.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule_modify_http_header_value_type">
+	<documentation>
+ Gets the modify HTTP header value types for the specified rules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Policy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Policy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="PEM.Policy">
+	<documentation>
+ The Policy interface enables you to work with attributes for 
+ policies. You can use this policy component to configure the 
+ policy definitions on the Policy Enforcement Manager. A policy 
+ is a set of rules which are used to match traffic flow and 
+ apply actions. A rule has filters and actions configuration. 
+ All configured filters must match before the actions can be 
+ applied to the traffic flow.
+
+        	</documentation>
+	<port name="PEM.PolicyPort" binding="tns:PEM.PolicyBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

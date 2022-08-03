@@ -1,0 +1,776 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Management.SFlowDataSource"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Management.SFlowDataSource.get_system_listRequest">
+</message>
+<message name="Management.SFlowDataSource.get_system_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_system_poll_interval_effectiveRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_system_poll_interval_effectiveResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_system_is_activeRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_system_is_activeResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_system_subagent_idRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_system_subagent_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_interface_listRequest">
+</message>
+<message name="Management.SFlowDataSource.get_interface_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_interface_poll_interval_effectiveRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_interface_poll_interval_effectiveResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_interface_is_activeRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_interface_is_activeResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_interface_subagent_idRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_interface_subagent_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_vlan_listRequest">
+</message>
+<message name="Management.SFlowDataSource.get_vlan_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_vlan_poll_interval_effectiveRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_vlan_poll_interval_effectiveResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_vlan_sampling_rate_effectiveRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_vlan_sampling_rate_effectiveResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_vlan_is_activeRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_vlan_is_activeResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_vlan_subagent_idRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_vlan_subagent_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_http_listRequest">
+</message>
+<message name="Management.SFlowDataSource.get_http_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_http_poll_interval_effectiveRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_http_poll_interval_effectiveResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_http_sampling_rate_effectiveRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_http_sampling_rate_effectiveResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_http_is_activeRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_http_is_activeResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_http_subagent_idRequest">
+	<part name="data_sources" type="tns:Common.StringSequence"/>
+</message>
+<message name="Management.SFlowDataSource.get_http_subagent_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Management.SFlowDataSource.get_versionRequest">
+</message>
+<message name="Management.SFlowDataSource.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Management.SFlowDataSourcePortType">
+	<operation name="get_system_list">
+      	<documentation>
+ Gets a list of names for all system sFlow data sources. System
+ data sources provide CPU utilization and memory statistics. 
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_system_listRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_system_listResponse"/>
+	</operation>
+	<operation name="get_system_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified system
+ sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_system_poll_interval_effectiveRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_system_poll_interval_effectiveResponse"/>
+	</operation>
+	<operation name="get_system_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified system 
+ sFlow data sources are active or not. The sFlow samples are 
+ generated for the active data sources only.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_system_is_activeRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_system_is_activeResponse"/>
+	</operation>
+	<operation name="get_system_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified system sFlow data
+ sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_system_subagent_idRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_system_subagent_idResponse"/>
+	</operation>
+	<operation name="get_interface_list">
+	<documentation>
+ Gets a list of names for all interface sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_interface_listRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_interface_listResponse"/>
+	</operation>
+	<operation name="get_interface_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified interface
+ sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_interface_poll_interval_effectiveRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_interface_poll_interval_effectiveResponse"/>
+	</operation>
+	<operation name="get_interface_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified
+ interface sFlow data sources are active or not. The sFlow 
+ samples are generated for the active data sources only.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_interface_is_activeRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_interface_is_activeResponse"/>
+	</operation>
+	<operation name="get_interface_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified interface sFlow data
+ sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_interface_subagent_idRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_interface_subagent_idResponse"/>
+	</operation>
+	<operation name="get_vlan_list">
+	<documentation>
+ Gets a list of names for all VLAN sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_vlan_listRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_vlan_listResponse"/>
+	</operation>
+	<operation name="get_vlan_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified VLAN
+ sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_vlan_poll_interval_effectiveRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_vlan_poll_interval_effectiveResponse"/>
+	</operation>
+	<operation name="get_vlan_sampling_rate_effective">
+	<documentation>
+ Gets the effective sampling rates for the specified VLAN
+ sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_vlan_sampling_rate_effectiveRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_vlan_sampling_rate_effectiveResponse"/>
+	</operation>
+	<operation name="get_vlan_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified VLAN
+ sFlow data sources are active or not. The sFlow samples are 
+ generated for the active data sources only.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_vlan_is_activeRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_vlan_is_activeResponse"/>
+	</operation>
+	<operation name="get_vlan_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified VLAN sFlow data
+ sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_vlan_subagent_idRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_vlan_subagent_idResponse"/>
+	</operation>
+	<operation name="get_http_list">
+	<documentation>
+ Gets a list of names for all HTTP virtual server sFlow 
+ data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_http_listRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_http_listResponse"/>
+	</operation>
+	<operation name="get_http_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified HTTP
+ virtual server sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_http_poll_interval_effectiveRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_http_poll_interval_effectiveResponse"/>
+	</operation>
+	<operation name="get_http_sampling_rate_effective">
+	<documentation>
+ Gets the effective sampling rates for the specified HTTP
+ virtual server sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_http_sampling_rate_effectiveRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_http_sampling_rate_effectiveResponse"/>
+	</operation>
+	<operation name="get_http_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified HTTP
+ virtual server sFlow data sources are active or not. The sFlow 
+ samples are generated for the active data sources only.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_http_is_activeRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_http_is_activeResponse"/>
+	</operation>
+	<operation name="get_http_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified HTTP virtual server 
+ sFlow data sources.
+
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_http_subagent_idRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_http_subagent_idResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+ 
+        	</documentation>
+		<input message="tns:Management.SFlowDataSource.get_versionRequest"/>
+		<output message="tns:Management.SFlowDataSource.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Management.SFlowDataSourceBinding" type="tns:Management.SFlowDataSourcePortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_system_list">
+	<documentation>
+ Gets a list of names for all system sFlow data sources. System
+ data sources provide CPU utilization and memory statistics. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_system_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified system
+ sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_system_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified system 
+ sFlow data sources are active or not. The sFlow samples are 
+ generated for the active data sources only.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_system_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified system sFlow data
+ sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_interface_list">
+	<documentation>
+ Gets a list of names for all interface sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_interface_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified interface
+ sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_interface_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified
+ interface sFlow data sources are active or not. The sFlow 
+ samples are generated for the active data sources only.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_interface_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified interface sFlow data
+ sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_vlan_list">
+	<documentation>
+ Gets a list of names for all VLAN sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_vlan_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified VLAN
+ sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_vlan_sampling_rate_effective">
+	<documentation>
+ Gets the effective sampling rates for the specified VLAN
+ sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_vlan_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified VLAN
+ sFlow data sources are active or not. The sFlow samples are 
+ generated for the active data sources only.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_vlan_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified VLAN sFlow data
+ sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_http_list">
+	<documentation>
+ Gets a list of names for all HTTP virtual server sFlow 
+ data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_http_poll_interval_effective">
+	<documentation>
+ Gets the effective poll intervals for the specified HTTP
+ virtual server sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_http_sampling_rate_effective">
+	<documentation>
+ Gets the effective sampling rates for the specified HTTP
+ virtual server sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_http_is_active">
+	<documentation>
+ Gets the active states indicating whether the specified HTTP
+ virtual server sFlow data sources are active or not. The sFlow 
+ samples are generated for the active data sources only.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_http_subagent_id">
+	<documentation>
+ Gets the subagent IDs for the specified HTTP virtual server 
+ sFlow data sources.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Management/SFlowDataSource"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Management/SFlowDataSource"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Management.SFlowDataSource">
+	<documentation>
+ The SFlowDataSource interface contains the methods for retrieving the
+ current status information of the sFlow data sources.
+ 
+ A data source refers to a location within a BIG-IP system that can make
+ traffic measurements. Data sources may correspond to interfaces, VLANs,
+ HTTP virtual servers or other entities within the BIG-IP system.
+
+        	</documentation>
+	<port name="Management.SFlowDataSourcePort" binding="tns:Management.SFlowDataSourceBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

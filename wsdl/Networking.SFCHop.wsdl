@@ -1,0 +1,781 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.SFCHop"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPAddressSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.SFCHop.get_listRequest">
+</message>
+<message name="Networking.SFCHop.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCHop.createRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.createResponse">
+</message>
+
+<message name="Networking.SFCHop.delete_hopRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.delete_hopResponse">
+</message>
+
+<message name="Networking.SFCHop.delete_all_hopsRequest">
+</message>
+<message name="Networking.SFCHop.delete_all_hopsResponse">
+</message>
+
+<message name="Networking.SFCHop.set_descriptionRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.set_descriptionResponse">
+</message>
+
+<message name="Networking.SFCHop.get_descriptionRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_service_indexRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="service_index" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.SFCHop.set_service_indexResponse">
+</message>
+
+<message name="Networking.SFCHop.get_service_indexRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_service_indexResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_source_interfaceRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="source_interface" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.set_source_interfaceResponse">
+</message>
+
+<message name="Networking.SFCHop.get_source_interfaceRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_source_interfaceResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_hopkeyRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="hopkey" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.SFCHop.set_hopkeyResponse">
+</message>
+
+<message name="Networking.SFCHop.get_hopkeyRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_hopkeyResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_ipaddressRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="ipaddress" type="tns:Common.IPAddressSequence"/>
+</message>
+<message name="Networking.SFCHop.set_ipaddressResponse">
+</message>
+
+<message name="Networking.SFCHop.get_ipaddressRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_ipaddressResponse">
+	<part name="return" type="tns:Common.IPAddressSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_sfRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="sf" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.set_sfResponse">
+</message>
+
+<message name="Networking.SFCHop.get_sfRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_sfResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_terminateRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="terminate" type="tns:Common.BooleanSequence"/>
+</message>
+<message name="Networking.SFCHop.set_terminateResponse">
+</message>
+
+<message name="Networking.SFCHop.get_terminateRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_terminateResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Networking.SFCHop.set_chain_nameRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+	<part name="chain_name" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.set_chain_nameResponse">
+</message>
+
+<message name="Networking.SFCHop.get_chain_nameRequest">
+	<part name="hops" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCHop.get_chain_nameResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.SFCHopPortType">
+	<operation name="get_list">
+       	<documentation>
+ Gets the names of all SFC policies.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_listRequest"/>
+		<output message="tns:Networking.SFCHop.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.createRequest"/>
+		<output message="tns:Networking.SFCHop.createResponse"/>
+	</operation>
+	<operation name="delete_hop">
+	<documentation>
+ Deletes a set of SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.delete_hopRequest"/>
+		<output message="tns:Networking.SFCHop.delete_hopResponse"/>
+	</operation>
+	<operation name="delete_all_hops">
+	<documentation>
+ Deletes all SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.delete_all_hopsRequest"/>
+		<output message="tns:Networking.SFCHop.delete_all_hopsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified SFC Service Functions.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_descriptionRequest"/>
+		<output message="tns:Networking.SFCHop.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_descriptionRequest"/>
+		<output message="tns:Networking.SFCHop.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_service_index">
+	<documentation>
+ Sets the service index hopkey value for nsh-aware enabled hop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_service_indexRequest"/>
+		<output message="tns:Networking.SFCHop.set_service_indexResponse"/>
+	</operation>
+	<operation name="get_service_index">
+	<documentation>
+ Gets the service index hopkey value for nsh-aware enabled hop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_service_indexRequest"/>
+		<output message="tns:Networking.SFCHop.get_service_indexResponse"/>
+	</operation>
+	<operation name="set_source_interface">
+	<documentation>
+ Sets the interface name as hopkey for nsh-aware disabled hop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_source_interfaceRequest"/>
+		<output message="tns:Networking.SFCHop.set_source_interfaceResponse"/>
+	</operation>
+	<operation name="get_source_interface">
+	<documentation>
+ Gets the the hopkey name of interface for the hop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_source_interfaceRequest"/>
+		<output message="tns:Networking.SFCHop.get_source_interfaceResponse"/>
+	</operation>
+	<operation name="set_hopkey">
+	<documentation>
+ Sets the hopkey type for hop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_hopkeyRequest"/>
+		<output message="tns:Networking.SFCHop.set_hopkeyResponse"/>
+	</operation>
+	<operation name="get_hopkey">
+	<documentation>
+ Gets the hopkey type for hop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_hopkeyRequest"/>
+		<output message="tns:Networking.SFCHop.get_hopkeyResponse"/>
+	</operation>
+	<operation name="set_ipaddress">
+	<documentation>
+ Set the ip-address as an endpoint for nexthop.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_ipaddressRequest"/>
+		<output message="tns:Networking.SFCHop.set_ipaddressResponse"/>
+	</operation>
+	<operation name="get_ipaddress">
+	<documentation>
+ Get the ip-address of endpoint for nexthop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_ipaddressRequest"/>
+		<output message="tns:Networking.SFCHop.get_ipaddressResponse"/>
+	</operation>
+	<operation name="set_sf">
+	<documentation>
+ Set service function as endpoint for nexthop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_sfRequest"/>
+		<output message="tns:Networking.SFCHop.set_sfResponse"/>
+	</operation>
+	<operation name="get_sf">
+	<documentation>
+ Gets service function endpoint for nexthop
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_sfRequest"/>
+		<output message="tns:Networking.SFCHop.get_sfResponse"/>
+	</operation>
+	<operation name="set_terminate">
+	<documentation>
+ Enable/Disable termination of the chain.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_terminateRequest"/>
+		<output message="tns:Networking.SFCHop.set_terminateResponse"/>
+	</operation>
+	<operation name="get_terminate">
+	<documentation>
+ Gets the currently configured enabled/disabled setting for the chain
+ termination.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_terminateRequest"/>
+		<output message="tns:Networking.SFCHop.get_terminateResponse"/>
+	</operation>
+	<operation name="set_chain_name">
+	<documentation>
+ Attach the hop with the given chain name.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.set_chain_nameRequest"/>
+		<output message="tns:Networking.SFCHop.set_chain_nameResponse"/>
+	</operation>
+	<operation name="get_chain_name">
+	<documentation>
+ Gets the currently configured enabled/disabled setting for the
+ NSH aware attribute for the specified SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCHop.get_chain_nameRequest"/>
+		<output message="tns:Networking.SFCHop.get_chain_nameResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.SFCHopBinding" type="tns:Networking.SFCHopPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the names of all SFC policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_hop">
+	<documentation>
+ Deletes a set of SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_hops">
+	<documentation>
+ Deletes all SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified SFC Service Functions.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_index">
+	<documentation>
+ Sets the service index hopkey value for nsh-aware enabled hop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_index">
+	<documentation>
+ Gets the service index hopkey value for nsh-aware enabled hop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_interface">
+	<documentation>
+ Sets the interface name as hopkey for nsh-aware disabled hop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_interface">
+	<documentation>
+ Gets the the hopkey name of interface for the hop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_hopkey">
+	<documentation>
+ Sets the hopkey type for hop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_hopkey">
+	<documentation>
+ Gets the hopkey type for hop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ipaddress">
+	<documentation>
+ Set the ip-address as an endpoint for nexthop.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ipaddress">
+	<documentation>
+ Get the ip-address of endpoint for nexthop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_sf">
+	<documentation>
+ Set service function as endpoint for nexthop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_sf">
+	<documentation>
+ Gets service function endpoint for nexthop
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_terminate">
+	<documentation>
+ Enable/Disable termination of the chain.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_terminate">
+	<documentation>
+ Gets the currently configured enabled/disabled setting for the chain
+ termination.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_chain_name">
+	<documentation>
+ Attach the hop with the given chain name.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_chain_name">
+	<documentation>
+ Gets the currently configured enabled/disabled setting for the
+ NSH aware attribute for the specified SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCHop"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCHop"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.SFCHop">
+	<documentation>
+ This interface configures the SFC policy components
+ to manage the egress bandwidth per policy, per session or subscriber,
+ per application and various combinations of these.
+
+        	</documentation>
+	<port name="Networking.SFCHopPort" binding="tns:Networking.SFCHopBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

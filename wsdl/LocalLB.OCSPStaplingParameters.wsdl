@@ -1,0 +1,1572 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.OCSPStaplingParameters"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.OCSPStaplingParameters.OCSPStaplingSignHash">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="OCSP_STAPLING_HASH_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>OCSP_STAPLING_HASH_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="OCSP_STAPLING_HASH_SHA1">
+					<xsd:annotation>
+						<xsd:documentation>OCSP_STAPLING_HASH_SHA1</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="OCSP_STAPLING_HASH_SHA256">
+					<xsd:annotation>
+						<xsd:documentation>OCSP_STAPLING_HASH_SHA256</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.OCSPStaplingParameters.OCSPStaplingSignHashSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.OCSPStaplingParameters.OCSPStaplingSignHash[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.OCSPStaplingParameters.get_listRequest">
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.createRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="use_proxy_server_states" type="tns:Common.EnabledStateSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+	<part name="dns_resolvers" type="tns:Common.StringSequence"/>
+	<part name="cas" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.createResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.delete_ocsp_stapling_parametersRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.delete_ocsp_stapling_parametersResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.delete_all_ocsp_stapling_parametersRequest">
+</message>
+<message name="LocalLB.OCSPStaplingParameters.delete_all_ocsp_stapling_parametersResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_use_proxy_server_stateRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_use_proxy_server_stateResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_use_proxy_server_stateRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_use_proxy_server_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_proxy_server_poolRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_proxy_server_poolResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_proxy_server_poolRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_proxy_server_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_dns_resolverRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="dns_resolvers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_dns_resolverResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_dns_resolverRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_dns_resolverResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_trusted_certificate_authorityRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="cas" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_trusted_certificate_authorityResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_trusted_certificate_authorityRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_trusted_certificate_authorityResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_trusted_responderRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="certs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_trusted_responderResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_trusted_responderRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_trusted_responderResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_responder_urlRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="urls" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_responder_urlResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_responder_urlRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_responder_urlResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_signer_keyRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="keys" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_signer_keyResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_signer_keyRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_signer_keyResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_signer_key_passphraseRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="passphrases" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_signer_key_passphraseResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_signer_certificateRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="certs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_signer_certificateResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_signer_certificateRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_signer_certificateResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_sign_hashRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="hashes" type="tns:LocalLB.OCSPStaplingParameters.OCSPStaplingSignHashSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_sign_hashResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_sign_hashRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_sign_hashResponse">
+	<part name="return" type="tns:LocalLB.OCSPStaplingParameters.OCSPStaplingSignHashSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_timeoutRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_timeoutResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_timeoutRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_timeoutResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_clock_skewRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_clock_skewResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_clock_skewRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_clock_skewResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_status_ageRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_status_ageResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_status_ageRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_status_ageResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_cache_timeoutRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_cache_timeoutResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_cache_timeoutRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_cache_timeoutResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_cache_error_timeoutRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_cache_error_timeoutResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_cache_error_timeoutRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_cache_error_timeoutResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_strict_responder_certificate_checking_stateRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_strict_responder_certificate_checking_stateResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_strict_responder_certificate_checking_stateRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_strict_responder_certificate_checking_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.set_descriptionRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_descriptionRequest">
+	<part name="stapling_parameters" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.OCSPStaplingParameters.get_versionRequest">
+</message>
+<message name="LocalLB.OCSPStaplingParameters.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.OCSPStaplingParametersPortType">
+	<operation name="get_list">
+  	<documentation>
+ Gets a list of OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_listRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified OCSP stapling parameters, using proxy addresses pool
+ or DNS resolver. If 'use_proxy_server_states' is enabled, the OCSP requests
+ will be sent to a proxy server that in turn sends the requests to the OCSP
+ responder. Otherwise, DNS resolver must be specified for the system to make
+ external http requests.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.createRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.createResponse"/>
+	</operation>
+	<operation name="delete_ocsp_stapling_parameters">
+	<documentation>
+ Deletes a set of OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.delete_ocsp_stapling_parametersRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.delete_ocsp_stapling_parametersResponse"/>
+	</operation>
+	<operation name="delete_all_ocsp_stapling_parameters">
+	<documentation>
+ Deletes all OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.delete_all_ocsp_stapling_parametersRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.delete_all_ocsp_stapling_parametersResponse"/>
+	</operation>
+	<operation name="set_use_proxy_server_state">
+	<documentation>
+ Sets the states controlling whether the OCSP request has to be
+ forwarded to a proxy server or to a DNS resolver for the specified
+ OCSP stapling parameters. If enabled, the request will be forwarded
+ to the proxy server; Otherwise, to the DNS resolver.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_use_proxy_server_stateRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_use_proxy_server_stateResponse"/>
+	</operation>
+	<operation name="get_use_proxy_server_state">
+	<documentation>
+ Gets the states controlling whether the OCSP request has to be
+  forwarded to a proxy server for the specified OCSP stapling
+  parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_use_proxy_server_stateRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_use_proxy_server_stateResponse"/>
+	</operation>
+	<operation name="set_proxy_server_pool">
+	<documentation>
+ Sets the proxy server pool that the OCSP request will be
+  forwarded to for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_proxy_server_poolRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_proxy_server_poolResponse"/>
+	</operation>
+	<operation name="get_proxy_server_pool">
+	<documentation>
+ Gets the proxy server pools that the OCSP request will be
+  forwarded to for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_proxy_server_poolRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_proxy_server_poolResponse"/>
+	</operation>
+	<operation name="set_dns_resolver">
+	<documentation>
+ Sets the DNS resolver for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_dns_resolverRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_dns_resolverResponse"/>
+	</operation>
+	<operation name="get_dns_resolver">
+	<documentation>
+ Gets the DNS resolver for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_dns_resolverRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_dns_resolverResponse"/>
+	</operation>
+	<operation name="set_trusted_certificate_authority">
+	<documentation>
+ This method has been deprecated as of v13.0.0.
+
+ Deprecation note:
+ The attribute trusted certificate authority of
+ OCSP stapling parameters is no longer used in the CertificateValidatorOCSP
+ interface. If the user tries to set this value via old TMSH or
+ iControl calls, it will not result in any effect.
+
+ Sets the trusted certificate authorities file object names for the
+  specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_trusted_certificate_authorityRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_trusted_certificate_authorityResponse"/>
+	</operation>
+	<operation name="get_trusted_certificate_authority">
+	<documentation>
+ This method has been deprecated as of v13.0.0.
+
+ Deprecation note:
+ The attribute trusted certificate authority of
+ OCSP stapling parameters is no longer used in the CertificateValidatorOCSP
+ interface. If the user tries to get this value via old TMSH or
+ iControl calls, it will return empty strings.
+
+ Gets the trusted certificate authorities file object names for the
+  specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_trusted_certificate_authorityRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_trusted_certificate_authorityResponse"/>
+	</operation>
+	<operation name="set_trusted_responder">
+	<documentation>
+ Sets the file object names of the trusted responder certificates
+  for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_trusted_responderRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_trusted_responderResponse"/>
+	</operation>
+	<operation name="get_trusted_responder">
+	<documentation>
+ Gets the file object names of the trusted responder certificates
+  for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_trusted_responderRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_trusted_responderResponse"/>
+	</operation>
+	<operation name="set_responder_url">
+	<documentation>
+ Sets the responder URL for the specified OCSP stapling parameters.
+ If a URL for the certificate's OCSP server is not present in
+ Authority Information Access (AIA) extension, the responser URL
+ will be used to send the status request.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_responder_urlRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_responder_urlResponse"/>
+	</operation>
+	<operation name="get_responder_url">
+	<documentation>
+ Gets the responder URL for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_responder_urlRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_responder_urlResponse"/>
+	</operation>
+	<operation name="set_signer_key">
+	<documentation>
+ Sets the signer private keys that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_signer_keyRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_signer_keyResponse"/>
+	</operation>
+	<operation name="get_signer_key">
+	<documentation>
+ Gets the signer private keys that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_signer_keyRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_signer_keyResponse"/>
+	</operation>
+	<operation name="set_signer_key_passphrase">
+	<documentation>
+ Sets the passphrase of the signer keys for the specified OCSP
+ stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_signer_key_passphraseRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_signer_key_passphraseResponse"/>
+	</operation>
+	<operation name="set_signer_certificate">
+	<documentation>
+ Sets the signer certificates that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_signer_certificateRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_signer_certificateResponse"/>
+	</operation>
+	<operation name="get_signer_certificate">
+	<documentation>
+ Gets the signer certificates that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_signer_certificateRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_signer_certificateResponse"/>
+	</operation>
+	<operation name="set_sign_hash">
+	<documentation>
+ Sets the hash algorithm used to sign the OCSP request for the specified
+ OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_sign_hashRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_sign_hashResponse"/>
+	</operation>
+	<operation name="get_sign_hash">
+	<documentation>
+ Gets the hash algorithm used to sign the OCSP request for the specified
+ OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_sign_hashRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_sign_hashResponse"/>
+	</operation>
+	<operation name="set_timeout">
+	<documentation>
+ Sets the timeout for fetching OCSP response for the specified
+  OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_timeoutRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_timeoutResponse"/>
+	</operation>
+	<operation name="get_timeout">
+	<documentation>
+ Gets the timeout for fetching OCSP response for the specified
+  OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_timeoutRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_timeoutResponse"/>
+	</operation>
+	<operation name="set_clock_skew">
+	<documentation>
+ Sets the maximum time skew between the OCSP responder and the system's 
+ clocks for the specified OCSP stapling parameters.  Clock skew is the
+ tolerable absolute difference in the clocks between the responder and
+ the system.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_clock_skewRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_clock_skewResponse"/>
+	</operation>
+	<operation name="get_clock_skew">
+	<documentation>
+ Gets the maximum time skew between the OCSP responder and clients'
+  clocks for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_clock_skewRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_clock_skewResponse"/>
+	</operation>
+	<operation name="set_status_age">
+	<documentation>
+ Sets the status age, in seconds, for the specified OCSP stapling parameters.
+ This specifies the maximum allowed lag time for the 'thisUpdate' time in the
+ OCSP response that the BIG-IP accepts. If this maximum is exceeded, the
+ response is dropped. If this value is set to '0', this validation is skipped.
+ The default value is 86400 seconds.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_status_ageRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_status_ageResponse"/>
+	</operation>
+	<operation name="get_status_age">
+	<documentation>
+ Gets the status age for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_status_ageRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_status_ageResponse"/>
+	</operation>
+	<operation name="set_cache_timeout">
+	<documentation>
+ Sets the cache timeouts, in seconds, for the specified OCSP stapling parameters.
+ The lifetime of OCSP response cache is set to the lower value of
+ the validity of the response and the configured cache timeout.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_cache_timeoutRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_cache_timeoutResponse"/>
+	</operation>
+	<operation name="get_cache_timeout">
+	<documentation>
+ Gets the cache timeouts for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_cache_timeoutRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_cache_timeoutResponse"/>
+	</operation>
+	<operation name="set_cache_error_timeout">
+	<documentation>
+ Sets the cache error timeouts for the specified OCSP stapling parameters.
+ If the OCSP response indicates an error, the response will be cached
+ for the duration specified in cache error timeout.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_cache_error_timeoutRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_cache_error_timeoutResponse"/>
+	</operation>
+	<operation name="get_cache_error_timeout">
+	<documentation>
+ Gets the cache error timeouts for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_cache_error_timeoutRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_cache_error_timeoutResponse"/>
+	</operation>
+	<operation name="set_strict_responder_certificate_checking_state">
+	<documentation>
+ Sets the strict responder certificate checking states for the
+ specified OCSP stapling parameters.
+ If enabled, the system explicitly checks that the response signer's
+ certificate is authorized for OCSP response signing, by checking for
+ OCSP signing extension in the signer's certificate.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_strict_responder_certificate_checking_stateRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_strict_responder_certificate_checking_stateResponse"/>
+	</operation>
+	<operation name="get_strict_responder_certificate_checking_state">
+	<documentation>
+ Gets the strict responder certificate checking states for the
+  specified OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_strict_responder_certificate_checking_stateRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_strict_responder_certificate_checking_stateResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of OCSP stapling parameters.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.set_descriptionRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of OCSP stapling parameters.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_descriptionRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.OCSPStaplingParameters.get_versionRequest"/>
+		<output message="tns:LocalLB.OCSPStaplingParameters.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.OCSPStaplingParametersBinding" type="tns:LocalLB.OCSPStaplingParametersPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified OCSP stapling parameters, using proxy addresses pool
+ or DNS resolver. If 'use_proxy_server_states' is enabled, the OCSP requests
+ will be sent to a proxy server that in turn sends the requests to the OCSP
+ responder. Otherwise, DNS resolver must be specified for the system to make
+ external http requests.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_ocsp_stapling_parameters">
+	<documentation>
+ Deletes a set of OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_ocsp_stapling_parameters">
+	<documentation>
+ Deletes all OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_use_proxy_server_state">
+	<documentation>
+ Sets the states controlling whether the OCSP request has to be
+ forwarded to a proxy server or to a DNS resolver for the specified
+ OCSP stapling parameters. If enabled, the request will be forwarded
+ to the proxy server; Otherwise, to the DNS resolver.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_use_proxy_server_state">
+	<documentation>
+ Gets the states controlling whether the OCSP request has to be
+  forwarded to a proxy server for the specified OCSP stapling
+  parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_proxy_server_pool">
+	<documentation>
+ Sets the proxy server pool that the OCSP request will be
+  forwarded to for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_proxy_server_pool">
+	<documentation>
+ Gets the proxy server pools that the OCSP request will be
+  forwarded to for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_dns_resolver">
+	<documentation>
+ Sets the DNS resolver for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_dns_resolver">
+	<documentation>
+ Gets the DNS resolver for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_trusted_certificate_authority">
+	<documentation>
+ This method has been deprecated as of v13.0.0.
+
+ Deprecation note:
+ The attribute trusted certificate authority of
+ OCSP stapling parameters is no longer used in the CertificateValidatorOCSP
+ interface. If the user tries to set this value via old TMSH or
+ iControl calls, it will not result in any effect.
+
+ Sets the trusted certificate authorities file object names for the
+  specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_trusted_certificate_authority">
+	<documentation>
+ This method has been deprecated as of v13.0.0.
+
+ Deprecation note:
+ The attribute trusted certificate authority of
+ OCSP stapling parameters is no longer used in the CertificateValidatorOCSP
+ interface. If the user tries to get this value via old TMSH or
+ iControl calls, it will return empty strings.
+
+ Gets the trusted certificate authorities file object names for the
+  specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_trusted_responder">
+	<documentation>
+ Sets the file object names of the trusted responder certificates
+  for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_trusted_responder">
+	<documentation>
+ Gets the file object names of the trusted responder certificates
+  for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_responder_url">
+	<documentation>
+ Sets the responder URL for the specified OCSP stapling parameters.
+ If a URL for the certificate's OCSP server is not present in
+ Authority Information Access (AIA) extension, the responser URL
+ will be used to send the status request.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_responder_url">
+	<documentation>
+ Gets the responder URL for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_signer_key">
+	<documentation>
+ Sets the signer private keys that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_signer_key">
+	<documentation>
+ Gets the signer private keys that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_signer_key_passphrase">
+	<documentation>
+ Sets the passphrase of the signer keys for the specified OCSP
+ stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_signer_certificate">
+	<documentation>
+ Sets the signer certificates that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_signer_certificate">
+	<documentation>
+ Gets the signer certificates that are used to sign the OCSP request
+ for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_sign_hash">
+	<documentation>
+ Sets the hash algorithm used to sign the OCSP request for the specified
+ OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_sign_hash">
+	<documentation>
+ Gets the hash algorithm used to sign the OCSP request for the specified
+ OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_timeout">
+	<documentation>
+ Sets the timeout for fetching OCSP response for the specified
+  OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_timeout">
+	<documentation>
+ Gets the timeout for fetching OCSP response for the specified
+  OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_clock_skew">
+	<documentation>
+ Sets the maximum time skew between the OCSP responder and the system's 
+ clocks for the specified OCSP stapling parameters.  Clock skew is the
+ tolerable absolute difference in the clocks between the responder and
+ the system.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_clock_skew">
+	<documentation>
+ Gets the maximum time skew between the OCSP responder and clients'
+  clocks for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_status_age">
+	<documentation>
+ Sets the status age, in seconds, for the specified OCSP stapling parameters.
+ This specifies the maximum allowed lag time for the 'thisUpdate' time in the
+ OCSP response that the BIG-IP accepts. If this maximum is exceeded, the
+ response is dropped. If this value is set to '0', this validation is skipped.
+ The default value is 86400 seconds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_status_age">
+	<documentation>
+ Gets the status age for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_cache_timeout">
+	<documentation>
+ Sets the cache timeouts, in seconds, for the specified OCSP stapling parameters.
+ The lifetime of OCSP response cache is set to the lower value of
+ the validity of the response and the configured cache timeout.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_cache_timeout">
+	<documentation>
+ Gets the cache timeouts for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_cache_error_timeout">
+	<documentation>
+ Sets the cache error timeouts for the specified OCSP stapling parameters.
+ If the OCSP response indicates an error, the response will be cached
+ for the duration specified in cache error timeout.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_cache_error_timeout">
+	<documentation>
+ Gets the cache error timeouts for the specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_strict_responder_certificate_checking_state">
+	<documentation>
+ Sets the strict responder certificate checking states for the
+ specified OCSP stapling parameters.
+ If enabled, the system explicitly checks that the response signer's
+ certificate is authorized for OCSP response signing, by checking for
+ OCSP signing extension in the signer's certificate.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_strict_responder_certificate_checking_state">
+	<documentation>
+ Gets the strict responder certificate checking states for the
+  specified OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of OCSP stapling parameters.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of OCSP stapling parameters.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/OCSPStaplingParameters"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/OCSPStaplingParameters"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.OCSPStaplingParameters">
+	<documentation>
+ *IMPORTANT* This entire interface has been deprecated (as of v13.0.0).
+ The functionality has been moved into the CertificateValidatorOCSP interface.
+
+ The OCSPStaplingParameters interface enables you to manipulate the
+ Online Certificate Status Protocol stapling parameters.
+
+ OCSP stapling parameters specify the options needed for the TLS
+ extension of certificate status request. This set of parameters
+ is associated with a certificate-key-chain object in a clientSSL
+ profile.
+
+        	</documentation>
+	<port name="LocalLB.OCSPStaplingParametersPort" binding="tns:LocalLB.OCSPStaplingParametersBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

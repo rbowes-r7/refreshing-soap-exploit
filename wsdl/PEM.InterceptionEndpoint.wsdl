@@ -1,0 +1,414 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="PEM.InterceptionEndpoint"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.PersistenceTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.PersistenceType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.PersistenceType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="PERSISTENCE_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PERSISTENCE_TYPE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PERSISTENCE_TYPE_SOURCE_IP">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_SOURCE_IP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PERSISTENCE_TYPE_DESTINATION_IP">
+					<xsd:annotation>
+						<xsd:documentation>PERSISTENCE_TYPE_DESTINATION_IP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="PEM.InterceptionEndpoint.get_listRequest">
+</message>
+<message name="PEM.InterceptionEndpoint.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.InterceptionEndpoint.createRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.InterceptionEndpoint.createResponse">
+</message>
+
+<message name="PEM.InterceptionEndpoint.delete_interception_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.InterceptionEndpoint.delete_interception_endpointResponse">
+</message>
+
+<message name="PEM.InterceptionEndpoint.delete_all_interception_endpointsRequest">
+</message>
+<message name="PEM.InterceptionEndpoint.delete_all_interception_endpointsResponse">
+</message>
+
+<message name="PEM.InterceptionEndpoint.set_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.InterceptionEndpoint.set_poolResponse">
+</message>
+
+<message name="PEM.InterceptionEndpoint.get_poolRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.InterceptionEndpoint.get_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.InterceptionEndpoint.set_persistence_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:PEM.PersistenceTypeSequence"/>
+</message>
+<message name="PEM.InterceptionEndpoint.set_persistence_typeResponse">
+</message>
+
+<message name="PEM.InterceptionEndpoint.get_persistence_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.InterceptionEndpoint.get_persistence_typeResponse">
+	<part name="return" type="tns:PEM.PersistenceTypeSequence"/>
+</message>
+
+<message name="PEM.InterceptionEndpoint.get_versionRequest">
+</message>
+<message name="PEM.InterceptionEndpoint.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="PEM.InterceptionEndpointPortType">
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all interception-endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.get_listRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM interception-endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.createRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.createResponse"/>
+	</operation>
+	<operation name="delete_interception_endpoint">
+	<documentation>
+ Deletes the specified interception-endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.delete_interception_endpointRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.delete_interception_endpointResponse"/>
+	</operation>
+	<operation name="delete_all_interception_endpoints">
+	<documentation>
+ Deletes all user defined interception-endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.delete_all_interception_endpointsRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.delete_all_interception_endpointsResponse"/>
+	</operation>
+	<operation name="set_pool">
+	<documentation>
+ Sets the pools for the specified interception-endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.set_poolRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.set_poolResponse"/>
+	</operation>
+	<operation name="get_pool">
+	<documentation>
+ Gets the pools for the specified interception-endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.get_poolRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.get_poolResponse"/>
+	</operation>
+	<operation name="set_persistence_type">
+	<documentation>
+ Sets the persistence types of the specified interception-endpoints
+ which specifies whether traffic persists with pool members. 
+ If you want specific traffic to go to the same pool member, 
+ set the persistence type to source or destination IP address.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.set_persistence_typeRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.set_persistence_typeResponse"/>
+	</operation>
+	<operation name="get_persistence_type">
+	<documentation>
+ Gets the persistence types of the specified 
+ interception-endpoints. 
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.get_persistence_typeRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.get_persistence_typeResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:PEM.InterceptionEndpoint.get_versionRequest"/>
+		<output message="tns:PEM.InterceptionEndpoint.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="PEM.InterceptionEndpointBinding" type="tns:PEM.InterceptionEndpointPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all interception-endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM interception-endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_interception_endpoint">
+	<documentation>
+ Deletes the specified interception-endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_interception_endpoints">
+	<documentation>
+ Deletes all user defined interception-endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_pool">
+	<documentation>
+ Sets the pools for the specified interception-endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_pool">
+	<documentation>
+ Gets the pools for the specified interception-endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_persistence_type">
+	<documentation>
+ Sets the persistence types of the specified interception-endpoints
+ which specifies whether traffic persists with pool members. 
+ If you want specific traffic to go to the same pool member, 
+ set the persistence type to source or destination IP address.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_persistence_type">
+	<documentation>
+ Gets the persistence types of the specified 
+ interception-endpoints. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/InterceptionEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/InterceptionEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="PEM.InterceptionEndpoint">
+	<documentation>
+ You can use the interception-endpoint interface to configure 
+ interception-endpoint definitions for the Policy Enforcement 
+ Manager. The interception-endpoint is used to clone all traffic. 
+ The endpoint will always point to a single pool. According to 
+ source-ip or destination-ip, the subsequent traffic can be 
+ directed to the same pool member, which is called persistence.
+ The persistence feature can be disabled.
+ Note: Before you create a cloning-endpoint you have to create a 
+ valid pool. 
+
+        	</documentation>
+	<port name="PEM.InterceptionEndpointPort" binding="tns:PEM.InterceptionEndpointBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

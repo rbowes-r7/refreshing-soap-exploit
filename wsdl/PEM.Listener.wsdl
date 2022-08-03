@@ -1,0 +1,495 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="PEM.Listener"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="PEM.Listener.get_listRequest">
+</message>
+<message name="PEM.Listener.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.Listener.createRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="servers" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Listener.createResponse">
+</message>
+
+<message name="PEM.Listener.delete_listenerRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Listener.delete_listenerResponse">
+</message>
+
+<message name="PEM.Listener.delete_all_listenersRequest">
+</message>
+<message name="PEM.Listener.delete_all_listenersResponse">
+</message>
+
+<message name="PEM.Listener.get_virtual_serverRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Listener.get_virtual_serverResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.Listener.add_virtual_serverRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+	<part name="servers" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Listener.add_virtual_serverResponse">
+</message>
+
+<message name="PEM.Listener.remove_virtual_serverRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+	<part name="servers" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.Listener.remove_virtual_serverResponse">
+</message>
+
+<message name="PEM.Listener.set_spm_profileRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Listener.set_spm_profileResponse">
+</message>
+
+<message name="PEM.Listener.get_spm_profileRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Listener.get_spm_profileResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.Listener.set_descriptionRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Listener.set_descriptionResponse">
+</message>
+
+<message name="PEM.Listener.get_descriptionRequest">
+	<part name="listeners" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.Listener.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.Listener.get_versionRequest">
+</message>
+<message name="PEM.Listener.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="PEM.ListenerPortType">
+	<operation name="get_list">
+    	<documentation>
+ Gets a list of all listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.get_listRequest"/>
+		<output message="tns:PEM.Listener.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM listeners.
+ A value must be provided for the profile-spm attribute when creating 
+ a listener.
+ The virtual servers list for a listener must contain at least 
+ one virtual server that does not have a profile of type RADIUS 
+ or diameter endpoint attached.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.createRequest"/>
+		<output message="tns:PEM.Listener.createResponse"/>
+	</operation>
+	<operation name="delete_listener">
+	<documentation>
+ Deletes the specified listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.delete_listenerRequest"/>
+		<output message="tns:PEM.Listener.delete_listenerResponse"/>
+	</operation>
+	<operation name="delete_all_listeners">
+	<documentation>
+ Deletes all user defined listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.delete_all_listenersRequest"/>
+		<output message="tns:PEM.Listener.delete_all_listenersResponse"/>
+	</operation>
+	<operation name="get_virtual_server">
+	<documentation>
+ Get a set of virtual servers for the specified listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.get_virtual_serverRequest"/>
+		<output message="tns:PEM.Listener.get_virtual_serverResponse"/>
+	</operation>
+	<operation name="add_virtual_server">
+	<documentation>
+ Add a set of virtual servers for the specified listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.add_virtual_serverRequest"/>
+		<output message="tns:PEM.Listener.add_virtual_serverResponse"/>
+	</operation>
+	<operation name="remove_virtual_server">
+	<documentation>
+ Remove a set of virtual servers for the specified listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.remove_virtual_serverRequest"/>
+		<output message="tns:PEM.Listener.remove_virtual_serverResponse"/>
+	</operation>
+	<operation name="set_spm_profile">
+	<documentation>
+ Sets the Subscriber Policy Manager (SPM) profiles for the 
+ specified listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.set_spm_profileRequest"/>
+		<output message="tns:PEM.Listener.set_spm_profileResponse"/>
+	</operation>
+	<operation name="get_spm_profile">
+	<documentation>
+ Gets the SPM profiles for the specified listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.get_spm_profileRequest"/>
+		<output message="tns:PEM.Listener.get_spm_profileResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.set_descriptionRequest"/>
+		<output message="tns:PEM.Listener.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of listeners.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.get_descriptionRequest"/>
+		<output message="tns:PEM.Listener.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:PEM.Listener.get_versionRequest"/>
+		<output message="tns:PEM.Listener.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="PEM.ListenerBinding" type="tns:PEM.ListenerPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM listeners.
+ A value must be provided for the profile-spm attribute when creating 
+ a listener.
+ The virtual servers list for a listener must contain at least 
+ one virtual server that does not have a profile of type RADIUS 
+ or diameter endpoint attached.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_listener">
+	<documentation>
+ Deletes the specified listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_listeners">
+	<documentation>
+ Deletes all user defined listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_virtual_server">
+	<documentation>
+ Get a set of virtual servers for the specified listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_virtual_server">
+	<documentation>
+ Add a set of virtual servers for the specified listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_virtual_server">
+	<documentation>
+ Remove a set of virtual servers for the specified listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_spm_profile">
+	<documentation>
+ Sets the Subscriber Policy Manager (SPM) profiles for the 
+ specified listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_spm_profile">
+	<documentation>
+ Gets the SPM profiles for the specified listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of listeners.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/Listener"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/Listener"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="PEM.Listener">
+	<documentation>
+ You can use the listener interface to configure listener definitions 
+ for the Policy Enforcement Manager. To apply policies, a listener 
+ listens traffic on one Subscriber Policy Manager (SPM) profile and 
+ one or more virtual servers.
+
+        	</documentation>
+	<port name="PEM.ListenerPort" binding="tns:PEM.ListenerBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

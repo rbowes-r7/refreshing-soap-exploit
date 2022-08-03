@@ -1,0 +1,2503 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.VLAN"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Networking.MemberTagMode">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MEMBER_TAG_MODE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TAG_MODE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MEMBER_TAG_MODE_NONE">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TAG_MODE_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MEMBER_TAG_MODE_SERVICE">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TAG_MODE_SERVICE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MEMBER_TAG_MODE_CUSTOMER">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TAG_MODE_CUSTOMER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MEMBER_TAG_MODE_DOUBLE">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TAG_MODE_DOUBLE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="Networking.LearningMode">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="LEARNING_MODE_ENABLE_FORWARD">
+					<xsd:annotation>
+						<xsd:documentation>LEARNING_MODE_ENABLE_FORWARD</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LEARNING_MODE_DISABLE_FORWARD">
+					<xsd:annotation>
+						<xsd:documentation>LEARNING_MODE_DISABLE_FORWARD</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LEARNING_MODE_DISABLE_DROP">
+					<xsd:annotation>
+						<xsd:documentation>LEARNING_MODE_DISABLE_DROP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="Networking.VLAN.VLANCMPHash">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="CMP_HASH_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>CMP_HASH_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CMP_HASH_DEFAULT">
+					<xsd:annotation>
+						<xsd:documentation>CMP_HASH_DEFAULT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CMP_HASH_DESTINATION_IP">
+					<xsd:annotation>
+						<xsd:documentation>CMP_HASH_DESTINATION_IP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CMP_HASH_SOURCE_IP">
+					<xsd:annotation>
+						<xsd:documentation>CMP_HASH_SOURCE_IP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CMP_HASH_IPPORT">
+					<xsd:annotation>
+						<xsd:documentation>CMP_HASH_IPPORT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Networking.VLAN.ForwardingTableSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.VLAN.ForwardingTableEntry[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Networking.VLAN.ForwardingTableSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.VLAN.ForwardingTableSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.AutoLasthop">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="AUTO_LASTHOP_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>AUTO_LASTHOP_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="AUTO_LASTHOP_DEFAULT">
+					<xsd:annotation>
+						<xsd:documentation>AUTO_LASTHOP_DEFAULT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="AUTO_LASTHOP_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>AUTO_LASTHOP_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="AUTO_LASTHOP_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>AUTO_LASTHOP_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.VLAN.MemberSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.VLAN.MemberSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.MemberTagModeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.MemberTagModeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.SFlowGlobalTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.SFlowGlobalType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.LearningModeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.LearningMode[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.MemberTagModeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.MemberTagMode[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Networking.MemberTagType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MEMBER_TAGGED">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TAGGED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MEMBER_UNTAGGED">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_UNTAGGED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="Common.HAAction">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="HA_ACTION_NONE">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_REBOOT">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_REBOOT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_RESTART">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_RESTART</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_FAILOVER">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_FAILOVER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_FAILOVER_RESTART">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_FAILOVER_RESTART</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_GO_ACTIVE">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_GO_ACTIVE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_RESTART_ALL">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_RESTART_ALL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_FAILOVER_ABORT_TRAFFIC_MGT">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_FAILOVER_ABORT_TRAFFIC_MGT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_GO_OFFLINE">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_GO_OFFLINE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_GO_OFFLINE_RESTART">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_GO_OFFLINE_RESTART</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_GO_OFFLINE_ABORT_TM">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_GO_OFFLINE_ABORT_TM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_GO_OFFLINE_DOWNLINKS">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_GO_OFFLINE_DOWNLINKS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="HA_ACTION_GO_OFFLINE_DOWNLINKS_RESTART">
+					<xsd:annotation>
+						<xsd:documentation>HA_ACTION_GO_OFFLINE_DOWNLINKS_RESTART</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.VLAN.VLANCMPHashSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.VLAN.VLANCMPHash[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.AutoLasthopSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.AutoLasthop[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.VLAN.MemberEntry">
+			<xsd:sequence>
+				<xsd:element name="member_name" type="xsd:string"/>
+				<xsd:element name="member_type" type="tns:Networking.MemberType"/>
+				<xsd:element name="tag_state" type="tns:Networking.MemberTagType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="Networking.MemberType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MEMBER_INTERFACE">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_INTERFACE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MEMBER_TRUNK">
+					<xsd:annotation>
+						<xsd:documentation>MEMBER_TRUNK</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.HAActionSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.HAAction[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.VLAN.MemberSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Networking.VLAN.MemberEntry[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Networking.VLAN.ForwardingTableEntry">
+			<xsd:sequence>
+				<xsd:element name="mac_address" type="xsd:string"/>
+				<xsd:element name="interface_name" type="xsd:string"/>
+				<xsd:element name="interface_type" type="tns:Networking.MemberType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.SFlowGlobalType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SFLOW_GLOBAL_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SFLOW_GLOBAL_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SFLOW_GLOBAL_YES">
+					<xsd:annotation>
+						<xsd:documentation>SFLOW_GLOBAL_YES</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SFLOW_GLOBAL_NO">
+					<xsd:annotation>
+						<xsd:documentation>SFLOW_GLOBAL_NO</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.VLAN.get_listRequest">
+</message>
+<message name="Networking.VLAN.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.VLAN.createRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="vlan_ids" type="tns:Common.ULongSequence"/>
+	<part name="members" type="tns:Networking.VLAN.MemberSequenceSequence"/>
+	<part name="failsafe_states" type="tns:Common.EnabledStateSequence"/>
+	<part name="timeouts" type="tns:Common.ULongSequence"/>
+	<part name="mac_masquerade_addresses" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.createResponse">
+</message>
+
+<message name="Networking.VLAN.create_v2Request">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="vlan_ids" type="tns:Common.ULongSequence"/>
+	<part name="members" type="tns:Networking.VLAN.MemberSequenceSequence"/>
+	<part name="failsafe_states" type="tns:Common.EnabledStateSequence"/>
+	<part name="timeouts" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.VLAN.create_v2Response">
+</message>
+
+<message name="Networking.VLAN.delete_vlanRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.delete_vlanResponse">
+</message>
+
+<message name="Networking.VLAN.delete_all_vlansRequest">
+</message>
+<message name="Networking.VLAN.delete_all_vlansResponse">
+</message>
+
+<message name="Networking.VLAN.get_memberRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_memberResponse">
+	<part name="return" type="tns:Networking.VLAN.MemberSequenceSequence"/>
+</message>
+
+<message name="Networking.VLAN.add_memberRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="members" type="tns:Networking.VLAN.MemberSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.add_memberResponse">
+</message>
+
+<message name="Networking.VLAN.remove_memberRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="members" type="tns:Networking.VLAN.MemberSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.remove_memberResponse">
+</message>
+
+<message name="Networking.VLAN.remove_all_membersRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.remove_all_membersResponse">
+</message>
+
+<message name="Networking.VLAN.get_static_forwardingRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_static_forwardingResponse">
+	<part name="return" type="tns:Networking.VLAN.ForwardingTableSequenceSequence"/>
+</message>
+
+<message name="Networking.VLAN.add_static_forwardingRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="forwarding_entries" type="tns:Networking.VLAN.ForwardingTableSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.add_static_forwardingResponse">
+</message>
+
+<message name="Networking.VLAN.remove_static_forwardingRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="forwarding_entries" type="tns:Networking.VLAN.ForwardingTableSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.remove_static_forwardingResponse">
+</message>
+
+<message name="Networking.VLAN.remove_all_static_forwardingsRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.remove_all_static_forwardingsResponse">
+</message>
+
+<message name="Networking.VLAN.set_static_forwarding_descriptionRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="mac_addresses" type="tns:Common.StringSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.set_static_forwarding_descriptionResponse">
+</message>
+
+<message name="Networking.VLAN.get_static_forwarding_descriptionRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="mac_addresses" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.get_static_forwarding_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Networking.VLAN.get_dynamic_forwardingRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_dynamic_forwardingResponse">
+	<part name="return" type="tns:Networking.VLAN.ForwardingTableSequenceSequence"/>
+</message>
+
+<message name="Networking.VLAN.remove_all_dynamic_forwardingsRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.remove_all_dynamic_forwardingsResponse">
+</message>
+
+<message name="Networking.VLAN.set_vlan_idRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="vlan_ids" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.VLAN.set_vlan_idResponse">
+</message>
+
+<message name="Networking.VLAN.get_vlan_idRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_vlan_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_customer_idRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="customer_ids" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.set_customer_idResponse">
+</message>
+
+<message name="Networking.VLAN.get_customer_idRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_customer_idResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_member_tag_modeRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="members" type="tns:Common.StringSequenceSequence"/>
+	<part name="tag_modes" type="tns:Networking.MemberTagModeSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.set_member_tag_modeResponse">
+</message>
+
+<message name="Networking.VLAN.get_member_tag_modeRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="members" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.VLAN.get_member_tag_modeResponse">
+	<part name="return" type="tns:Networking.MemberTagModeSequenceSequence"/>
+</message>
+
+<message name="Networking.VLAN.get_source_check_stateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_source_check_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_source_check_stateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.VLAN.set_source_check_stateResponse">
+</message>
+
+<message name="Networking.VLAN.get_failsafe_timeoutRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_failsafe_timeoutResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_failsafe_timeoutRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="timeouts" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.VLAN.set_failsafe_timeoutResponse">
+</message>
+
+<message name="Networking.VLAN.get_failsafe_stateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_failsafe_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_dag_round_robin_stateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.VLAN.set_dag_round_robin_stateResponse">
+</message>
+
+<message name="Networking.VLAN.get_dag_round_robin_stateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_dag_round_robin_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_failsafe_stateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.VLAN.set_failsafe_stateResponse">
+</message>
+
+<message name="Networking.VLAN.get_failsafe_actionRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_failsafe_actionResponse">
+	<part name="return" type="tns:Common.HAActionSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_failsafe_actionRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="actions" type="tns:Common.HAActionSequence"/>
+</message>
+<message name="Networking.VLAN.set_failsafe_actionResponse">
+</message>
+
+<message name="Networking.VLAN.set_cmp_hash_algorithmRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Networking.VLAN.VLANCMPHashSequence"/>
+</message>
+<message name="Networking.VLAN.set_cmp_hash_algorithmResponse">
+</message>
+
+<message name="Networking.VLAN.get_cmp_hash_algorithmRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_cmp_hash_algorithmResponse">
+	<part name="return" type="tns:Networking.VLAN.VLANCMPHashSequence"/>
+</message>
+
+<message name="Networking.VLAN.get_mac_masquerade_addressRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_mac_masquerade_addressResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_mac_masquerade_addressRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="mac_masquerade_addresses" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.set_mac_masquerade_addressResponse">
+</message>
+
+<message name="Networking.VLAN.get_true_mac_addressRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_true_mac_addressResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.VLAN.get_mtuRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_mtuResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_mtuRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="mtus" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.VLAN.set_mtuResponse">
+</message>
+
+<message name="Networking.VLAN.get_learning_modeRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_learning_modeResponse">
+	<part name="return" type="tns:Networking.LearningModeSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_learning_modeRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="modes" type="tns:Networking.LearningModeSequence"/>
+</message>
+<message name="Networking.VLAN.set_learning_modeResponse">
+</message>
+
+<message name="Networking.VLAN.set_auto_lasthopRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.AutoLasthopSequence"/>
+</message>
+<message name="Networking.VLAN.set_auto_lasthopResponse">
+</message>
+
+<message name="Networking.VLAN.get_auto_lasthopRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_auto_lasthopResponse">
+	<part name="return" type="tns:Common.AutoLasthopSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_descriptionRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.set_descriptionResponse">
+</message>
+
+<message name="Networking.VLAN.get_descriptionRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_sflow_poll_intervalRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="intervals" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.VLAN.set_sflow_poll_intervalResponse">
+</message>
+
+<message name="Networking.VLAN.get_sflow_poll_intervalRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_sflow_poll_intervalResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_sflow_poll_interval_globalRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:Common.SFlowGlobalTypeSequence"/>
+</message>
+<message name="Networking.VLAN.set_sflow_poll_interval_globalResponse">
+</message>
+
+<message name="Networking.VLAN.get_sflow_poll_interval_globalRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_sflow_poll_interval_globalResponse">
+	<part name="return" type="tns:Common.SFlowGlobalTypeSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_sflow_sampling_rateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="rates" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.VLAN.set_sflow_sampling_rateResponse">
+</message>
+
+<message name="Networking.VLAN.get_sflow_sampling_rateRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_sflow_sampling_rateResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.VLAN.set_sflow_sampling_rate_globalRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:Common.SFlowGlobalTypeSequence"/>
+</message>
+<message name="Networking.VLAN.set_sflow_sampling_rate_globalResponse">
+</message>
+
+<message name="Networking.VLAN.get_sflow_sampling_rate_globalRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_sflow_sampling_rate_globalResponse">
+	<part name="return" type="tns:Common.SFlowGlobalTypeSequence"/>
+</message>
+
+<message name="Networking.VLAN.get_if_indexRequest">
+	<part name="vlans" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.VLAN.get_if_indexResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.VLAN.get_versionRequest">
+</message>
+<message name="Networking.VLAN.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.VLANPortType">
+	<operation name="get_list">
+ 	<documentation>
+ Gets a list of all VLANs on this device.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_listRequest"/>
+		<output message="tns:Networking.VLAN.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ This function has been deprecated; please use create_v2().
+
+ Creates the specified VLANs with extended attributes.  If mac masquerade
+ addresses are specified, they follow the same behavior as set_mac_masquerade_address()
+ on this interface.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.createRequest"/>
+		<output message="tns:Networking.VLAN.createResponse"/>
+	</operation>
+	<operation name="create_v2">
+	<documentation>
+ Creates the specified VLANs with extended attributes.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.create_v2Request"/>
+		<output message="tns:Networking.VLAN.create_v2Response"/>
+	</operation>
+	<operation name="delete_vlan">
+	<documentation>
+ Deletes the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.delete_vlanRequest"/>
+		<output message="tns:Networking.VLAN.delete_vlanResponse"/>
+	</operation>
+	<operation name="delete_all_vlans">
+	<documentation>
+ Deletes all VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.delete_all_vlansRequest"/>
+		<output message="tns:Networking.VLAN.delete_all_vlansResponse"/>
+	</operation>
+	<operation name="get_member">
+	<documentation>
+ Gets the members of the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_memberRequest"/>
+		<output message="tns:Networking.VLAN.get_memberResponse"/>
+	</operation>
+	<operation name="add_member">
+	<documentation>
+ Adds the specified member interfaces/trunks to the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.add_memberRequest"/>
+		<output message="tns:Networking.VLAN.add_memberResponse"/>
+	</operation>
+	<operation name="remove_member">
+	<documentation>
+ Removes the specified member interfaces/trunks from the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.remove_memberRequest"/>
+		<output message="tns:Networking.VLAN.remove_memberResponse"/>
+	</operation>
+	<operation name="remove_all_members">
+	<documentation>
+ Removes all member interfaces/trunks from the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.remove_all_membersRequest"/>
+		<output message="tns:Networking.VLAN.remove_all_membersResponse"/>
+	</operation>
+	<operation name="get_static_forwarding">
+	<documentation>
+ Retrieves the static forwarding entries for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_static_forwardingRequest"/>
+		<output message="tns:Networking.VLAN.get_static_forwardingResponse"/>
+	</operation>
+	<operation name="add_static_forwarding">
+	<documentation>
+ Adds the static forwarding entries for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.add_static_forwardingRequest"/>
+		<output message="tns:Networking.VLAN.add_static_forwardingResponse"/>
+	</operation>
+	<operation name="remove_static_forwarding">
+	<documentation>
+ Removes the static forwarding entries from the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.remove_static_forwardingRequest"/>
+		<output message="tns:Networking.VLAN.remove_static_forwardingResponse"/>
+	</operation>
+	<operation name="remove_all_static_forwardings">
+	<documentation>
+ Removes all static forwarding entries from the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.remove_all_static_forwardingsRequest"/>
+		<output message="tns:Networking.VLAN.remove_all_static_forwardingsResponse"/>
+	</operation>
+	<operation name="set_static_forwarding_description">
+	<documentation>
+ Sets the description for a set of static forwarding entries.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_static_forwarding_descriptionRequest"/>
+		<output message="tns:Networking.VLAN.set_static_forwarding_descriptionResponse"/>
+	</operation>
+	<operation name="get_static_forwarding_description">
+	<documentation>
+ Gets the descriptions for a set of static forwarding entries.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_static_forwarding_descriptionRequest"/>
+		<output message="tns:Networking.VLAN.get_static_forwarding_descriptionResponse"/>
+	</operation>
+	<operation name="get_dynamic_forwarding">
+	<documentation>
+ Retrieves the dynamic forwarding entries for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_dynamic_forwardingRequest"/>
+		<output message="tns:Networking.VLAN.get_dynamic_forwardingResponse"/>
+	</operation>
+	<operation name="remove_all_dynamic_forwardings">
+	<documentation>
+ Removes all dynamic forwarding entries from the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.remove_all_dynamic_forwardingsRequest"/>
+		<output message="tns:Networking.VLAN.remove_all_dynamic_forwardingsResponse"/>
+	</operation>
+	<operation name="set_vlan_id">
+	<documentation>
+ Sets the tag ids for the specified VLANs.
+
+ Note: In some releases (9.4.0+), this method is not supported;
+ delete and re-create the VLAN instead. In versions 10.0.0+,
+ this method is supported.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_vlan_idRequest"/>
+		<output message="tns:Networking.VLAN.set_vlan_idResponse"/>
+	</operation>
+	<operation name="get_vlan_id">
+	<documentation>
+ Gets the ids for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_vlan_idRequest"/>
+		<output message="tns:Networking.VLAN.get_vlan_idResponse"/>
+	</operation>
+	<operation name="set_customer_id">
+	<documentation>
+ Sets the customer tag ids for the specified VLANs for QinQ support.
+ The customer tag can be set to any valid number between 1-4094.
+ The customer tag field is set for QinQ vlans, and it represents the tag value
+ for the vlan members that are facing the customer network.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_customer_idRequest"/>
+		<output message="tns:Networking.VLAN.set_customer_idResponse"/>
+	</operation>
+	<operation name="get_customer_id">
+	<documentation>
+ Gets the customer ids for the specified VLANs with support for QinQ.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_customer_idRequest"/>
+		<output message="tns:Networking.VLAN.get_customer_idResponse"/>
+	</operation>
+	<operation name="set_member_tag_mode">
+	<documentation>
+ Sets the tag-mode for the vlan member in a QinQ vlan.
+ If the member is untagged, the tag-mode should be set to QINQ_TAG_MODE_NONE.
+ If the member is tagged, the tag-mode should be set as follows:
+  QINQ_TAG_MODE_CUSTOMER - when the member is facing the customer network.
+  QINQ_TAG_MODE_SERVICE  - when the member is facing the service provider network and
+                           the outbound packets are sent single tagged.
+  QINQ_TAG_MODE_DOUBLE   - when the member is facing the service provider network and
+                           the outbound packets are sent double tagged.
+
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_member_tag_modeRequest"/>
+		<output message="tns:Networking.VLAN.set_member_tag_modeResponse"/>
+	</operation>
+	<operation name="get_member_tag_mode">
+	<documentation>
+ Gets the tag-mode for the vlan member in a QinQ vlan.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_member_tag_modeRequest"/>
+		<output message="tns:Networking.VLAN.get_member_tag_modeResponse"/>
+	</operation>
+	<operation name="get_source_check_state">
+	<documentation>
+ Gets the source checking states for the specified VLANs. If enabled and auto lasthop is disabled,
+ check that the source of the first packet of a connection is correct (correct VLAN, router, node).
+ This is equivalent to BSD's net.inet.sourcecheck sysctl variable.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_source_check_stateRequest"/>
+		<output message="tns:Networking.VLAN.get_source_check_stateResponse"/>
+	</operation>
+	<operation name="set_source_check_state">
+	<documentation>
+ Sets the the source checking states for the specified VLANs. If enabled and auto lasthop is disabled,
+ check that the source of the first packet of a connection is correct (correct VLAN, router, node).
+ This is equivalent to BSD's net.inet.sourcecheck sysctl variable.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_source_check_stateRequest"/>
+		<output message="tns:Networking.VLAN.set_source_check_stateResponse"/>
+	</operation>
+	<operation name="get_failsafe_timeout">
+	<documentation>
+ Gets the failsafe timeouts for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_failsafe_timeoutRequest"/>
+		<output message="tns:Networking.VLAN.get_failsafe_timeoutResponse"/>
+	</operation>
+	<operation name="set_failsafe_timeout">
+	<documentation>
+ Sets the failsafe timeouts for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_failsafe_timeoutRequest"/>
+		<output message="tns:Networking.VLAN.set_failsafe_timeoutResponse"/>
+	</operation>
+	<operation name="get_failsafe_state">
+	<documentation>
+ Gets the failsafe states for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_failsafe_stateRequest"/>
+		<output message="tns:Networking.VLAN.get_failsafe_stateResponse"/>
+	</operation>
+	<operation name="set_dag_round_robin_state">
+	<documentation>
+ Sets the state that, if enabled, forces a VLAN to disaggregrate
+ stateless traffic using a round-robin order instead of using a static hash.
+ The default state is disabled.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_dag_round_robin_stateRequest"/>
+		<output message="tns:Networking.VLAN.set_dag_round_robin_stateResponse"/>
+	</operation>
+	<operation name="get_dag_round_robin_state">
+	<documentation>
+ Gets the state that, if enabled, forces a VLAN to disaggregrate stateless traffic
+ using a round-robin order instead of using a static hash
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_dag_round_robin_stateRequest"/>
+		<output message="tns:Networking.VLAN.get_dag_round_robin_stateResponse"/>
+	</operation>
+	<operation name="set_failsafe_state">
+	<documentation>
+ Sets the failsafe states for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_failsafe_stateRequest"/>
+		<output message="tns:Networking.VLAN.set_failsafe_stateResponse"/>
+	</operation>
+	<operation name="get_failsafe_action">
+	<documentation>
+ Gets the failsafe actions for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_failsafe_actionRequest"/>
+		<output message="tns:Networking.VLAN.get_failsafe_actionResponse"/>
+	</operation>
+	<operation name="set_failsafe_action">
+	<documentation>
+ Sets the failsafe actions for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_failsafe_actionRequest"/>
+		<output message="tns:Networking.VLAN.set_failsafe_actionResponse"/>
+	</operation>
+	<operation name="set_cmp_hash_algorithm">
+	<documentation>
+ Sets the CMP hash algorithm for the specified VLANs.
+
+ The CMP hash algorithm decides the traffic dissagregation criteria
+ for a vlan. This allows all connections from a client to land on
+ the same set of TMMs. It improves tmm performance by localizing
+ the sessionDB lookup.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_cmp_hash_algorithmRequest"/>
+		<output message="tns:Networking.VLAN.set_cmp_hash_algorithmResponse"/>
+	</operation>
+	<operation name="get_cmp_hash_algorithm">
+	<documentation>
+ Gets the CMP hash algorithms for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_cmp_hash_algorithmRequest"/>
+		<output message="tns:Networking.VLAN.get_cmp_hash_algorithmResponse"/>
+	</operation>
+	<operation name="get_mac_masquerade_address">
+	<documentation>
+ This function is deprecated.  MAC masquerade addresses are now configured
+ on traffic groups.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_mac_masquerade_addressRequest"/>
+		<output message="tns:Networking.VLAN.get_mac_masquerade_addressResponse"/>
+	</operation>
+	<operation name="set_mac_masquerade_address">
+	<documentation>
+ This function is deprecated.  MAC masquerade address are now configured
+ on traffic groups.
+
+ If there is only one floating traffic group in the system, this function will
+ set the traffic group's MAC masquerade address to the last address in
+ mac_masquerade_addresses and discard all other MAC addresses provided.  If
+ there is more than one floating traffic group, a Common::OperationFailed exception
+ is raised.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_mac_masquerade_addressRequest"/>
+		<output message="tns:Networking.VLAN.set_mac_masquerade_addressResponse"/>
+	</operation>
+	<operation name="get_true_mac_address">
+	<documentation>
+ Gets the true MAC addresses used by the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_true_mac_addressRequest"/>
+		<output message="tns:Networking.VLAN.get_true_mac_addressResponse"/>
+	</operation>
+	<operation name="get_mtu">
+	<documentation>
+ Gets the MTUs for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_mtuRequest"/>
+		<output message="tns:Networking.VLAN.get_mtuResponse"/>
+	</operation>
+	<operation name="set_mtu">
+	<documentation>
+ Sets the MTUs for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_mtuRequest"/>
+		<output message="tns:Networking.VLAN.set_mtuResponse"/>
+	</operation>
+	<operation name="get_learning_mode">
+	<documentation>
+ Gets the configured learning modes of the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_learning_modeRequest"/>
+		<output message="tns:Networking.VLAN.get_learning_modeResponse"/>
+	</operation>
+	<operation name="set_learning_mode">
+	<documentation>
+ Sets the learning modes for the specified VLANs.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_learning_modeRequest"/>
+		<output message="tns:Networking.VLAN.set_learning_modeResponse"/>
+	</operation>
+	<operation name="set_auto_lasthop">
+	<documentation>
+ Sets the attribute that specifies auto-lasthop behavior,
+ for the specified VLANS.
+ This controls how the system routes return traffic.
+ The default is AUTO_LASTHOP_DEFAULT.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_auto_lasthopRequest"/>
+		<output message="tns:Networking.VLAN.set_auto_lasthopResponse"/>
+	</operation>
+	<operation name="get_auto_lasthop">
+	<documentation>
+ Gets the attribute that specifies auto-lasthop behavior,
+ for the specified VLANS.
+ 
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_auto_lasthopRequest"/>
+		<output message="tns:Networking.VLAN.get_auto_lasthopResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of VLANs.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_descriptionRequest"/>
+		<output message="tns:Networking.VLAN.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_descriptionRequest"/>
+		<output message="tns:Networking.VLAN.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_sflow_poll_interval">
+	<documentation>
+ Sets the sFlow poll intervals for the specified VLANs. This is
+ the maximum interval in seconds between polling of the specified
+ VLANs. You should set the poll intervals for the VLANs when you
+ want the counters associated with these VLANs to be sampled at an 
+ interval that is different than the global sFlow poll interval. 
+ Note: you will also need to set the polling type to SFLOW_GLOBAL_NO 
+ (see set_sflow_poll_interval_global). The default is 0 (zero).
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_sflow_poll_intervalRequest"/>
+		<output message="tns:Networking.VLAN.set_sflow_poll_intervalResponse"/>
+	</operation>
+	<operation name="get_sflow_poll_interval">
+	<documentation>
+ Gets the sFlow poll intervals for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_sflow_poll_intervalRequest"/>
+		<output message="tns:Networking.VLAN.get_sflow_poll_intervalResponse"/>
+	</operation>
+	<operation name="set_sflow_poll_interval_global">
+	<documentation>
+ Sets the sFlow polling types for the specified VLANs. It
+ allows you to specify whether the global sFlow poll interval
+ overrides the object-level poll interval for the specified
+ VLANs. The default is SFLOW_GLOBAL_YES.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_sflow_poll_interval_globalRequest"/>
+		<output message="tns:Networking.VLAN.set_sflow_poll_interval_globalResponse"/>
+	</operation>
+	<operation name="get_sflow_poll_interval_global">
+	<documentation>
+ Gets the sFlow polling types for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_sflow_poll_interval_globalRequest"/>
+		<output message="tns:Networking.VLAN.get_sflow_poll_interval_globalResponse"/>
+	</operation>
+	<operation name="set_sflow_sampling_rate">
+	<documentation>
+ Sets the sFlow sampling rates for the specified VLANs. This is
+ the ratio of packets observed at the specified VLANs to the number
+ of samples you want the the BIG-IP system to generate. For example,
+ a sampling rate of 2000 specifies that 1 sample will be randomly 
+ generated for every 2000 packets observed. You should set the 
+ sampling rates for the VLANs when you want the traffic flowing 
+ through these VLANs to be sampled at a rate that is different than 
+ the global sFlow sampling rate. Note: you will also need to set the 
+ sampling type to SFLOW_GLOBAL_NO (see set_sflow_sampling_rate_global). 
+ The default is 0 (zero).
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_sflow_sampling_rateRequest"/>
+		<output message="tns:Networking.VLAN.set_sflow_sampling_rateResponse"/>
+	</operation>
+	<operation name="get_sflow_sampling_rate">
+	<documentation>
+ Gets the sFlow sampling rates for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_sflow_sampling_rateRequest"/>
+		<output message="tns:Networking.VLAN.get_sflow_sampling_rateResponse"/>
+	</operation>
+	<operation name="set_sflow_sampling_rate_global">
+	<documentation>
+ Sets the sFlow sampling types for the specified VLANs. It
+ allows you to specify whether the global sFlow sampling rate
+ overrides the object-level sampling rate for the specified
+ VLANs. The default is SFLOW_GLOBAL_YES.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.set_sflow_sampling_rate_globalRequest"/>
+		<output message="tns:Networking.VLAN.set_sflow_sampling_rate_globalResponse"/>
+	</operation>
+	<operation name="get_sflow_sampling_rate_global">
+	<documentation>
+ Gets the sFlow sampling types for the specified VLANs.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_sflow_sampling_rate_globalRequest"/>
+		<output message="tns:Networking.VLAN.get_sflow_sampling_rate_globalResponse"/>
+	</operation>
+	<operation name="get_if_index">
+	<documentation>
+ Gets the IF indices for the specified VLANs. This is a
+ unique identifier assigned to all objects displayed in 
+ the SNMP IF-MIB.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_if_indexRequest"/>
+		<output message="tns:Networking.VLAN.get_if_indexResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Networking.VLAN.get_versionRequest"/>
+		<output message="tns:Networking.VLAN.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.VLANBinding" type="tns:Networking.VLANPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all VLANs on this device.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ This function has been deprecated; please use create_v2().
+
+ Creates the specified VLANs with extended attributes.  If mac masquerade
+ addresses are specified, they follow the same behavior as set_mac_masquerade_address()
+ on this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create_v2">
+	<documentation>
+ Creates the specified VLANs with extended attributes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_vlan">
+	<documentation>
+ Deletes the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_vlans">
+	<documentation>
+ Deletes all VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_member">
+	<documentation>
+ Gets the members of the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_member">
+	<documentation>
+ Adds the specified member interfaces/trunks to the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_member">
+	<documentation>
+ Removes the specified member interfaces/trunks from the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_members">
+	<documentation>
+ Removes all member interfaces/trunks from the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_static_forwarding">
+	<documentation>
+ Retrieves the static forwarding entries for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_static_forwarding">
+	<documentation>
+ Adds the static forwarding entries for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_static_forwarding">
+	<documentation>
+ Removes the static forwarding entries from the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_static_forwardings">
+	<documentation>
+ Removes all static forwarding entries from the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_static_forwarding_description">
+	<documentation>
+ Sets the description for a set of static forwarding entries.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_static_forwarding_description">
+	<documentation>
+ Gets the descriptions for a set of static forwarding entries.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_dynamic_forwarding">
+	<documentation>
+ Retrieves the dynamic forwarding entries for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_dynamic_forwardings">
+	<documentation>
+ Removes all dynamic forwarding entries from the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_vlan_id">
+	<documentation>
+ Sets the tag ids for the specified VLANs.
+
+ Note: In some releases (9.4.0+), this method is not supported;
+ delete and re-create the VLAN instead. In versions 10.0.0+,
+ this method is supported.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_vlan_id">
+	<documentation>
+ Gets the ids for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_customer_id">
+	<documentation>
+ Sets the customer tag ids for the specified VLANs for QinQ support.
+ The customer tag can be set to any valid number between 1-4094.
+ The customer tag field is set for QinQ vlans, and it represents the tag value
+ for the vlan members that are facing the customer network.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_customer_id">
+	<documentation>
+ Gets the customer ids for the specified VLANs with support for QinQ.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_member_tag_mode">
+	<documentation>
+ Sets the tag-mode for the vlan member in a QinQ vlan.
+ If the member is untagged, the tag-mode should be set to QINQ_TAG_MODE_NONE.
+ If the member is tagged, the tag-mode should be set as follows:
+  QINQ_TAG_MODE_CUSTOMER - when the member is facing the customer network.
+  QINQ_TAG_MODE_SERVICE  - when the member is facing the service provider network and
+                           the outbound packets are sent single tagged.
+  QINQ_TAG_MODE_DOUBLE   - when the member is facing the service provider network and
+                           the outbound packets are sent double tagged.
+
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_member_tag_mode">
+	<documentation>
+ Gets the tag-mode for the vlan member in a QinQ vlan.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_check_state">
+	<documentation>
+ Gets the source checking states for the specified VLANs. If enabled and auto lasthop is disabled,
+ check that the source of the first packet of a connection is correct (correct VLAN, router, node).
+ This is equivalent to BSD's net.inet.sourcecheck sysctl variable.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_check_state">
+	<documentation>
+ Sets the the source checking states for the specified VLANs. If enabled and auto lasthop is disabled,
+ check that the source of the first packet of a connection is correct (correct VLAN, router, node).
+ This is equivalent to BSD's net.inet.sourcecheck sysctl variable.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_failsafe_timeout">
+	<documentation>
+ Gets the failsafe timeouts for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_failsafe_timeout">
+	<documentation>
+ Sets the failsafe timeouts for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_failsafe_state">
+	<documentation>
+ Gets the failsafe states for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_dag_round_robin_state">
+	<documentation>
+ Sets the state that, if enabled, forces a VLAN to disaggregrate
+ stateless traffic using a round-robin order instead of using a static hash.
+ The default state is disabled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_dag_round_robin_state">
+	<documentation>
+ Gets the state that, if enabled, forces a VLAN to disaggregrate stateless traffic
+ using a round-robin order instead of using a static hash
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_failsafe_state">
+	<documentation>
+ Sets the failsafe states for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_failsafe_action">
+	<documentation>
+ Gets the failsafe actions for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_failsafe_action">
+	<documentation>
+ Sets the failsafe actions for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_cmp_hash_algorithm">
+	<documentation>
+ Sets the CMP hash algorithm for the specified VLANs.
+
+ The CMP hash algorithm decides the traffic dissagregation criteria
+ for a vlan. This allows all connections from a client to land on
+ the same set of TMMs. It improves tmm performance by localizing
+ the sessionDB lookup.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_cmp_hash_algorithm">
+	<documentation>
+ Gets the CMP hash algorithms for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_mac_masquerade_address">
+	<documentation>
+ This function is deprecated.  MAC masquerade addresses are now configured
+ on traffic groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_mac_masquerade_address">
+	<documentation>
+ This function is deprecated.  MAC masquerade address are now configured
+ on traffic groups.
+
+ If there is only one floating traffic group in the system, this function will
+ set the traffic group's MAC masquerade address to the last address in
+ mac_masquerade_addresses and discard all other MAC addresses provided.  If
+ there is more than one floating traffic group, a Common::OperationFailed exception
+ is raised.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_true_mac_address">
+	<documentation>
+ Gets the true MAC addresses used by the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_mtu">
+	<documentation>
+ Gets the MTUs for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_mtu">
+	<documentation>
+ Sets the MTUs for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_learning_mode">
+	<documentation>
+ Gets the configured learning modes of the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_learning_mode">
+	<documentation>
+ Sets the learning modes for the specified VLANs.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_auto_lasthop">
+	<documentation>
+ Sets the attribute that specifies auto-lasthop behavior,
+ for the specified VLANS.
+ This controls how the system routes return traffic.
+ The default is AUTO_LASTHOP_DEFAULT.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_auto_lasthop">
+	<documentation>
+ Gets the attribute that specifies auto-lasthop behavior,
+ for the specified VLANS.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of VLANs.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_sflow_poll_interval">
+	<documentation>
+ Sets the sFlow poll intervals for the specified VLANs. This is
+ the maximum interval in seconds between polling of the specified
+ VLANs. You should set the poll intervals for the VLANs when you
+ want the counters associated with these VLANs to be sampled at an 
+ interval that is different than the global sFlow poll interval. 
+ Note: you will also need to set the polling type to SFLOW_GLOBAL_NO 
+ (see set_sflow_poll_interval_global). The default is 0 (zero).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_sflow_poll_interval">
+	<documentation>
+ Gets the sFlow poll intervals for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_sflow_poll_interval_global">
+	<documentation>
+ Sets the sFlow polling types for the specified VLANs. It
+ allows you to specify whether the global sFlow poll interval
+ overrides the object-level poll interval for the specified
+ VLANs. The default is SFLOW_GLOBAL_YES.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_sflow_poll_interval_global">
+	<documentation>
+ Gets the sFlow polling types for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_sflow_sampling_rate">
+	<documentation>
+ Sets the sFlow sampling rates for the specified VLANs. This is
+ the ratio of packets observed at the specified VLANs to the number
+ of samples you want the the BIG-IP system to generate. For example,
+ a sampling rate of 2000 specifies that 1 sample will be randomly 
+ generated for every 2000 packets observed. You should set the 
+ sampling rates for the VLANs when you want the traffic flowing 
+ through these VLANs to be sampled at a rate that is different than 
+ the global sFlow sampling rate. Note: you will also need to set the 
+ sampling type to SFLOW_GLOBAL_NO (see set_sflow_sampling_rate_global). 
+ The default is 0 (zero).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_sflow_sampling_rate">
+	<documentation>
+ Gets the sFlow sampling rates for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_sflow_sampling_rate_global">
+	<documentation>
+ Sets the sFlow sampling types for the specified VLANs. It
+ allows you to specify whether the global sFlow sampling rate
+ overrides the object-level sampling rate for the specified
+ VLANs. The default is SFLOW_GLOBAL_YES.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_sflow_sampling_rate_global">
+	<documentation>
+ Gets the sFlow sampling types for the specified VLANs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_if_index">
+	<documentation>
+ Gets the IF indices for the specified VLANs. This is a
+ unique identifier assigned to all objects displayed in 
+ the SNMP IF-MIB.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/VLAN"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/VLAN"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.VLAN">
+	<documentation>
+ The VLAN interface enables you to work with the definitions and attributes contained in a device's VLAN.  
+
+        	</documentation>
+	<port name="Networking.VLANPort" binding="tns:Networking.VLANBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

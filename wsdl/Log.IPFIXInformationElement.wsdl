@@ -1,0 +1,811 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Log.IPFIXInformationElement"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Log.IPFIXInformationElement.DataTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Log.IPFIXInformationElement.DataType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Log.IPFIXInformationElement.DefinitionSourceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Log.IPFIXInformationElement.DefinitionSource[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Log.IPFIXInformationElement.DefinitionSource">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="IPFIX_DEFINITION_SOURCE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DEFINITION_SOURCE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DEFINITION_SOURCE_USER">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DEFINITION_SOURCE_USER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DEFINITION_SOURCE_BASE">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DEFINITION_SOURCE_BASE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.UShortSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:int[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Log.IPFIXInformationElement.DataType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="IPFIX_DATA_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_OCTETARRAY">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_OCTETARRAY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_UNSIGNED8">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_UNSIGNED8</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_UNSIGNED16">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_UNSIGNED16</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_UNSIGNED32">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_UNSIGNED32</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_UNSIGNED64">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_UNSIGNED64</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_SIGNED8">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_SIGNED8</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_SIGNED16">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_SIGNED16</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_SIGNED32">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_SIGNED32</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_SIGNED64">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_SIGNED64</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_FLOAT32">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_FLOAT32</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_FLOAT64">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_FLOAT64</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_BOOLEAN">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_BOOLEAN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_MACADDRESS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_MACADDRESS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_STRING">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_STRING</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_DATETIMESECONDS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_DATETIMESECONDS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_DATETIMEMILLISECONDS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_DATETIMEMILLISECONDS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_DATETIMEMICROSECONDS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_DATETIMEMICROSECONDS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_DATETIMENANOSECONDS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_DATETIMENANOSECONDS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_IPV4ADDRESS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_IPV4ADDRESS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IPFIX_DATA_TYPE_IPV6ADDRESS">
+					<xsd:annotation>
+						<xsd:documentation>IPFIX_DATA_TYPE_IPV6ADDRESS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Log.IPFIXInformationElement.get_listRequest">
+</message>
+<message name="Log.IPFIXInformationElement.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Log.IPFIXInformationElement.createRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.createResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.delete_ipfix_elementRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.delete_ipfix_elementResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.delete_all_ipfix_elementsRequest">
+</message>
+<message name="Log.IPFIXInformationElement.delete_all_ipfix_elementsResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.set_element_idRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.UShortSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.set_element_idResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.get_element_idRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="definition_sources" type="tns:Log.IPFIXInformationElement.DefinitionSourceSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.get_element_idResponse">
+	<part name="return" type="tns:Common.UShortSequence"/>
+</message>
+
+<message name="Log.IPFIXInformationElement.set_data_typeRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Log.IPFIXInformationElement.DataTypeSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.set_data_typeResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.get_data_typeRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="definition_sources" type="tns:Log.IPFIXInformationElement.DefinitionSourceSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.get_data_typeResponse">
+	<part name="return" type="tns:Log.IPFIXInformationElement.DataTypeSequence"/>
+</message>
+
+<message name="Log.IPFIXInformationElement.set_data_type_sizeRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.UShortSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.set_data_type_sizeResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.get_data_type_sizeRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="definition_sources" type="tns:Log.IPFIXInformationElement.DefinitionSourceSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.get_data_type_sizeResponse">
+	<part name="return" type="tns:Common.UShortSequence"/>
+</message>
+
+<message name="Log.IPFIXInformationElement.set_enterprise_idRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.set_enterprise_idResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.get_enterprise_idRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="definition_sources" type="tns:Log.IPFIXInformationElement.DefinitionSourceSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.get_enterprise_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Log.IPFIXInformationElement.set_descriptionRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.set_descriptionResponse">
+</message>
+
+<message name="Log.IPFIXInformationElement.get_descriptionRequest">
+	<part name="elements" type="tns:Common.StringSequence"/>
+	<part name="definition_sources" type="tns:Log.IPFIXInformationElement.DefinitionSourceSequence"/>
+</message>
+<message name="Log.IPFIXInformationElement.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Log.IPFIXInformationElement.get_versionRequest">
+</message>
+<message name="Log.IPFIXInformationElement.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Log.IPFIXInformationElementPortType">
+	<operation name="get_list">
+     	<documentation>
+ Gets the list of IPFIX Elements.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_listRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates an IPFIX IE. Notice that it is desirable to set the
+ enterprise id to something different than the default zero. Zero
+ is mainly used for the IPFIX information model [RFC5102] defined base elements.
+ If data types include IPFIX_DATA_TYPE_STRING and/or IPFIX_DATA_TYPE_OCTETARRAY,
+ the default size is zero, which means variable length. Specify sizes with the
+ respective set method if your elements have a fixed length for those elements.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.createRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.createResponse"/>
+	</operation>
+	<operation name="delete_ipfix_element">
+	<documentation>
+ Deletes the specified user IPFIX Information Element.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.delete_ipfix_elementRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.delete_ipfix_elementResponse"/>
+	</operation>
+	<operation name="delete_all_ipfix_elements">
+	<documentation>
+ Deletes all user defined IPFIX Information Elements.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.delete_all_ipfix_elementsRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.delete_all_ipfix_elementsResponse"/>
+	</operation>
+	<operation name="set_element_id">
+	<documentation>
+ Sets the id for the specified IPFIX IEs.
+ This is a numeric identifier of the Information Element. If this identifier is used
+ without an enterprise identifier, then it is globally unique and the list
+ of allowed values is administered by the Internet Assigned Numbers Authority (IANA).
+ It is used for compact identification of an Information Element when encoding Templates
+ in the protocol. This is only applicable on user defined source elements. Base elements
+ cannot change.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.set_element_idRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.set_element_idResponse"/>
+	</operation>
+	<operation name="get_element_id">
+	<documentation>
+ Gets the ids for the specified IPFIX IEs.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_element_idRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_element_idResponse"/>
+	</operation>
+	<operation name="set_data_type">
+	<documentation>
+ Sets the data type for the specified IPFIX IEs. The IPFIX Information model
+ [RFC5102] has defined a constrained set of data types for IEs to facilitate
+ implementation. This is only applicable on user defined source elements.
+ Base elements cannot change.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.set_data_typeRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.set_data_typeResponse"/>
+	</operation>
+	<operation name="get_data_type">
+	<documentation>
+ Gets the data type for the specified IPFIX IEs.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_data_typeRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_data_typeResponse"/>
+	</operation>
+	<operation name="set_data_type_size">
+	<documentation>
+ Sets the sizes for the specified IPFIX IEs. It is only applicable for
+ string and octetarray data types. Other data types ignore this value. Using
+ 0 means the string or the octetarray has a variable length. The value must
+ be in the range of 0 to 65535. This is only applicable on user defined source
+ elements. Base elements cannot change.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.set_data_type_sizeRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.set_data_type_sizeResponse"/>
+	</operation>
+	<operation name="get_data_type_size">
+	<documentation>
+ Gets the data data type size for the specified IPFIX IEs.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_data_type_sizeRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_data_type_sizeResponse"/>
+	</operation>
+	<operation name="set_enterprise_id">
+	<documentation>
+ Sets the enterprise id for the specified IPFIX IEs. It is set to zero
+ by default. Enterprises may wish to define Information Elements
+ without registering them with IANA, for example, for enterprise-internal
+ purposes. For such IEs, the IE identifier described above is not
+ sufficient when the IE is used outside the enterprise. If specifications
+ of enterprise-specific IEs are made public and/or if enterprise-specific
+ identifiers are used by the IPFIX protocol outside the enterprise, then the
+ enterprise-specific identifier MUST be made globally unique by combining it
+ with an enterprise identifier. Valid values for the enterpriseId are
+ defined by IANA as Structure of Management Information (SMI) network
+ management private enterprise codes. This is only applicable on user defined
+ source elements. Base elements cannot change.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.set_enterprise_idRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.set_enterprise_idResponse"/>
+	</operation>
+	<operation name="get_enterprise_id">
+	<documentation>
+ Gets the enterprise id for the specified IPFIX IEs.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_enterprise_idRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_enterprise_idResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified IPFIX IEs. This is only applicable on user
+ defined source elements. Base elements cannot change.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.set_descriptionRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified IPFIX IEs.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_descriptionRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Log.IPFIXInformationElement.get_versionRequest"/>
+		<output message="tns:Log.IPFIXInformationElement.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Log.IPFIXInformationElementBinding" type="tns:Log.IPFIXInformationElementPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the list of IPFIX Elements.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates an IPFIX IE. Notice that it is desirable to set the
+ enterprise id to something different than the default zero. Zero
+ is mainly used for the IPFIX information model [RFC5102] defined base elements.
+ If data types include IPFIX_DATA_TYPE_STRING and/or IPFIX_DATA_TYPE_OCTETARRAY,
+ the default size is zero, which means variable length. Specify sizes with the
+ respective set method if your elements have a fixed length for those elements.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_ipfix_element">
+	<documentation>
+ Deletes the specified user IPFIX Information Element.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_ipfix_elements">
+	<documentation>
+ Deletes all user defined IPFIX Information Elements.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_element_id">
+	<documentation>
+ Sets the id for the specified IPFIX IEs.
+ This is a numeric identifier of the Information Element. If this identifier is used
+ without an enterprise identifier, then it is globally unique and the list
+ of allowed values is administered by the Internet Assigned Numbers Authority (IANA).
+ It is used for compact identification of an Information Element when encoding Templates
+ in the protocol. This is only applicable on user defined source elements. Base elements
+ cannot change.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_element_id">
+	<documentation>
+ Gets the ids for the specified IPFIX IEs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_data_type">
+	<documentation>
+ Sets the data type for the specified IPFIX IEs. The IPFIX Information model
+ [RFC5102] has defined a constrained set of data types for IEs to facilitate
+ implementation. This is only applicable on user defined source elements.
+ Base elements cannot change.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_data_type">
+	<documentation>
+ Gets the data type for the specified IPFIX IEs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_data_type_size">
+	<documentation>
+ Sets the sizes for the specified IPFIX IEs. It is only applicable for
+ string and octetarray data types. Other data types ignore this value. Using
+ 0 means the string or the octetarray has a variable length. The value must
+ be in the range of 0 to 65535. This is only applicable on user defined source
+ elements. Base elements cannot change.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_data_type_size">
+	<documentation>
+ Gets the data data type size for the specified IPFIX IEs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_enterprise_id">
+	<documentation>
+ Sets the enterprise id for the specified IPFIX IEs. It is set to zero
+ by default. Enterprises may wish to define Information Elements
+ without registering them with IANA, for example, for enterprise-internal
+ purposes. For such IEs, the IE identifier described above is not
+ sufficient when the IE is used outside the enterprise. If specifications
+ of enterprise-specific IEs are made public and/or if enterprise-specific
+ identifiers are used by the IPFIX protocol outside the enterprise, then the
+ enterprise-specific identifier MUST be made globally unique by combining it
+ with an enterprise identifier. Valid values for the enterpriseId are
+ defined by IANA as Structure of Management Information (SMI) network
+ management private enterprise codes. This is only applicable on user defined
+ source elements. Base elements cannot change.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_enterprise_id">
+	<documentation>
+ Gets the enterprise id for the specified IPFIX IEs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified IPFIX IEs. This is only applicable on user
+ defined source elements. Base elements cannot change.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified IPFIX IEs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/IPFIXInformationElement"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/IPFIXInformationElement"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Log.IPFIXInformationElement">
+	<documentation>
+ The IPFIX Information Element (IE) interface enables you to get, create,
+ modify and delete IEs that are used to define standard IEs
+ or user defined IEs; to be able to filter via iRules the IEs that the
+ customer is interested in when enabling IPFIX destination as a log
+ destination.
+
+ An Information Element is a protocol and encoding-independent description
+ of an attribute that may appear in an IPFIX Record. The IPFIX information
+ model [RFC5102] defines the base set of Information Elements for IPFIX.
+ The type associated with an Information Element indicates constraints on what
+ it may contain and also determines the valid encoding mechanisms for use in IPFIX.
+
+        	</documentation>
+	<port name="Log.IPFIXInformationElementPort" binding="tns:Log.IPFIXInformationElementBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

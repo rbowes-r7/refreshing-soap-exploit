@@ -1,0 +1,1712 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="System.Connections"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="System.Connections.ActiveConnectionV2Sequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:System.Connections.ActiveConnectionV2[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="System.Connections.ConnectionID">
+			<xsd:sequence>
+				<xsd:element name="clientside_client" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="clientside_server" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="serverside_server" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="protocol" type="tns:Common.ProtocolType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="System.Connections.ActiveConnectionSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:System.Connections.ActiveConnection[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULong64">
+			<xsd:sequence>
+				<xsd:element name="high" type="xsd:long"/>
+				<xsd:element name="low" type="xsd:long"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.ProtocolType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="PROTOCOL_ANY">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ANY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IPV6">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IPV6</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ROUTING">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ROUTING</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_NONE">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_FRAGMENT">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_FRAGMENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_DSTOPTS">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_DSTOPTS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TCP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TCP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_UDP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_UDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ICMP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ICMP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ICMPV6">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ICMPV6</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_OSPF">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_OSPF</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SCTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SCTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IGMP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IGMP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_GGP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_GGP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IPV4">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IPV4</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ST">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ST</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_EGP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_EGP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_PIGP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_PIGP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_RCCMON">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_RCCMON</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_NVPII">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_NVPII</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_PUP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_PUP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ARGUS">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ARGUS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_EMCON">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_EMCON</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_XNET">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_XNET</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_CHAOS">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_CHAOS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_MUX">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_MUX</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_MEAS">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_MEAS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_HMP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_HMP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_PRM">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_PRM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IDP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TRUNK1">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TRUNK1</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TRUNK2">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TRUNK2</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_LEAF1">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_LEAF1</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_LEAF2">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_LEAF2</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_RDP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_RDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IRTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IRTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_BLT">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_BLT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_NSP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_NSP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_INP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_INP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SEP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SEP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_3PC">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_3PC</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IDPR">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IDPR</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_XTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_XTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_DDP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_DDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_CMTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_CMTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TPXX">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TPXX</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IL">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SDRP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SDRP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IDRP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IDRP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_RSVP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_RSVP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_GRE">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_GRE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_MHRP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_MHRP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_BHA">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_BHA</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ESP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ESP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_AH">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_AH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_INLSP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_INLSP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SWIPE">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SWIPE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_NHRP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_NHRP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_55">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_55</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_56">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_56</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_57">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_57</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_AHIP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_AHIP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_CFTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_CFTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_HELLO">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_HELLO</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SATEXPAK">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SATEXPAK</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_KRYPTOLAN">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_KRYPTOLAN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_RVD">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_RVD</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IPPC">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IPPC</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ADFS">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ADFS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SATMON">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SATMON</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_VISA">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_VISA</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IPCV">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IPCV</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_CPNX">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_CPNX</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_CPHB">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_CPHB</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_WSN">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_WSN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_PVP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_PVP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_BRSATMON">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_BRSATMON</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ND">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ND</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_WBMON">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_WBMON</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_WBEXPAK">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_WBEXPAK</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_EON">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_EON</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_VMTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_VMTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SVMTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SVMTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_VINES">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_VINES</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IGP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IGP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_DGP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_DGP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_TCF">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_TCF</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IGRP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IGRP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SRPC">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SRPC</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_LARP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_LARP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_MTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_MTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_AX25">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_AX25</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IPEIP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IPEIP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_MICP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_MICP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_SCCSP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_SCCSP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ETHERIP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ETHERIP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_ENCAP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_ENCAP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_APES">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_APES</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_GMTP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_GMTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_101">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_101</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_102">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_102</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_PIM">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_PIM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_104">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_104</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_105">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_105</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_106">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_106</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_107">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_107</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_IPCOMP">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_IPCOMP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_109">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_109</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_110">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_110</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_111">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_111</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_112">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_112</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_PGM">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_PGM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_114">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_114</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_115">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_115</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_116">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_116</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_117">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_117</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_118">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_118</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_119">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_119</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_120">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_120</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_121">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_121</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_122">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_122</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_123">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_123</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_124">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_124</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_125">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_125</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_126">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_126</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_127">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_127</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_128">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_128</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_129">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_129</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_130">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_130</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_131">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_131</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_133">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_133</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_134">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_134</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_MH">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_MH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_136">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_136</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_137">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_137</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_138">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_138</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_139">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_139</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_140">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_140</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_141">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_141</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_142">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_142</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_143">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_143</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_144">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_144</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_145">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_145</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_146">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_146</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_147">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_147</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_148">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_148</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_149">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_149</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_150">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_150</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_151">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_151</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_152">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_152</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_153">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_153</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_154">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_154</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_155">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_155</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_156">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_156</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_157">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_157</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_158">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_158</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_159">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_159</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_160">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_160</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_161">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_161</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_162">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_162</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_163">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_163</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_164">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_164</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_165">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_165</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_166">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_166</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_167">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_167</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_168">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_168</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_169">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_169</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_170">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_170</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_171">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_171</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_172">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_172</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_173">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_173</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_174">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_174</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_175">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_175</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_176">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_176</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_177">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_177</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_178">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_178</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_179">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_179</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_180">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_180</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_181">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_181</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_182">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_182</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_183">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_183</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_184">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_184</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_185">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_185</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_186">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_186</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_187">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_187</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_188">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_188</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_189">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_189</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_190">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_190</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_191">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_191</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_192">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_192</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_193">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_193</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_194">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_194</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_195">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_195</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_196">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_196</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_197">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_197</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_198">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_198</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_199">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_199</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_200">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_200</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_201">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_201</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_202">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_202</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_203">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_203</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_204">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_204</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_205">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_205</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_206">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_206</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_207">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_207</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_208">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_208</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_209">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_209</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_210">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_210</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_211">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_211</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_212">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_212</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_213">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_213</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_214">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_214</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_215">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_215</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_216">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_216</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_217">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_217</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_218">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_218</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_219">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_219</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_220">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_220</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_221">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_221</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_222">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_222</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_223">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_223</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_224">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_224</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_225">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_225</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_226">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_226</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_227">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_227</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_228">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_228</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_229">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_229</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_230">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_230</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_231">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_231</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_232">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_232</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_233">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_233</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_234">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_234</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_235">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_235</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_236">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_236</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_237">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_237</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_238">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_238</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_239">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_239</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_240">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_240</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_241">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_241</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_242">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_242</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_243">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_243</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_244">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_244</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_245">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_245</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_246">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_246</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_247">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_247</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_248">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_248</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_249">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_249</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_250">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_250</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_251">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_251</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_252">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_252</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_253">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_253</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_DIVERT">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_DIVERT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROTOCOL_RAW">
+					<xsd:annotation>
+						<xsd:documentation>PROTOCOL_RAW</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="System.Connections.ConnectionIDSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:System.Connections.ConnectionID[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPPortDefinition">
+			<xsd:sequence>
+				<xsd:element name="address" type="xsd:string"/>
+				<xsd:element name="port" type="xsd:long"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="System.Connections.ActiveConnectionV2">
+			<xsd:sequence>
+				<xsd:element name="connection_id" type="tns:System.Connections.ConnectionID"/>
+				<xsd:element name="serverside_client" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="virtual_path" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="traffic_group" type="xsd:string"/>
+				<xsd:element name="clientside_bytes_in" type="tns:Common.ULong64"/>
+				<xsd:element name="clientside_bytes_out" type="tns:Common.ULong64"/>
+				<xsd:element name="clientside_packets_in" type="tns:Common.ULong64"/>
+				<xsd:element name="clientside_packets_out" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_bytes_in" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_bytes_out" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_packets_in" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_packets_out" type="tns:Common.ULong64"/>
+				<xsd:element name="idle_time" type="xsd:long"/>
+				<xsd:element name="idle_timeout" type="xsd:long"/>
+				<xsd:element name="lasthop_info" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="System.Connections.ActiveConnection">
+			<xsd:sequence>
+				<xsd:element name="connection_id" type="tns:System.Connections.ConnectionID"/>
+				<xsd:element name="serverside_client" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="virtual_path" type="tns:Common.IPPortDefinition"/>
+				<xsd:element name="unit_id" type="xsd:long"/>
+				<xsd:element name="clientside_bytes_in" type="tns:Common.ULong64"/>
+				<xsd:element name="clientside_bytes_out" type="tns:Common.ULong64"/>
+				<xsd:element name="clientside_packets_in" type="tns:Common.ULong64"/>
+				<xsd:element name="clientside_packets_out" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_bytes_in" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_bytes_out" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_packets_in" type="tns:Common.ULong64"/>
+				<xsd:element name="serverside_packets_out" type="tns:Common.ULong64"/>
+				<xsd:element name="idle_time" type="xsd:long"/>
+				<xsd:element name="idle_timeout" type="xsd:long"/>
+				<xsd:element name="lasthop_info" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="System.Connections.get_listRequest">
+</message>
+<message name="System.Connections.get_listResponse">
+	<part name="return" type="tns:System.Connections.ConnectionIDSequence"/>
+</message>
+
+<message name="System.Connections.delete_active_connectionRequest">
+	<part name="connections" type="tns:System.Connections.ConnectionIDSequence"/>
+</message>
+<message name="System.Connections.delete_active_connectionResponse">
+</message>
+
+<message name="System.Connections.delete_all_active_connectionsRequest">
+</message>
+<message name="System.Connections.delete_all_active_connectionsResponse">
+</message>
+
+<message name="System.Connections.get_active_connectionRequest">
+	<part name="connections" type="tns:System.Connections.ConnectionIDSequence"/>
+</message>
+<message name="System.Connections.get_active_connectionResponse">
+	<part name="return" type="tns:System.Connections.ActiveConnectionSequence"/>
+</message>
+
+<message name="System.Connections.get_all_active_connectionsRequest">
+</message>
+<message name="System.Connections.get_all_active_connectionsResponse">
+	<part name="return" type="tns:System.Connections.ActiveConnectionSequence"/>
+</message>
+
+<message name="System.Connections.get_active_connection_v2Request">
+	<part name="connections" type="tns:System.Connections.ConnectionIDSequence"/>
+</message>
+<message name="System.Connections.get_active_connection_v2Response">
+	<part name="return" type="tns:System.Connections.ActiveConnectionV2Sequence"/>
+</message>
+
+<message name="System.Connections.get_all_active_connections_v2Request">
+</message>
+<message name="System.Connections.get_all_active_connections_v2Response">
+	<part name="return" type="tns:System.Connections.ActiveConnectionV2Sequence"/>
+</message>
+
+<message name="System.Connections.get_versionRequest">
+</message>
+<message name="System.Connections.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="System.ConnectionsPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets the list of active connections.
+
+        	</documentation>
+		<input message="tns:System.Connections.get_listRequest"/>
+		<output message="tns:System.Connections.get_listResponse"/>
+	</operation>
+	<operation name="delete_active_connection">
+	<documentation>
+ Deletes the specified connections from the connection table.
+
+        	</documentation>
+		<input message="tns:System.Connections.delete_active_connectionRequest"/>
+		<output message="tns:System.Connections.delete_active_connectionResponse"/>
+	</operation>
+	<operation name="delete_all_active_connections">
+	<documentation>
+ Deletes all active connections from the connection table.
+
+        	</documentation>
+		<input message="tns:System.Connections.delete_all_active_connectionsRequest"/>
+		<output message="tns:System.Connections.delete_all_active_connectionsResponse"/>
+	</operation>
+	<operation name="get_active_connection">
+	<documentation>
+ Gets the active connections in detail for the specified connections.
+
+ If some of the connections requested no longer exist (or
+ never existed), the system skips them and returns the
+ entries it can, in which case the result sequence will be
+ shorter than the input sequence and you can check the key
+ fields in the result to see which connections exist.
+
+        	</documentation>
+		<input message="tns:System.Connections.get_active_connectionRequest"/>
+		<output message="tns:System.Connections.get_active_connectionResponse"/>
+	</operation>
+	<operation name="get_all_active_connections">
+	<documentation>
+ Gets all active connections in details on the local load balancer.
+
+        	</documentation>
+		<input message="tns:System.Connections.get_all_active_connectionsRequest"/>
+		<output message="tns:System.Connections.get_all_active_connectionsResponse"/>
+	</operation>
+	<operation name="get_active_connection_v2">
+	<documentation>
+ Gets the active connections in detail for the specified connections.
+
+ If some of the connections requested no longer exist (or
+ never existed), the system skips them and returns the
+ entries it can, in which case the result sequence will be
+ shorter than the input sequence and you can check the key
+ fields in the result to see which connections exist.
+
+        	</documentation>
+		<input message="tns:System.Connections.get_active_connection_v2Request"/>
+		<output message="tns:System.Connections.get_active_connection_v2Response"/>
+	</operation>
+	<operation name="get_all_active_connections_v2">
+	<documentation>
+ Gets all active connections in details on the local load balancer.
+
+        	</documentation>
+		<input message="tns:System.Connections.get_all_active_connections_v2Request"/>
+		<output message="tns:System.Connections.get_all_active_connections_v2Response"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:System.Connections.get_versionRequest"/>
+		<output message="tns:System.Connections.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="System.ConnectionsBinding" type="tns:System.ConnectionsPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the list of active connections.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_active_connection">
+	<documentation>
+ Deletes the specified connections from the connection table.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_active_connections">
+	<documentation>
+ Deletes all active connections from the connection table.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_active_connection">
+	<documentation>
+ Gets the active connections in detail for the specified connections.
+
+ If some of the connections requested no longer exist (or
+ never existed), the system skips them and returns the
+ entries it can, in which case the result sequence will be
+ shorter than the input sequence and you can check the key
+ fields in the result to see which connections exist.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_all_active_connections">
+	<documentation>
+ Gets all active connections in details on the local load balancer.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_active_connection_v2">
+	<documentation>
+ Gets the active connections in detail for the specified connections.
+
+ If some of the connections requested no longer exist (or
+ never existed), the system skips them and returns the
+ entries it can, in which case the result sequence will be
+ shorter than the input sequence and you can check the key
+ fields in the result to see which connections exist.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_all_active_connections_v2">
+	<documentation>
+ Gets all active connections in details on the local load balancer.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:System/Connections"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:System/Connections"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="System.Connections">
+	<documentation>
+ The Connections interface enables you to get information about a device's connections.
+ For example, use Connection interface to get a list of all active connections or to get
+ a list of all active connections for a specific client.
+
+        	</documentation>
+	<port name="System.ConnectionsPort" binding="tns:System.ConnectionsBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

@@ -1,0 +1,233 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Classification.SignatureVersion"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.TimeStampSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.TimeStamp[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.TimeStamp">
+			<xsd:sequence>
+				<xsd:element name="year" type="xsd:long"/>
+				<xsd:element name="month" type="xsd:long"/>
+				<xsd:element name="day" type="xsd:long"/>
+				<xsd:element name="hour" type="xsd:long"/>
+				<xsd:element name="minute" type="xsd:long"/>
+				<xsd:element name="second" type="xsd:long"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Classification.SignatureVersion.get_listRequest">
+</message>
+<message name="Classification.SignatureVersion.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.SignatureVersion.get_update_timeRequest">
+	<part name="versions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.SignatureVersion.get_update_timeResponse">
+	<part name="return" type="tns:Common.TimeStampSequence"/>
+</message>
+
+<message name="Classification.SignatureVersion.get_version_numberRequest">
+	<part name="versions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.SignatureVersion.get_version_numberResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.SignatureVersion.get_versionRequest">
+</message>
+<message name="Classification.SignatureVersion.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Classification.SignatureVersionPortType">
+	<operation name="get_list">
+ 	<documentation>
+ Gets a list of all signature update versions.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureVersion.get_listRequest"/>
+		<output message="tns:Classification.SignatureVersion.get_listResponse"/>
+	</operation>
+	<operation name="get_update_time">
+	<documentation>
+ Gets the update times for the specified signature update 
+ versions. An update time specifies the time when the last 
+ classification signature is updated.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureVersion.get_update_timeRequest"/>
+		<output message="tns:Classification.SignatureVersion.get_update_timeResponse"/>
+	</operation>
+	<operation name="get_version_number">
+	<documentation>
+ Gets the version numbers (in strings) for the specified  
+ signature update versions. A version number specifies the 
+ version of the last updated classification signature. An example 
+ version number looks like: "version-number 7"; the higher the
+ number (in string) is, the newer the version is.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureVersion.get_version_numberRequest"/>
+		<output message="tns:Classification.SignatureVersion.get_version_numberResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Classification.SignatureVersion.get_versionRequest"/>
+		<output message="tns:Classification.SignatureVersion.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Classification.SignatureVersionBinding" type="tns:Classification.SignatureVersionPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all signature update versions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureVersion"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_update_time">
+	<documentation>
+ Gets the update times for the specified signature update 
+ versions. An update time specifies the time when the last 
+ classification signature is updated.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureVersion"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version_number">
+	<documentation>
+ Gets the version numbers (in strings) for the specified  
+ signature update versions. A version number specifies the 
+ version of the last updated classification signature. An example 
+ version number looks like: "version-number 7"; the higher the
+ number (in string) is, the newer the version is.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureVersion"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/SignatureVersion"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/SignatureVersion"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Classification.SignatureVersion">
+	<documentation>
+ The classification methods have some signatures, and these signatures 
+ change with time. For example, the signatures to identify the Skype 
+ traffic working now may not work later. Thus the classification  
+ signatures need to be updated. This signature update version  
+ interface enables you to configure the versions for classification 
+ signature updates. In more detail, the update time and version number 
+ of the last updated classification signature can be shown.
+
+ Please specify the following key in all methods in the interface: 
+ '/Common/version-info'.
+
+        	</documentation>
+	<port name="Classification.SignatureVersionPort" binding="tns:Classification.SignatureVersionBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

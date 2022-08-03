@@ -1,0 +1,1264 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.ContentPolicyStrategy"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="LocalLB.PolicyEventSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.PolicyEvent[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.PolicySelectorSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.PolicySelector[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.PolicySelector">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="POLICY_SELECTOR_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_ALL">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_ALL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_NAME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_NAME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_VALUE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_VALUE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_ADDRESS">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_ADDRESS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_HEADER">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_HEADER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_SCHEME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_SCHEME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_HOST">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_HOST</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_PORT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_PORT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_PATH">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_PATH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_QUERY_STRING">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_QUERY_STRING</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_EXTENSION">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_EXTENSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_PATH_SEGMENT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_PATH_SEGMENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_QUERY_PARAM">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_QUERY_PARAM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_UNNAMED_QUERY_PARAM">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_UNNAMED_QUERY_PARAM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_MAJOR">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_MAJOR</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_MINOR">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_MINOR</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_CODE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_CODE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_TEXT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_TEXT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_DOMAIN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_DOMAIN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_EXPIRY">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_EXPIRY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_VERSION">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_VERSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_USERNAME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_USERNAME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_PASSWORD">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_PASSWORD</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_PROTOCOL">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_PROTOCOL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_CIPHER">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_CIPHER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_CIPHER_BITS">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_CIPHER_BITS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_RTT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_RTT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_MSS">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_MSS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_VLAN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_VLAN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_VLAN_ID">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_VLAN_ID</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_ROUTE_DOMAIN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_ROUTE_DOMAIN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_SERVER_NAME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_SERVER_NAME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_COMMON_NAME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_COMMON_NAME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_NPN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_NPN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_ALPN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_ALPN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_CONTINENT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_CONTINENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_COUNTRY_CODE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_COUNTRY_CODE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_COUNTRY_NAME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_COUNTRY_NAME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_REGION_NAME">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_REGION_NAME</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_REGION_CODE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_REGION_CODE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_ORG">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_ORG</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_ISP">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_ISP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_LAST_15SECS">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_LAST_15SECS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_LAST_1MIN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_LAST_1MIN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_LAST_5MINS">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_LAST_5MINS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_DEVICE_MAKE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_DEVICE_MAKE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_DEVICE_MODEL">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_DEVICE_MODEL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_BROWSER_TYPE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_BROWSER_TYPE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_BROWSER_VERSION">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_BROWSER_VERSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_SELECTOR_UA_TOKEN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_SELECTOR_UA_TOKEN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.PolicyOperandSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.PolicyOperandSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.PolicyOperand">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="POLICY_OPERAND_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_TCP">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_TCP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_CLIENT_SSL">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_CLIENT_SSL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_METHOD">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_METHOD</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_URI">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_URI</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_VERSION">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_VERSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_STATUS">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_STATUS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_HOST">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_HOST</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_HEADER">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_HEADER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_REFERER">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_REFERER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_COOKIE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_COOKIE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_SET_COOKIE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_SET_COOKIE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_BASIC_AUTH">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_BASIC_AUTH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_HTTP_USER_AGENT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_HTTP_USER_AGENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_SSL_EXTENSION">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_SSL_EXTENSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_SSL_CERT">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_SSL_CERT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_GEOIP">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_GEOIP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_OPERAND_CPU_USAGE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_OPERAND_CPU_USAGE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.PolicyOperandSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.PolicyOperand[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.ContentPolicyStrategy.PolicyStrategy">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STRATEGY_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>STRATEGY_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STRATEGY_FIRST_MATCH">
+					<xsd:annotation>
+						<xsd:documentation>STRATEGY_FIRST_MATCH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STRATEGY_BEST_MATCH">
+					<xsd:annotation>
+						<xsd:documentation>STRATEGY_BEST_MATCH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STRATEGY_ALL_MATCH">
+					<xsd:annotation>
+						<xsd:documentation>STRATEGY_ALL_MATCH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.ContentPolicyStrategy.PolicyStrategySequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ContentPolicyStrategy.PolicyStrategy[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.PolicyEvent">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="POLICY_EVENT_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_CLIENT_ACCEPTED">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_CLIENT_ACCEPTED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_CLIENTSSL_CLIENTHELLO">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_CLIENTSSL_CLIENTHELLO</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_SERVER_CONNECTED">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_SERVER_CONNECTED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_SERVERSSL_SERVERHELLO">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_SERVERSSL_SERVERHELLO</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_SERVERSSL_HANDSHAKE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_SERVERSSL_HANDSHAKE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_HTTP_REQUEST">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_HTTP_REQUEST</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="POLICY_EVENT_HTTP_RESPONSE">
+					<xsd:annotation>
+						<xsd:documentation>POLICY_EVENT_HTTP_RESPONSE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.PolicySelectorSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.PolicySelectorSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.PolicyEventSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.PolicyEventSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.ContentPolicyStrategy.get_listRequest">
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.createRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.createResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.delete_policy_strategyRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.delete_policy_strategyResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.delete_all_policy_strategiesRequest">
+</message>
+<message name="LocalLB.ContentPolicyStrategy.delete_all_policy_strategiesResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.set_descriptionRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_descriptionRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.set_typeRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:LocalLB.ContentPolicyStrategy.PolicyStrategySequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.set_typeResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_typeRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_typeResponse">
+	<part name="return" type="tns:LocalLB.ContentPolicyStrategy.PolicyStrategySequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_operandRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_operandResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.add_operandRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+	<part name="operands" type="tns:LocalLB.PolicyOperandSequenceSequence"/>
+	<part name="events" type="tns:LocalLB.PolicyEventSequenceSequence"/>
+	<part name="selectors" type="tns:LocalLB.PolicySelectorSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.add_operandResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.remove_operandRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.remove_operandResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.remove_all_operandsRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.remove_all_operandsResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.set_operand_typeRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+	<part name="operands" type="tns:LocalLB.PolicyOperandSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.set_operand_typeResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_operand_typeRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_operand_typeResponse">
+	<part name="return" type="tns:LocalLB.PolicyOperandSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.set_operand_eventRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+	<part name="events" type="tns:LocalLB.PolicyEventSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.set_operand_eventResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_operand_eventRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_operand_eventResponse">
+	<part name="return" type="tns:LocalLB.PolicyEventSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.set_operand_selectorRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+	<part name="selectors" type="tns:LocalLB.PolicySelectorSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.set_operand_selectorResponse">
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_operand_selectorRequest">
+	<part name="strategies" type="tns:Common.StringSequence"/>
+	<part name="operand_ids" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_operand_selectorResponse">
+	<part name="return" type="tns:LocalLB.PolicySelectorSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ContentPolicyStrategy.get_versionRequest">
+</message>
+<message name="LocalLB.ContentPolicyStrategy.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.ContentPolicyStrategyPortType">
+	<operation name="get_list">
+   	<documentation>
+ Gets a list of all Content Policy Strategies.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_listRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a new Content Policy Strategy. The default Content Policy
+ Strategy Type is STRATEGY_ALL_MATCH.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.createRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.createResponse"/>
+	</operation>
+	<operation name="delete_policy_strategy">
+	<documentation>
+ Deletes a list of Content Policy Strategies.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.delete_policy_strategyRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.delete_policy_strategyResponse"/>
+	</operation>
+	<operation name="delete_all_policy_strategies">
+	<documentation>
+ Deletes all Content Policy Strategies.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.delete_all_policy_strategiesRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.delete_all_policy_strategiesResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of Content Policy Strategies.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.set_descriptionRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of Content Policy Strategies.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_descriptionRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_type">
+	<documentation>
+ Sets the Content Policy Strategy Types for a set of Conent Policy
+ Strategies. See PolicyStrategy for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.set_typeRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.set_typeResponse"/>
+	</operation>
+	<operation name="get_type">
+	<documentation>
+ Gets the Content Policy Strategy Types for a set of Conent Policy
+ Strategies.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_typeRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_typeResponse"/>
+	</operation>
+	<operation name="get_operand">
+	<documentation>
+ Gets the Policy Strategy Operands for the specified Content Policy
+ Strategies. The Policy Strategy Operand is the attribute of a
+ connection that a Content Policy Rule Condition matches on. The ID of
+ the Policy Strategy Operand determines the order in which they are
+ matched. The Policy Strategy Operands are only relevant when when the
+ Content Policy Strategy Type is STRATEGY_BEST_MATCH.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_operandRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_operandResponse"/>
+	</operation>
+	<operation name="add_operand">
+	<documentation>
+ Adds a set of Content Policy Strategy Operands to the specified
+ Content Policy Strategy. The Operand ID determines the ordering
+ of the Policy Strategy Operands.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.add_operandRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.add_operandResponse"/>
+	</operation>
+	<operation name="remove_operand">
+	<documentation>
+ Removes a set of Content Policy Strategy Operands from the given
+ Content Policy Strategy Operand IDs.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.remove_operandRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.remove_operandResponse"/>
+	</operation>
+	<operation name="remove_all_operands">
+	<documentation>
+ Removes all Content Policy Strategy Operands from the given Content
+ Policy Strategies.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.remove_all_operandsRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.remove_all_operandsResponse"/>
+	</operation>
+	<operation name="set_operand_type">
+	<documentation>
+ Sets the Operand Type for the given Policy Strategies for the
+ given Policy Strategy Operands. The Operand Types specifies the
+ attribute of a connection fo a Content Policy Rule to match on.
+ See LocalLB::PolicyOperand for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.set_operand_typeRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.set_operand_typeResponse"/>
+	</operation>
+	<operation name="get_operand_type">
+	<documentation>
+ Gets the Operand Type for the given Policy Strategies for the
+ given Policy Strategy Operands.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_operand_typeRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_operand_typeResponse"/>
+	</operation>
+	<operation name="set_operand_event">
+	<documentation>
+ Sets the Content Policy Event for a given Content Policy Operand
+ to match upon. This value will be dependent upon the Content Policy
+ Operand Type of the given Content Policy Operand Type. See
+ LocalLB::PolicyEvent for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.set_operand_eventRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.set_operand_eventResponse"/>
+	</operation>
+	<operation name="get_operand_event">
+	<documentation>
+ Gets the Content Policy Event for the given Content Policy Operands
+ to match upon.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_operand_eventRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_operand_eventResponse"/>
+	</operation>
+	<operation name="set_operand_selector">
+	<documentation>
+ Sets the Content Policy Selector Type for the given Content
+ Policy Operands. The Content Policy Selector is the value to match
+ upon given a Content Policy Operand Type. See LocalLB::PolicySelector
+ for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.set_operand_selectorRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.set_operand_selectorResponse"/>
+	</operation>
+	<operation name="get_operand_selector">
+	<documentation>
+ Gets the Content Policy Selector Type for the given Content
+ Policy Operands.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_operand_selectorRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_operand_selectorResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.ContentPolicyStrategy.get_versionRequest"/>
+		<output message="tns:LocalLB.ContentPolicyStrategy.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.ContentPolicyStrategyBinding" type="tns:LocalLB.ContentPolicyStrategyPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all Content Policy Strategies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a new Content Policy Strategy. The default Content Policy
+ Strategy Type is STRATEGY_ALL_MATCH.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_policy_strategy">
+	<documentation>
+ Deletes a list of Content Policy Strategies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_policy_strategies">
+	<documentation>
+ Deletes all Content Policy Strategies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of Content Policy Strategies.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of Content Policy Strategies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_type">
+	<documentation>
+ Sets the Content Policy Strategy Types for a set of Conent Policy
+ Strategies. See PolicyStrategy for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_type">
+	<documentation>
+ Gets the Content Policy Strategy Types for a set of Conent Policy
+ Strategies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_operand">
+	<documentation>
+ Gets the Policy Strategy Operands for the specified Content Policy
+ Strategies. The Policy Strategy Operand is the attribute of a
+ connection that a Content Policy Rule Condition matches on. The ID of
+ the Policy Strategy Operand determines the order in which they are
+ matched. The Policy Strategy Operands are only relevant when when the
+ Content Policy Strategy Type is STRATEGY_BEST_MATCH.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_operand">
+	<documentation>
+ Adds a set of Content Policy Strategy Operands to the specified
+ Content Policy Strategy. The Operand ID determines the ordering
+ of the Policy Strategy Operands.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_operand">
+	<documentation>
+ Removes a set of Content Policy Strategy Operands from the given
+ Content Policy Strategy Operand IDs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_operands">
+	<documentation>
+ Removes all Content Policy Strategy Operands from the given Content
+ Policy Strategies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_operand_type">
+	<documentation>
+ Sets the Operand Type for the given Policy Strategies for the
+ given Policy Strategy Operands. The Operand Types specifies the
+ attribute of a connection fo a Content Policy Rule to match on.
+ See LocalLB::PolicyOperand for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_operand_type">
+	<documentation>
+ Gets the Operand Type for the given Policy Strategies for the
+ given Policy Strategy Operands.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_operand_event">
+	<documentation>
+ Sets the Content Policy Event for a given Content Policy Operand
+ to match upon. This value will be dependent upon the Content Policy
+ Operand Type of the given Content Policy Operand Type. See
+ LocalLB::PolicyEvent for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_operand_event">
+	<documentation>
+ Gets the Content Policy Event for the given Content Policy Operands
+ to match upon.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_operand_selector">
+	<documentation>
+ Sets the Content Policy Selector Type for the given Content
+ Policy Operands. The Content Policy Selector is the value to match
+ upon given a Content Policy Operand Type. See LocalLB::PolicySelector
+ for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_operand_selector">
+	<documentation>
+ Gets the Content Policy Selector Type for the given Content
+ Policy Operands.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ContentPolicyStrategy"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ContentPolicyStrategy"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.ContentPolicyStrategy">
+	<documentation>
+ The Content Policy Strategy interface configures how Content Policy Rules
+ will be matched on a Content Policy (See: LocalLB::ContentPolicy). Given
+ the nature of Content Policy Strategies, a user of this API should
+ familiarize themselves with iControl transactions described in the
+ System::Session interface.
+
+        	</documentation>
+	<port name="LocalLB.ContentPolicyStrategyPort" binding="tns:LocalLB.ContentPolicyStrategyBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

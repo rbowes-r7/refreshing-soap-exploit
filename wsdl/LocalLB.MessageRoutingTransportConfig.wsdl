@@ -1,0 +1,1274 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.MessageRoutingTransportConfig"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="LocalLB.MessageRoutingTransportConfig.SourceAddressTranslationTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingTransportConfig.SourceAddressTranslationType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.SourcePortBehaviorSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.SourcePortBehavior[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.MessageRoutingTransportConfig.TransportConfigProfileSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingTransportConfig.TransportConfigProfileSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.MessageRoutingProtocolSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingProtocol[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.MessageRoutingProtocol">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_NONE">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_GENERIC_MESSAGE">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_GENERIC_MESSAGE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_SIP">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_SIP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_DIAMETER">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_DIAMETER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.MessageRoutingTransportConfig.TransportConfigProfileSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingTransportConfig.TransportConfigProfile[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.MessageRoutingTransportConfig.TransportConfigProfile">
+			<xsd:sequence>
+				<xsd:element name="profile_name" type="xsd:string"/>
+				<xsd:element name="profile_type" type="tns:LocalLB.ProfileType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.ProfileType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="PROFILE_TYPE_TCP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_TCP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_UDP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_UDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_FTP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_FTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_FAST_L4">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_FAST_L4</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_HTTP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_HTTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SERVER_SSL">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SERVER_SSL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_CLIENT_SSL">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_CLIENT_SSL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_AUTH">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_AUTH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_PERSISTENCE">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_PERSISTENCE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_CONNECTION_POOL">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_CONNECTION_POOL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_STREAM">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_STREAM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_XML">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_XML</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_FAST_HTTP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_FAST_HTTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_IIOP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_IIOP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_RTSP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_RTSP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_STATISTICS">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_STATISTICS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_HTTPCLASS">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_HTTPCLASS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_DNS">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_DNS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SCTP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SCTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_INSTANCE">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_INSTANCE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SIPP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SIPP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_HTTPCOMPRESSION">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_HTTPCOMPRESSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_WEBACCELERATION">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_WEBACCELERATION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_RADIUS">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_RADIUS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_DIAMETER">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_DIAMETER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_ANALYTICS">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_ANALYTICS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_REQUEST_LOGGING">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_REQUEST_LOGGING</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_DOS">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_DOS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_ICAP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_ICAP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_REQUESTADAPT">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_REQUESTADAPT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_RESPONSEADAPT">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_RESPONSEADAPT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_IPINTELLIGENCE">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_IPINTELLIGENCE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SPDY">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SPDY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_DIAMETER_ENDPOINT">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_DIAMETER_ENDPOINT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_DIAMETER_ROUTER">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_DIAMETER_ROUTER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_WEBSECURITY">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_WEBSECURITY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_HTTPSECURITY">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_HTTPSECURITY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_PPTP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_PPTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_FIX">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_FIX</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SIP_ROUTER">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SIP_ROUTER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SIP_SESSION">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SIP_SESSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_CLIENT_LDAP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_CLIENT_LDAP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_SERVER_LDAP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_SERVER_LDAP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_TFTP">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_TFTP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_DIAMETER_SESSION">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_DIAMETER_SESSION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_IPSECALG">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_IPSECALG</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="PROFILE_TYPE_TRAFFIC_ACCELERATION">
+					<xsd:annotation>
+						<xsd:documentation>PROFILE_TYPE_TRAFFIC_ACCELERATION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.SourcePortBehavior">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SOURCE_PORT_PRESERVE">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_PRESERVE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_PORT_PRESERVE_STRICT">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_PRESERVE_STRICT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_PORT_CHANGE">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_CHANGE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_PORT_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_PORT_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="LocalLB.MessageRoutingTransportConfig.SourceAddressTranslationType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SOURCE_ADDRESS_TRANSLATION_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_ADDRESS_TRANSLATION_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_ADDRESS_TRANSLATION_TYPE_NONE">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_ADDRESS_TRANSLATION_TYPE_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_ADDRESS_TRANSLATION_TYPE_SNATPOOL">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_ADDRESS_TRANSLATION_TYPE_SNATPOOL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SOURCE_ADDRESS_TRANSLATION_TYPE_AUTOMAP">
+					<xsd:annotation>
+						<xsd:documentation>SOURCE_ADDRESS_TRANSLATION_TYPE_AUTOMAP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_listRequest">
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.createRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="protocols" type="tns:LocalLB.MessageRoutingProtocolSequence"/>
+	<part name="profiles" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.createResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.delete_transport_configRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.delete_transport_configResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.delete_all_transport_configsRequest">
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.delete_all_transport_configsResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.set_descriptionRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_descriptionRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_protocolRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_protocolResponse">
+	<part name="return" type="tns:LocalLB.MessageRoutingProtocolSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_portRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="ports" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_portResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_portRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_portResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_port_modeRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="modes" type="tns:Common.SourcePortBehaviorSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_port_modeResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_port_modeRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_port_modeResponse">
+	<part name="return" type="tns:Common.SourcePortBehaviorSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_address_translation_typeRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:LocalLB.MessageRoutingTransportConfig.SourceAddressTranslationTypeSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_address_translation_typeResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_address_translation_typeRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_address_translation_typeResponse">
+	<part name="return" type="tns:LocalLB.MessageRoutingTransportConfig.SourceAddressTranslationTypeSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_address_translation_poolRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_address_translation_poolResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_address_translation_poolRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_source_address_translation_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_address_translation_pool_with_typeRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+	<part name="types" type="tns:LocalLB.MessageRoutingTransportConfig.SourceAddressTranslationTypeSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.set_source_address_translation_pool_with_typeResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_ruleRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_ruleResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.replace_ruleRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+	<part name="priorities" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.replace_ruleResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_profileRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_profileResponse">
+	<part name="return" type="tns:LocalLB.MessageRoutingTransportConfig.TransportConfigProfileSequenceSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.add_profileRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="profiles" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.add_profileResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.remove_profileRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+	<part name="profiles" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.remove_profileResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.remove_all_profilesRequest">
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.remove_all_profilesResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingTransportConfig.get_versionRequest">
+</message>
+<message name="LocalLB.MessageRoutingTransportConfig.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.MessageRoutingTransportConfigPortType">
+	<operation name="get_list">
+   	<documentation>
+ Gets a list of all transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_listRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.createRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.createResponse"/>
+	</operation>
+	<operation name="delete_transport_config">
+	<documentation>
+ Deletes the specified list of transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.delete_transport_configRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.delete_transport_configResponse"/>
+	</operation>
+	<operation name="delete_all_transport_configs">
+	<documentation>
+ Deletes all transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.delete_all_transport_configsRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.delete_all_transport_configsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of transport configs.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.set_descriptionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_descriptionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_protocol">
+	<documentation>
+ Gets the message routing protocol which was set for the specified
+ transport configs upon creation. See LocalLB::MessageRoutingProtocol
+ for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_protocolRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_protocolResponse"/>
+	</operation>
+	<operation name="set_source_port">
+	<documentation>
+ Sets the source port to be used for the connection being created.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.set_source_portRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.set_source_portResponse"/>
+	</operation>
+	<operation name="get_source_port">
+	<documentation>
+ Gets the source port to be used for the connection being created.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_source_portRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_source_portResponse"/>
+	</operation>
+	<operation name="set_source_port_mode">
+	<documentation>
+ Sets the source port mode to be used when creating outgoing connections.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.set_source_port_modeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.set_source_port_modeResponse"/>
+	</operation>
+	<operation name="get_source_port_mode">
+	<documentation>
+ Gets the source port mode to be used when creating outgoing connections.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_source_port_modeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_source_port_modeResponse"/>
+	</operation>
+	<operation name="set_source_address_translation_type">
+	<documentation>
+ Sets the source address translation type for the specified transport
+ config.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.set_source_address_translation_typeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.set_source_address_translation_typeResponse"/>
+	</operation>
+	<operation name="get_source_address_translation_type">
+	<documentation>
+ Gets the source address translation type for the specified transport
+ config.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_source_address_translation_typeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_source_address_translation_typeResponse"/>
+	</operation>
+	<operation name="set_source_address_translation_pool">
+	<documentation>
+ Sets the Source Address Translation pool for the specified transport
+ config.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.set_source_address_translation_poolRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.set_source_address_translation_poolResponse"/>
+	</operation>
+	<operation name="get_source_address_translation_pool">
+	<documentation>
+ Gets the Source Address Translation pool for the specified transport
+ config.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_source_address_translation_poolRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_source_address_translation_poolResponse"/>
+	</operation>
+	<operation name="set_source_address_translation_pool_with_type">
+	<documentation>
+ Sets the source address translation pool and the source address translation
+ type for the specified transport config. This is a convenience method
+ that allows you to set these values without using a transaction.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.set_source_address_translation_pool_with_typeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.set_source_address_translation_pool_with_typeResponse"/>
+	</operation>
+	<operation name="get_rule">
+	<documentation>
+ Gets the list of rules for the specified transport configs.
+ The rules will be invoked in the order listed.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_ruleRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_ruleResponse"/>
+	</operation>
+	<operation name="replace_rule">
+	<documentation>
+ Replace the rule list associated with the specified transport
+ configs with the specified list of rules.
+ The rules will be invoked in the order listed.
+ See LocalLB::Rule for more information about iRules.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.replace_ruleRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.replace_ruleResponse"/>
+	</operation>
+	<operation name="get_profile">
+	<documentation>
+ Gets the list of profiles for the specified transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_profileRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_profileResponse"/>
+	</operation>
+	<operation name="add_profile">
+	<documentation>
+ Adds the specified profiles to the specified transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.add_profileRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.add_profileResponse"/>
+	</operation>
+	<operation name="remove_profile">
+	<documentation>
+ Removes the specified profiles from the specified transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.remove_profileRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.remove_profileResponse"/>
+	</operation>
+	<operation name="remove_all_profiles">
+	<documentation>
+ Removes all profiles from the specified transport configs.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.remove_all_profilesRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.remove_all_profilesResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingTransportConfig.get_versionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingTransportConfig.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.MessageRoutingTransportConfigBinding" type="tns:LocalLB.MessageRoutingTransportConfigPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_transport_config">
+	<documentation>
+ Deletes the specified list of transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_transport_configs">
+	<documentation>
+ Deletes all transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of transport configs.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_protocol">
+	<documentation>
+ Gets the message routing protocol which was set for the specified
+ transport configs upon creation. See LocalLB::MessageRoutingProtocol
+ for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_port">
+	<documentation>
+ Sets the source port to be used for the connection being created.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_port">
+	<documentation>
+ Gets the source port to be used for the connection being created.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_port_mode">
+	<documentation>
+ Sets the source port mode to be used when creating outgoing connections.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_port_mode">
+	<documentation>
+ Gets the source port mode to be used when creating outgoing connections.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_address_translation_type">
+	<documentation>
+ Sets the source address translation type for the specified transport
+ config.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_address_translation_type">
+	<documentation>
+ Gets the source address translation type for the specified transport
+ config.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_address_translation_pool">
+	<documentation>
+ Sets the Source Address Translation pool for the specified transport
+ config.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_address_translation_pool">
+	<documentation>
+ Gets the Source Address Translation pool for the specified transport
+ config.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_address_translation_pool_with_type">
+	<documentation>
+ Sets the source address translation pool and the source address translation
+ type for the specified transport config. This is a convenience method
+ that allows you to set these values without using a transaction.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule">
+	<documentation>
+ Gets the list of rules for the specified transport configs.
+ The rules will be invoked in the order listed.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="replace_rule">
+	<documentation>
+ Replace the rule list associated with the specified transport
+ configs with the specified list of rules.
+ The rules will be invoked in the order listed.
+ See LocalLB::Rule for more information about iRules.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_profile">
+	<documentation>
+ Gets the list of profiles for the specified transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_profile">
+	<documentation>
+ Adds the specified profiles to the specified transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_profile">
+	<documentation>
+ Removes the specified profiles from the specified transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_profiles">
+	<documentation>
+ Removes all profiles from the specified transport configs.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingTransportConfig"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingTransportConfig"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.MessageRoutingTransportConfig">
+	<documentation>
+
+ The MessageRoutingTransportConfig interface enables you to work with
+ the definitions contained in a message routing transport_config.
+ The transport_config is used by the message router to create an
+ outgoing connection.
+
+        	</documentation>
+	<port name="LocalLB.MessageRoutingTransportConfigPort" binding="tns:LocalLB.MessageRoutingTransportConfigBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

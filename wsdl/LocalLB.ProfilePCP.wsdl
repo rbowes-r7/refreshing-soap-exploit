@@ -1,0 +1,1499 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.ProfilePCP"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="LocalLB.ProfileEnabledState">
+			<xsd:sequence>
+				<xsd:element name="value" type="tns:Common.EnabledState"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileStringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfileString[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileULong">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:long"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfileULong[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileString">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:string"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileEnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfileEnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfilePortNumber">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:long"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfilePortNumberSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfilePortNumber[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.ProfilePCP.get_listRequest">
+</message>
+<message name="LocalLB.ProfilePCP.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.createRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.createResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.delete_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.delete_profileResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.delete_all_profilesRequest">
+</message>
+<message name="LocalLB.ProfilePCP.delete_all_profilesResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.is_base_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.is_base_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.is_system_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.is_system_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="defaults" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_default_profileResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_default_profileResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_minimum_mapping_lifetimeRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_minimum_mapping_lifetimeResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_minimum_mapping_lifetimeRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_minimum_mapping_lifetimeResponse">
+	<part name="return" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_maximum_mapping_lifetimeRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_maximum_mapping_lifetimeResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_maximum_mapping_lifetimeRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_maximum_mapping_lifetimeResponse">
+	<part name="return" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_mapping_recycle_delayRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_mapping_recycle_delayResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_mapping_recycle_delayRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_mapping_recycle_delayResponse">
+	<part name="return" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_mapping_limit_per_clientRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_mapping_limit_per_clientResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_mapping_limit_per_clientRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_mapping_limit_per_clientResponse">
+	<part name="return" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_mapping_filter_limitRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_mapping_filter_limitResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_mapping_filter_limitRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_mapping_filter_limitResponse">
+	<part name="return" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_ruleRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:LocalLB.ProfileStringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_ruleResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_ruleRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_ruleResponse">
+	<part name="return" type="tns:LocalLB.ProfileStringSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_third_party_option_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:LocalLB.ProfileEnabledStateSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_third_party_option_stateResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_third_party_option_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_third_party_option_stateResponse">
+	<part name="return" type="tns:LocalLB.ProfileEnabledStateSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_announce_multicast_repeatsRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_announce_multicast_repeatsResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_announce_multicast_repeatsRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_announce_multicast_repeatsResponse">
+	<part name="return" type="tns:LocalLB.ProfileULongSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.set_announce_after_failover_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:LocalLB.ProfileEnabledStateSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_announce_after_failover_stateResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_announce_after_failover_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_announce_after_failover_stateResponse">
+	<part name="return" type="tns:LocalLB.ProfileEnabledStateSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.get_listening_portRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_listening_portResponse">
+	<part name="return" type="tns:LocalLB.ProfilePortNumberSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.get_multicast_portRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_multicast_portResponse">
+	<part name="return" type="tns:LocalLB.ProfilePortNumberSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.get_third_party_allowed_subnetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_third_party_allowed_subnetResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.add_third_party_allowed_subnetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="subnets" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.add_third_party_allowed_subnetResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.remove_third_party_allowed_subnetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="subnets" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.remove_third_party_allowed_subnetResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.remove_all_third_party_allowed_subnetsRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.remove_all_third_party_allowed_subnetsResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.set_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.ProfilePCP.get_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfilePCP.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ProfilePCP.get_versionRequest">
+</message>
+<message name="LocalLB.ProfilePCP.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.ProfilePCPPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets a list of all PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_listRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.createRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.createResponse"/>
+	</operation>
+	<operation name="delete_profile">
+	<documentation>
+ Deletes the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.delete_profileRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.delete_profileResponse"/>
+	</operation>
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.delete_all_profilesRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.delete_all_profilesResponse"/>
+	</operation>
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified PCP profiles are base profiles.
+ A base profile sits at the base of the profile's inheritance tree,
+ supplying the defaults for every profile derived from it.  (See
+ also is_system_profile).
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.is_base_profileRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.is_base_profileResponse"/>
+	</operation>
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified PCP profiles are system
+ profiles.  A system profile is a profile pre-configured on the
+ system, ready for use.  Non-system profiles are profiles created or
+ modified by a user.  Note that if a system profile is modified, it
+ is no longer considered a system profile.  (See also
+ is_base_profile).
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.is_system_profileRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.is_system_profileResponse"/>
+	</operation>
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the names of the default profiles from which the specified profiles will derive
+ default values for its attributes.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_default_profileRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_default_profileResponse"/>
+	</operation>
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the names of the default profiles from which the specified profiles will derive
+ default values for its attributes.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_default_profileRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_default_profileResponse"/>
+	</operation>
+	<operation name="set_minimum_mapping_lifetime">
+	<documentation>
+ Sets the lower lifetime limit (in seconds) for the specified PCP profiles.
+
+ PCP allows clients to request a lifetime for their port/address mapping
+ request. However, the PCP server has a configurable valid range for lifetime
+ that can be adjusted based on the networking conditions.
+ 
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_minimum_mapping_lifetimeRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_minimum_mapping_lifetimeResponse"/>
+	</operation>
+	<operation name="get_minimum_mapping_lifetime">
+	<documentation>
+ Gets the lower lifetime limit (in seconds) for the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_minimum_mapping_lifetimeRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_minimum_mapping_lifetimeResponse"/>
+	</operation>
+	<operation name="set_maximum_mapping_lifetime">
+	<documentation>
+ Sets the higher lifetime limit (in seconds) for the specified PCP profiles.
+
+ PCP allows clients to request a lifetime for their port/address mapping
+ request. However, the PCP server has a configurable valid range for lifetime
+ that can be adjusted based on the networking conditions.
+ 
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_maximum_mapping_lifetimeRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_maximum_mapping_lifetimeResponse"/>
+	</operation>
+	<operation name="get_maximum_mapping_lifetime">
+	<documentation>
+ Gets the higher lifetime limit (in seconds) for the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_maximum_mapping_lifetimeRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_maximum_mapping_lifetimeResponse"/>
+	</operation>
+	<operation name="set_mapping_recycle_delay">
+	<documentation>
+ Sets the minimum delay (in seconds) the PCP Server will wait before recycling 
+ mappings that have expired for new client requests for the specified PCP profiles.
+
+ PCP defines a configurable delay after mapping expiration to prevent other clients 
+ from hijacking expired mappings if the original owner failed to renew them on time.
+ 
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_mapping_recycle_delayRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_mapping_recycle_delayResponse"/>
+	</operation>
+	<operation name="get_mapping_recycle_delay">
+	<documentation>
+ Gets the minimum delay (in seconds) the PCP Server will wait before recycling 
+ mappings that have expired for new client requests for the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_mapping_recycle_delayRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_mapping_recycle_delayResponse"/>
+	</operation>
+	<operation name="set_mapping_limit_per_client">
+	<documentation>
+ Sets the limit for the number of outstanding mappings any one client can have for 
+ the specified PCP profiles.
+
+ PCP allows PCP servers to use limit the number of outstanding port/address
+ mappings a client can have according to the networking conditions.
+ 
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_mapping_limit_per_clientRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_mapping_limit_per_clientResponse"/>
+	</operation>
+	<operation name="get_mapping_limit_per_client">
+	<documentation>
+ Gets the limit of outstanding mappings any one client can have for the specified 
+ PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_mapping_limit_per_clientRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_mapping_limit_per_clientResponse"/>
+	</operation>
+	<operation name="set_mapping_filter_limit">
+	<documentation>
+ Sets the higher limit for the number of filters that must be applied to an incoming
+ PCP packet for the specified PCP profiles.
+
+ PCP allows PCP clients to specify a list of subnet/address/[port] filters for
+ denying access. A higher limit can be specified according to the 
+ networking conditions.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_mapping_filter_limitRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_mapping_filter_limitResponse"/>
+	</operation>
+	<operation name="get_mapping_filter_limit">
+	<documentation>
+ Gets the higher limit for the number of filters that must be applied to an incoming
+ PCP packet for the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_mapping_filter_limitRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_mapping_filter_limitResponse"/>
+	</operation>
+	<operation name="set_rule">
+	<documentation>
+ Sets the iRules that the specified profiles will be using to monitor and control 
+ PCP actions.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_ruleRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_ruleResponse"/>
+	</operation>
+	<operation name="get_rule">
+	<documentation>
+ Gets the iRules that the specified profiles will be using to monitor and control 
+ PCP actions.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_ruleRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_ruleResponse"/>
+	</operation>
+	<operation name="set_third_party_option_state">
+	<documentation>       
+ Sets the third party option state for the specified profiles. When enabled,
+ third party options for PCP are accepted.
+
+ PCP allows clients behind a CPE device issue PCP request on their behalf
+ to the CGNAT PCP Server via the CPE. For this the PCP Server must use a
+ PCP profile that has a DS-Lite tunnel specified so that the third party
+ encapsulated IPv4 packets are delivered to the PCP Server via the DS-Lite 
+ tunnel.
+ 
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_third_party_option_stateRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_third_party_option_stateResponse"/>
+	</operation>
+	<operation name="get_third_party_option_state">
+	<documentation>
+ Gets the third party option state for the specified profiles. If enabled,
+ third party options for PCP are accepted.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_third_party_option_stateRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_third_party_option_stateResponse"/>
+	</operation>
+	<operation name="set_announce_multicast_repeats">
+	<documentation>
+ Sets the number of multicast announcements that are sent after PCP Server loses 
+ state for the specified profiles.
+
+ The PCP Server is required to inform all clients if it loses state; for example,
+ if it restarted. This is done by multicast. To guard against packet loss the 
+ multicast is repeated a configurable number of times.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_announce_multicast_repeatsRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_announce_multicast_repeatsResponse"/>
+	</operation>
+	<operation name="get_announce_multicast_repeats">
+	<documentation>
+ Gets the number of multicast announcements that are sent after after PCP Server loses 
+ state for the specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_announce_multicast_repeatsRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_announce_multicast_repeatsResponse"/>
+	</operation>
+	<operation name="set_announce_after_failover_state">
+	<documentation>
+ Sets the announce after failover state for the specified profiles. If enabled
+ a multicast announcement will be sent when a PCP Server fails over its HA pair.
+
+ In a pair of BIG-IPs, it is unlikely to lose state when a fail over occurs. 
+ However, there is a small possibility that the 'last' mappings have not yet been
+ replicated and this method allows enabling sending a multicast announcement
+ after the fail over.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_announce_after_failover_stateRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_announce_after_failover_stateResponse"/>
+	</operation>
+	<operation name="get_announce_after_failover_state">
+	<documentation>
+ Gets the announce after failover state for the specified profiles. If enabled
+ a multicast announcement will be sent when a PCP Server fails over its HA pair.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_announce_after_failover_stateRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_announce_after_failover_stateResponse"/>
+	</operation>
+	<operation name="get_listening_port">
+	<documentation>
+ Gets the listening port for the specified profiles. This is the port on which 
+ the PCP server listens.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_listening_portRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_listening_portResponse"/>
+	</operation>
+	<operation name="get_multicast_port">
+	<documentation>
+ Gets the multicast port for the specified profiles. This is the port the PCP
+ server uses to send multicast announcements. 
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_multicast_portRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_multicast_portResponse"/>
+	</operation>
+	<operation name="get_third_party_allowed_subnet">
+	<documentation>
+ Gets the list of third party allowed subnets for the specified PCP profiles.
+
+ PCP allows clients behind a CPE device to issue PCP request on their behalf
+ to the CGNAT PCP Server via the CPE. For this the PCP Server must use a
+ PCP profile that has a DS-Lite tunnel specified so that the third party
+ encapsulated IPv4 packets are delivered to the PCP Server via the DS-Lite 
+ tunnel. PCP also allows you to specify subnets from which it will accept third
+ party requests.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_third_party_allowed_subnetRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_third_party_allowed_subnetResponse"/>
+	</operation>
+	<operation name="add_third_party_allowed_subnet">
+	<documentation>
+ Adds third party allowed subnets to the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.add_third_party_allowed_subnetRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.add_third_party_allowed_subnetResponse"/>
+	</operation>
+	<operation name="remove_third_party_allowed_subnet">
+	<documentation>
+ Removes third party allowed subnets to the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.remove_third_party_allowed_subnetRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.remove_third_party_allowed_subnetResponse"/>
+	</operation>
+	<operation name="remove_all_third_party_allowed_subnets">
+	<documentation>
+ Removes all third party allowed subnets to the specified PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.remove_all_third_party_allowed_subnetsRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.remove_all_third_party_allowed_subnetsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of PCP profiles.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.set_descriptionRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of PCP profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_descriptionRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfilePCP.get_versionRequest"/>
+		<output message="tns:LocalLB.ProfilePCP.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.ProfilePCPBinding" type="tns:LocalLB.ProfilePCPPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_profile">
+	<documentation>
+ Deletes the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified PCP profiles are base profiles.
+ A base profile sits at the base of the profile's inheritance tree,
+ supplying the defaults for every profile derived from it.  (See
+ also is_system_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified PCP profiles are system
+ profiles.  A system profile is a profile pre-configured on the
+ system, ready for use.  Non-system profiles are profiles created or
+ modified by a user.  Note that if a system profile is modified, it
+ is no longer considered a system profile.  (See also
+ is_base_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the names of the default profiles from which the specified profiles will derive
+ default values for its attributes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the names of the default profiles from which the specified profiles will derive
+ default values for its attributes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_minimum_mapping_lifetime">
+	<documentation>
+ Sets the lower lifetime limit (in seconds) for the specified PCP profiles.
+
+ PCP allows clients to request a lifetime for their port/address mapping
+ request. However, the PCP server has a configurable valid range for lifetime
+ that can be adjusted based on the networking conditions.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_minimum_mapping_lifetime">
+	<documentation>
+ Gets the lower lifetime limit (in seconds) for the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_maximum_mapping_lifetime">
+	<documentation>
+ Sets the higher lifetime limit (in seconds) for the specified PCP profiles.
+
+ PCP allows clients to request a lifetime for their port/address mapping
+ request. However, the PCP server has a configurable valid range for lifetime
+ that can be adjusted based on the networking conditions.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_maximum_mapping_lifetime">
+	<documentation>
+ Gets the higher lifetime limit (in seconds) for the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_mapping_recycle_delay">
+	<documentation>
+ Sets the minimum delay (in seconds) the PCP Server will wait before recycling 
+ mappings that have expired for new client requests for the specified PCP profiles.
+
+ PCP defines a configurable delay after mapping expiration to prevent other clients 
+ from hijacking expired mappings if the original owner failed to renew them on time.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_mapping_recycle_delay">
+	<documentation>
+ Gets the minimum delay (in seconds) the PCP Server will wait before recycling 
+ mappings that have expired for new client requests for the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_mapping_limit_per_client">
+	<documentation>
+ Sets the limit for the number of outstanding mappings any one client can have for 
+ the specified PCP profiles.
+
+ PCP allows PCP servers to use limit the number of outstanding port/address
+ mappings a client can have according to the networking conditions.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_mapping_limit_per_client">
+	<documentation>
+ Gets the limit of outstanding mappings any one client can have for the specified 
+ PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_mapping_filter_limit">
+	<documentation>
+ Sets the higher limit for the number of filters that must be applied to an incoming
+ PCP packet for the specified PCP profiles.
+
+ PCP allows PCP clients to specify a list of subnet/address/[port] filters for
+ denying access. A higher limit can be specified according to the 
+ networking conditions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_mapping_filter_limit">
+	<documentation>
+ Gets the higher limit for the number of filters that must be applied to an incoming
+ PCP packet for the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_rule">
+	<documentation>
+ Sets the iRules that the specified profiles will be using to monitor and control 
+ PCP actions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_rule">
+	<documentation>
+ Gets the iRules that the specified profiles will be using to monitor and control 
+ PCP actions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_third_party_option_state">
+	<documentation>       
+ Sets the third party option state for the specified profiles. When enabled,
+ third party options for PCP are accepted.
+
+ PCP allows clients behind a CPE device issue PCP request on their behalf
+ to the CGNAT PCP Server via the CPE. For this the PCP Server must use a
+ PCP profile that has a DS-Lite tunnel specified so that the third party
+ encapsulated IPv4 packets are delivered to the PCP Server via the DS-Lite 
+ tunnel.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_third_party_option_state">
+	<documentation>
+ Gets the third party option state for the specified profiles. If enabled,
+ third party options for PCP are accepted.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_announce_multicast_repeats">
+	<documentation>
+ Sets the number of multicast announcements that are sent after PCP Server loses 
+ state for the specified profiles.
+
+ The PCP Server is required to inform all clients if it loses state; for example,
+ if it restarted. This is done by multicast. To guard against packet loss the 
+ multicast is repeated a configurable number of times.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_announce_multicast_repeats">
+	<documentation>
+ Gets the number of multicast announcements that are sent after after PCP Server loses 
+ state for the specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_announce_after_failover_state">
+	<documentation>
+ Sets the announce after failover state for the specified profiles. If enabled
+ a multicast announcement will be sent when a PCP Server fails over its HA pair.
+
+ In a pair of BIG-IPs, it is unlikely to lose state when a fail over occurs. 
+ However, there is a small possibility that the 'last' mappings have not yet been
+ replicated and this method allows enabling sending a multicast announcement
+ after the fail over.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_announce_after_failover_state">
+	<documentation>
+ Gets the announce after failover state for the specified profiles. If enabled
+ a multicast announcement will be sent when a PCP Server fails over its HA pair.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_listening_port">
+	<documentation>
+ Gets the listening port for the specified profiles. This is the port on which 
+ the PCP server listens.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_multicast_port">
+	<documentation>
+ Gets the multicast port for the specified profiles. This is the port the PCP
+ server uses to send multicast announcements. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_third_party_allowed_subnet">
+	<documentation>
+ Gets the list of third party allowed subnets for the specified PCP profiles.
+
+ PCP allows clients behind a CPE device to issue PCP request on their behalf
+ to the CGNAT PCP Server via the CPE. For this the PCP Server must use a
+ PCP profile that has a DS-Lite tunnel specified so that the third party
+ encapsulated IPv4 packets are delivered to the PCP Server via the DS-Lite 
+ tunnel. PCP also allows you to specify subnets from which it will accept third
+ party requests.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_third_party_allowed_subnet">
+	<documentation>
+ Adds third party allowed subnets to the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_third_party_allowed_subnet">
+	<documentation>
+ Removes third party allowed subnets to the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_third_party_allowed_subnets">
+	<documentation>
+ Removes all third party allowed subnets to the specified PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of PCP profiles.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of PCP profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfilePCP"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfilePCP"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.ProfilePCP">
+	<documentation>
+ The ProfilePCP interface enables you to specify a set of predefined Port Control 
+ Protocol parameters so that it can be used together to govern the processing of 
+ PCP incoming requests.
+
+ PCP (Port Control Protocol) is a protocol that provides more seamless NAT
+ traversal by allowing communication and control of port/address mappings and
+ session lifetimes between the NAT and the NAT'ed client.   The application or
+ CPE requests a NAT mapping and the PCP Server collocated with the CGNAT device
+ responds with the mapped address and port and session lifetime.
+
+        	</documentation>
+	<port name="LocalLB.ProfilePCPPort" binding="tns:LocalLB.ProfilePCPBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

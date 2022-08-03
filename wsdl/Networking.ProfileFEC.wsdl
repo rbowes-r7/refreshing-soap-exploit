@@ -1,0 +1,1350 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.ProfileFEC"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.ProfileEnabledState">
+			<xsd:sequence>
+				<xsd:element name="value" type="tns:Common.EnabledState"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfilePortNumberSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ProfilePortNumber[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ProfileULong[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileULong">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:long"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfileEnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ProfileEnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ProfilePortNumber">
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:long"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.ProfileFEC.get_listRequest">
+</message>
+<message name="Networking.ProfileFEC.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.createRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.createResponse">
+</message>
+
+<message name="Networking.ProfileFEC.delete_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.delete_profileResponse">
+</message>
+
+<message name="Networking.ProfileFEC.delete_all_profilesRequest">
+</message>
+<message name="Networking.ProfileFEC.delete_all_profilesResponse">
+</message>
+
+<message name="Networking.ProfileFEC.is_base_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.is_base_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.is_system_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.is_system_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="defaults" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_default_profileResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_default_profileResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_udp_portRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="ports" type="tns:Common.ProfilePortNumberSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_udp_portResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_udp_portRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_udp_portResponse">
+	<part name="return" type="tns:Common.ProfilePortNumberSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_source_packetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_source_packetResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_source_packetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_source_packetResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_repair_packetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_repair_packetResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_repair_packetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_repair_packetResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_source_adaptive_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.ProfileEnabledStateSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_source_adaptive_stateResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_source_adaptive_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_source_adaptive_stateResponse">
+	<part name="return" type="tns:Common.ProfileEnabledStateSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_repair_adaptive_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.ProfileEnabledStateSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_repair_adaptive_stateResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_repair_adaptive_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_repair_adaptive_stateResponse">
+	<part name="return" type="tns:Common.ProfileEnabledStateSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_encode_maximum_delayRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="delays" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_encode_maximum_delayResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_encode_maximum_delayRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_encode_maximum_delayResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_decode_queueRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_decode_queueResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_decode_queueRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_decode_queueResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_decode_maximum_packetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_decode_maximum_packetResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_decode_maximum_packetRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_decode_maximum_packetResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_decode_idle_timeoutRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="timeouts" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_decode_idle_timeoutResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_decode_idle_timeoutRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_decode_idle_timeoutResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_keepalive_intervalRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="intervals" type="tns:Common.ProfileULongSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_keepalive_intervalResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_keepalive_intervalRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_keepalive_intervalResponse">
+	<part name="return" type="tns:Common.ProfileULongSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_lzo_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.ProfileEnabledStateSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_lzo_stateResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_lzo_stateRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_lzo_stateResponse">
+	<part name="return" type="tns:Common.ProfileEnabledStateSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.set_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.set_descriptionResponse">
+</message>
+
+<message name="Networking.ProfileFEC.get_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.ProfileFEC.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.ProfileFEC.get_versionRequest">
+</message>
+<message name="Networking.ProfileFEC.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.ProfileFECPortType">
+	<operation name="get_list">
+   	<documentation>
+ Gets the names of all FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_listRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.createRequest"/>
+		<output message="tns:Networking.ProfileFEC.createResponse"/>
+	</operation>
+	<operation name="delete_profile">
+	<documentation>
+ Deletes a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.delete_profileRequest"/>
+		<output message="tns:Networking.ProfileFEC.delete_profileResponse"/>
+	</operation>
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all non-system FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.delete_all_profilesRequest"/>
+		<output message="tns:Networking.ProfileFEC.delete_all_profilesResponse"/>
+	</operation>
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified FEC tunnel profiles are base
+ profiles.  A base profile sits at the base of the profile's
+ inheritance tree, supplying the defaults for every profile derived
+ from it.  (See also is_system_profile).
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.is_base_profileRequest"/>
+		<output message="tns:Networking.ProfileFEC.is_base_profileResponse"/>
+	</operation>
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified FEC tunnel profiles are
+ system profiles.  A system profile is a profile pre-configured on
+ the system, ready for use.  Non-system profiles are profiles
+ created or modified by a user.  Note that if a system profile is
+ modified, it is no longer considered a system profile.  (See also
+ is_base_profile).
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.is_system_profileRequest"/>
+		<output message="tns:Networking.ProfileFEC.is_system_profileResponse"/>
+	</operation>
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the existing FEC tunnel profile from which this set of
+ FEC tunnel profiles inherits their unspecified attribute
+ values.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_default_profileRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_default_profileResponse"/>
+	</operation>
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the existing FEC tunnel profile from which this set of
+ FEC tunnel profiles inherits its unspecified attribute values.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_default_profileRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_default_profileResponse"/>
+	</operation>
+	<operation name="set_udp_port">
+	<documentation>
+ Sets the UDP ports for a set of FEC tunnel profiles. The FEC tunnel profile 
+ configuration is applied to all the UDP traffic passing through this port.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_udp_portRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_udp_portResponse"/>
+	</operation>
+	<operation name="get_udp_port">
+	<documentation>
+ Gets the UDP ports for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_udp_portRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_udp_portResponse"/>
+	</operation>
+	<operation name="set_source_packet">
+	<documentation>
+ Sets the source packet values for a set of FEC tunnel profiles. This value defines the 
+ number of data blocks into which the source payload data will be split. 
+ If the size of the source payload data is 3200 bytes and the source packet value
+ is set as 4, then the source payload data will be split into 4 data blocks, where
+ each data block is of 800 bytes. 
+ 
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_source_packetRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_source_packetResponse"/>
+	</operation>
+	<operation name="get_source_packet">
+	<documentation>
+ Gets the source packet values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_source_packetRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_source_packetResponse"/>
+	</operation>
+	<operation name="set_repair_packet">
+	<documentation>
+ Sets the repair packet values for a set of FEC tunnel profiles. The repair packet
+ value is the number of additional data blocks to be added to the source
+ payload data before the payload is sent over the network. These additional
+ data blocks help in recovering any errors in the original data payload.
+  
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_repair_packetRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_repair_packetResponse"/>
+	</operation>
+	<operation name="get_repair_packet">
+	<documentation>
+ Gets the repair packet values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_repair_packetRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_repair_packetResponse"/>
+	</operation>
+	<operation name="set_source_adaptive_state">
+	<documentation>
+ Sets the source adaptive states for a set of FEC tunnel profiles. If source 
+ adaptive state is enabled, then source payload data will be split adaptively for all
+ packets going through this FEC tunnel profile. 
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_source_adaptive_stateRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_source_adaptive_stateResponse"/>
+	</operation>
+	<operation name="get_source_adaptive_state">
+	<documentation>
+ Gets the source adaptive state values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_source_adaptive_stateRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_source_adaptive_stateResponse"/>
+	</operation>
+	<operation name="set_repair_adaptive_state">
+	<documentation>
+ Sets the repair adaptive states for a set of FEC tunnel profiles. If the repair packet
+ state is enabled, then the additional payload data will be added adaptively to the 
+ original data payload. This addition of payload data is based on network errors 
+ that occur during transmission of original payloads.
+ 
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_repair_adaptive_stateRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_repair_adaptive_stateResponse"/>
+	</operation>
+	<operation name="get_repair_adaptive_state">
+	<documentation>
+ Gets the repair adaptive states for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_repair_adaptive_stateRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_repair_adaptive_stateResponse"/>
+	</operation>
+	<operation name="set_encode_maximum_delay">
+	<documentation>
+ Sets the encode maximum delays for a set of FEC tunnel profiles. 
+ Encode maximum delay time interval is the maximum time interval the FEC-enabled
+ BIG-IP waits for additional source payload, before it splits the source payload into
+ data blocks. 
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_encode_maximum_delayRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_encode_maximum_delayResponse"/>
+	</operation>
+	<operation name="get_encode_maximum_delay">
+	<documentation>
+ Gets the encode maximum delay time intervals for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_encode_maximum_delayRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_encode_maximum_delayResponse"/>
+	</operation>
+	<operation name="set_decode_queue">
+	<documentation>
+ Sets the decode queue values for a set of FEC tunnel profiles. Decode queue value
+ defines the number of parallel queues required to decode incoming packets.
+ Decode queue value must be one of 8, 16, 32, 64, 128, 256, 512, 1024 
+ and represent power-of-2 values.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_decode_queueRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_decode_queueResponse"/>
+	</operation>
+	<operation name="get_decode_queue">
+	<documentation>
+ Gets the decode queue values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_decode_queueRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_decode_queueResponse"/>
+	</operation>
+	<operation name="set_decode_maximum_packet">
+	<documentation>
+ Sets the decode maximum packet values for a set of FEC tunnel profiles. 
+ Decode maximum packet value defines the maximum total number of packets 
+ in all decode queues that will be decoded.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_decode_maximum_packetRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_decode_maximum_packetResponse"/>
+	</operation>
+	<operation name="get_decode_maximum_packet">
+	<documentation>
+ Gets the decode maximum packet values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_decode_maximum_packetRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_decode_maximum_packetResponse"/>
+	</operation>
+	<operation name="set_decode_idle_timeout">
+	<documentation>
+ Sets the decode idle timeouts for a set of FEC tunnel profiles. Decode idle 
+ timeout value defines the time interval to wait for any missing packets in the 
+ data packet stream received from the FEC-enabled peer BIG-IP.
+ 
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_decode_idle_timeoutRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_decode_idle_timeoutResponse"/>
+	</operation>
+	<operation name="get_decode_idle_timeout">
+	<documentation>
+ Gets the decode idle timeouts for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_decode_idle_timeoutRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_decode_idle_timeoutResponse"/>
+	</operation>
+	<operation name="set_keepalive_interval">
+	<documentation>
+ Sets the keep-alive interval time for a set of FEC tunnel profiles. Keep-alive 
+ interval time value defines the time interval at which each of the FEC-enabled 
+ BIG-IP sends FEC statistics to its peer FEC-enabled BIG-IP.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_keepalive_intervalRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_keepalive_intervalResponse"/>
+	</operation>
+	<operation name="get_keepalive_interval">
+	<documentation>
+ Gets the keepalive interval time for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_keepalive_intervalRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_keepalive_intervalResponse"/>
+	</operation>
+	<operation name="set_lzo_state">
+	<documentation>
+ Sets the LZO states for a set of FEC tunnel profiles. If LZO state is 
+ enabled, then compression using LZO codec will be performed on the data 
+ payload before it is sent out on the network.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_lzo_stateRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_lzo_stateResponse"/>
+	</operation>
+	<operation name="get_lzo_state">
+	<documentation>
+ Gets the LZO states for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_lzo_stateRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_lzo_stateResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of FEC tunnel profiles.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.set_descriptionRequest"/>
+		<output message="tns:Networking.ProfileFEC.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_descriptionRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Networking.ProfileFEC.get_versionRequest"/>
+		<output message="tns:Networking.ProfileFEC.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.ProfileFECBinding" type="tns:Networking.ProfileFECPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the names of all FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_profile">
+	<documentation>
+ Deletes a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all non-system FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified FEC tunnel profiles are base
+ profiles.  A base profile sits at the base of the profile's
+ inheritance tree, supplying the defaults for every profile derived
+ from it.  (See also is_system_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified FEC tunnel profiles are
+ system profiles.  A system profile is a profile pre-configured on
+ the system, ready for use.  Non-system profiles are profiles
+ created or modified by a user.  Note that if a system profile is
+ modified, it is no longer considered a system profile.  (See also
+ is_base_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the existing FEC tunnel profile from which this set of
+ FEC tunnel profiles inherits their unspecified attribute
+ values.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the existing FEC tunnel profile from which this set of
+ FEC tunnel profiles inherits its unspecified attribute values.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_udp_port">
+	<documentation>
+ Sets the UDP ports for a set of FEC tunnel profiles. The FEC tunnel profile 
+ configuration is applied to all the UDP traffic passing through this port.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_udp_port">
+	<documentation>
+ Gets the UDP ports for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_packet">
+	<documentation>
+ Sets the source packet values for a set of FEC tunnel profiles. This value defines the 
+ number of data blocks into which the source payload data will be split. 
+ If the size of the source payload data is 3200 bytes and the source packet value
+ is set as 4, then the source payload data will be split into 4 data blocks, where
+ each data block is of 800 bytes. 
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_packet">
+	<documentation>
+ Gets the source packet values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_repair_packet">
+	<documentation>
+ Sets the repair packet values for a set of FEC tunnel profiles. The repair packet
+ value is the number of additional data blocks to be added to the source
+ payload data before the payload is sent over the network. These additional
+ data blocks help in recovering any errors in the original data payload.
+  
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_repair_packet">
+	<documentation>
+ Gets the repair packet values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_source_adaptive_state">
+	<documentation>
+ Sets the source adaptive states for a set of FEC tunnel profiles. If source 
+ adaptive state is enabled, then source payload data will be split adaptively for all
+ packets going through this FEC tunnel profile. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_source_adaptive_state">
+	<documentation>
+ Gets the source adaptive state values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_repair_adaptive_state">
+	<documentation>
+ Sets the repair adaptive states for a set of FEC tunnel profiles. If the repair packet
+ state is enabled, then the additional payload data will be added adaptively to the 
+ original data payload. This addition of payload data is based on network errors 
+ that occur during transmission of original payloads.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_repair_adaptive_state">
+	<documentation>
+ Gets the repair adaptive states for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_encode_maximum_delay">
+	<documentation>
+ Sets the encode maximum delays for a set of FEC tunnel profiles. 
+ Encode maximum delay time interval is the maximum time interval the FEC-enabled
+ BIG-IP waits for additional source payload, before it splits the source payload into
+ data blocks. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_encode_maximum_delay">
+	<documentation>
+ Gets the encode maximum delay time intervals for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_decode_queue">
+	<documentation>
+ Sets the decode queue values for a set of FEC tunnel profiles. Decode queue value
+ defines the number of parallel queues required to decode incoming packets.
+ Decode queue value must be one of 8, 16, 32, 64, 128, 256, 512, 1024 
+ and represent power-of-2 values.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_decode_queue">
+	<documentation>
+ Gets the decode queue values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_decode_maximum_packet">
+	<documentation>
+ Sets the decode maximum packet values for a set of FEC tunnel profiles. 
+ Decode maximum packet value defines the maximum total number of packets 
+ in all decode queues that will be decoded.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_decode_maximum_packet">
+	<documentation>
+ Gets the decode maximum packet values for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_decode_idle_timeout">
+	<documentation>
+ Sets the decode idle timeouts for a set of FEC tunnel profiles. Decode idle 
+ timeout value defines the time interval to wait for any missing packets in the 
+ data packet stream received from the FEC-enabled peer BIG-IP.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_decode_idle_timeout">
+	<documentation>
+ Gets the decode idle timeouts for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_keepalive_interval">
+	<documentation>
+ Sets the keep-alive interval time for a set of FEC tunnel profiles. Keep-alive 
+ interval time value defines the time interval at which each of the FEC-enabled 
+ BIG-IP sends FEC statistics to its peer FEC-enabled BIG-IP.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_keepalive_interval">
+	<documentation>
+ Gets the keepalive interval time for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_lzo_state">
+	<documentation>
+ Sets the LZO states for a set of FEC tunnel profiles. If LZO state is 
+ enabled, then compression using LZO codec will be performed on the data 
+ payload before it is sent out on the network.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_lzo_state">
+	<documentation>
+ Gets the LZO states for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of FEC tunnel profiles.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of FEC tunnel profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/ProfileFEC"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/ProfileFEC"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.ProfileFEC">
+	<documentation>
+ The ProfileFEC interface enables you to configure FEC tunnel profiles 
+ used for recovering errors in data transmission over unreliable 
+ communication channels. FEC gives the receiver the ability to correct
+ errors without needing a reverse channel to request retransmission of 
+ data.
+ 
+        	</documentation>
+	<port name="Networking.ProfileFECPort" binding="tns:Networking.ProfileFECBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

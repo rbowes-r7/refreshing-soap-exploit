@@ -1,0 +1,1576 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.ALGLogProfile"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="LocalLB.LogAction">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="LOG_ACTION_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>LOG_ACTION_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LOG_ACTION_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>LOG_ACTION_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LOG_ACTION_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>LOG_ACTION_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LOG_ACTION_BACKUP_ALLOCATION_ONLY">
+					<xsd:annotation>
+						<xsd:documentation>LOG_ACTION_BACKUP_ALLOCATION_ONLY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.ProfileLogActionSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfileLogAction[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileEnabledState">
+			<xsd:sequence>
+				<xsd:element name="value" type="tns:Common.EnabledState"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileLogElementSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfileLogElementSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileLogAction">
+			<xsd:sequence>
+				<xsd:element name="value" type="tns:LocalLB.LogAction"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.LogElementSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.LogElement[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.LogElement">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="LOG_ELEMENT_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>LOG_ELEMENT_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LOG_ELEMENT_DESTINATION">
+					<xsd:annotation>
+						<xsd:documentation>LOG_ELEMENT_DESTINATION</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="LocalLB.ProfileEnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.ProfileEnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.ProfileLogElementSequence">
+			<xsd:sequence>
+				<xsd:element name="value" type="tns:LocalLB.LogElementSequence"/>
+				<xsd:element name="default_flag" type="xsd:boolean"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.ALGLogProfile.get_listRequest">
+</message>
+<message name="LocalLB.ALGLogProfile.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.createRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.createResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.delete_alg_log_profileRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.delete_alg_log_profileResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.delete_all_alg_log_profilesRequest">
+</message>
+<message name="LocalLB.ALGLogProfile.delete_all_alg_log_profilesResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.is_base_profileRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.is_base_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.is_system_profileRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.is_system_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_default_profileRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="defaults" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_default_profileResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_default_profileRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_default_profileResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_descriptionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_descriptionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_start_control_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="actions" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_start_control_channel_actionResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_start_control_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_start_control_channel_actionResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_start_control_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_start_control_channel_elementResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.add_start_control_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.add_start_control_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_start_control_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_start_control_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_all_start_control_channel_elementsRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_all_start_control_channel_elementsResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_end_control_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="actions" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_end_control_channel_actionResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_end_control_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_end_control_channel_actionResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_end_control_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_end_control_channel_elementResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.add_end_control_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.add_end_control_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_end_control_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_end_control_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_all_end_control_channel_elementsRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_all_end_control_channel_elementsResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_start_data_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="actions" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_start_data_channel_actionResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_start_data_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_start_data_channel_actionResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_start_data_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_start_data_channel_elementResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.add_start_data_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.add_start_data_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_start_data_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_start_data_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_all_start_data_channel_elementsRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_all_start_data_channel_elementsResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_end_data_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="actions" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_end_data_channel_actionResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_end_data_channel_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_end_data_channel_actionResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_end_data_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_end_data_channel_elementResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.add_end_data_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.add_end_data_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_end_data_channel_elementRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="elements" type="tns:LocalLB.ProfileLogElementSequenceSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_end_data_channel_elementResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.remove_all_end_data_channel_elementsRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.remove_all_end_data_channel_elementsResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_inbound_transaction_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="actions" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_inbound_transaction_actionResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_inbound_transaction_actionRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_inbound_transaction_actionResponse">
+	<part name="return" type="tns:LocalLB.ProfileLogActionSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.set_csv_format_stateRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:LocalLB.ProfileEnabledStateSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.set_csv_format_stateResponse">
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_csv_format_stateRequest">
+	<part name="profiles" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ALGLogProfile.get_csv_format_stateResponse">
+	<part name="return" type="tns:LocalLB.ProfileEnabledStateSequence"/>
+</message>
+
+<message name="LocalLB.ALGLogProfile.get_versionRequest">
+</message>
+<message name="LocalLB.ALGLogProfile.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.ALGLogProfilePortType">
+	<operation name="get_list">
+   	<documentation>
+ Gets a list of all ALG log profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_listRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified ALG log profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.createRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.createResponse"/>
+	</operation>
+	<operation name="delete_alg_log_profile">
+	<documentation>
+ Deletes a specified list of ALG log profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.delete_alg_log_profileRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.delete_alg_log_profileResponse"/>
+	</operation>
+	<operation name="delete_all_alg_log_profiles">
+	<documentation>
+ Deletes all ALG log profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.delete_all_alg_log_profilesRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.delete_all_alg_log_profilesResponse"/>
+	</operation>
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified ALG log profiles are base profiles.
+ A base profile sits at the base of the profile's inheritance tree,
+ supplying the defaults for every profile derived from it.  (See
+ also is_system_profile).
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.is_base_profileRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.is_base_profileResponse"/>
+	</operation>
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified ALG log profiles are system profiles.
+ A system profile is a profile pre-configured on the system, ready
+ for use.  Non-system profiles are profiles created or modified by a
+ user.  Note that if a system profile is modified, it is no longer
+ considered a system profile.  (See also is_base_profile).
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.is_system_profileRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.is_system_profileResponse"/>
+	</operation>
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the names of the default profiles from which the specified profiles will derive
+ default values for attributes.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_default_profileRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_default_profileResponse"/>
+	</operation>
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the names of the default profiles from which the specified profiles will derive
+ default values for attributes.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_default_profileRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_default_profileResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of ALG log profiles.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_descriptionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of ALG log profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_descriptionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_start_control_channel_action">
+	<documentation>
+ Sets the log action to occur at the creation of the control channel connection for
+ the specified log profiles.  Control channel is the out-of-band channel where control
+ information is exchanged between server and client.
+
+ See LogAction for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_start_control_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_start_control_channel_actionResponse"/>
+	</operation>
+	<operation name="get_start_control_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_start_control_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_start_control_channel_actionResponse"/>
+	</operation>
+	<operation name="get_start_control_channel_element">
+	<documentation>
+ Gets the optional log elements for the start of control channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_start_control_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_start_control_channel_elementResponse"/>
+	</operation>
+	<operation name="add_start_control_channel_element">
+	<documentation>
+ Adds the optional log elements for the start of control channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.add_start_control_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.add_start_control_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_start_control_channel_element">
+	<documentation>
+ Removes the optional log elements for the start of control channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_start_control_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_start_control_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_all_start_control_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the start of control channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_all_start_control_channel_elementsRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_all_start_control_channel_elementsResponse"/>
+	</operation>
+	<operation name="set_end_control_channel_action">
+	<documentation>
+ Sets the log action to occur at the end of the control channel connection for
+ the specified log profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_end_control_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_end_control_channel_actionResponse"/>
+	</operation>
+	<operation name="get_end_control_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_end_control_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_end_control_channel_actionResponse"/>
+	</operation>
+	<operation name="get_end_control_channel_element">
+	<documentation>
+ Gets the optional log elements for the end of control channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_end_control_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_end_control_channel_elementResponse"/>
+	</operation>
+	<operation name="add_end_control_channel_element">
+	<documentation>
+ Adds the optional log elements for the end of control channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.add_end_control_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.add_end_control_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_end_control_channel_element">
+	<documentation>
+ Removes the optional log elements for the end of control channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_end_control_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_end_control_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_all_end_control_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the end of control channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_all_end_control_channel_elementsRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_all_end_control_channel_elementsResponse"/>
+	</operation>
+	<operation name="set_start_data_channel_action">
+	<documentation>
+ Sets the log action to occur at the creation of the data channel
+ connection for the specified log profile.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_start_data_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_start_data_channel_actionResponse"/>
+	</operation>
+	<operation name="get_start_data_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_start_data_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_start_data_channel_actionResponse"/>
+	</operation>
+	<operation name="get_start_data_channel_element">
+	<documentation>
+ Gets the optional log elements for the start of data channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_start_data_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_start_data_channel_elementResponse"/>
+	</operation>
+	<operation name="add_start_data_channel_element">
+	<documentation>
+ Adds the optional log elements for the start of data channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.add_start_data_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.add_start_data_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_start_data_channel_element">
+	<documentation>
+ Removes the optional log elements for the start of data channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_start_data_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_start_data_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_all_start_data_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the start of data channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_all_start_data_channel_elementsRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_all_start_data_channel_elementsResponse"/>
+	</operation>
+	<operation name="set_end_data_channel_action">
+	<documentation>
+ Sets the log action to occur at the end of the data channel
+ connection, for the specified log profile.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_end_data_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_end_data_channel_actionResponse"/>
+	</operation>
+	<operation name="get_end_data_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_end_data_channel_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_end_data_channel_actionResponse"/>
+	</operation>
+	<operation name="get_end_data_channel_element">
+	<documentation>
+ Gets the optional log elements for the end of data channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_end_data_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_end_data_channel_elementResponse"/>
+	</operation>
+	<operation name="add_end_data_channel_element">
+	<documentation>
+ Adds the optional log elements for the end of data channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.add_end_data_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.add_end_data_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_end_data_channel_element">
+	<documentation>
+ Removes the optional log elements for the end of data channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_end_data_channel_elementRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_end_data_channel_elementResponse"/>
+	</operation>
+	<operation name="remove_all_end_data_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the end of data channel connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.remove_all_end_data_channel_elementsRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.remove_all_end_data_channel_elementsResponse"/>
+	</operation>
+	<operation name="set_inbound_transaction_action">
+	<documentation>
+ Sets the log action to occur for an inbound transaction event
+ to an ALG end-point for the specified log profile.  Inbound transaction log
+ entry could contain both incoming and outgoing messages.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_inbound_transaction_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_inbound_transaction_actionResponse"/>
+	</operation>
+	<operation name="get_inbound_transaction_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_inbound_transaction_actionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_inbound_transaction_actionResponse"/>
+	</operation>
+	<operation name="set_csv_format_state">
+	<documentation>
+ Sets the states that if true, enable support for CSV log format.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.set_csv_format_stateRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.set_csv_format_stateResponse"/>
+	</operation>
+	<operation name="get_csv_format_state">
+	<documentation>
+ Gets the states that if true, enable support for CSV log format.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_csv_format_stateRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_csv_format_stateResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.ALGLogProfile.get_versionRequest"/>
+		<output message="tns:LocalLB.ALGLogProfile.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.ALGLogProfileBinding" type="tns:LocalLB.ALGLogProfilePortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all ALG log profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified ALG log profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_alg_log_profile">
+	<documentation>
+ Deletes a specified list of ALG log profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_alg_log_profiles">
+	<documentation>
+ Deletes all ALG log profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified ALG log profiles are base profiles.
+ A base profile sits at the base of the profile's inheritance tree,
+ supplying the defaults for every profile derived from it.  (See
+ also is_system_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified ALG log profiles are system profiles.
+ A system profile is a profile pre-configured on the system, ready
+ for use.  Non-system profiles are profiles created or modified by a
+ user.  Note that if a system profile is modified, it is no longer
+ considered a system profile.  (See also is_base_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the names of the default profiles from which the specified profiles will derive
+ default values for attributes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the names of the default profiles from which the specified profiles will derive
+ default values for attributes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of ALG log profiles.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of ALG log profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_start_control_channel_action">
+	<documentation>
+ Sets the log action to occur at the creation of the control channel connection for
+ the specified log profiles.  Control channel is the out-of-band channel where control
+ information is exchanged between server and client.
+
+ See LogAction for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_start_control_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_start_control_channel_element">
+	<documentation>
+ Gets the optional log elements for the start of control channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_start_control_channel_element">
+	<documentation>
+ Adds the optional log elements for the start of control channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_start_control_channel_element">
+	<documentation>
+ Removes the optional log elements for the start of control channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_start_control_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the start of control channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_end_control_channel_action">
+	<documentation>
+ Sets the log action to occur at the end of the control channel connection for
+ the specified log profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_end_control_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_end_control_channel_element">
+	<documentation>
+ Gets the optional log elements for the end of control channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_end_control_channel_element">
+	<documentation>
+ Adds the optional log elements for the end of control channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_end_control_channel_element">
+	<documentation>
+ Removes the optional log elements for the end of control channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_end_control_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the end of control channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_start_data_channel_action">
+	<documentation>
+ Sets the log action to occur at the creation of the data channel
+ connection for the specified log profile.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_start_data_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_start_data_channel_element">
+	<documentation>
+ Gets the optional log elements for the start of data channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_start_data_channel_element">
+	<documentation>
+ Adds the optional log elements for the start of data channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_start_data_channel_element">
+	<documentation>
+ Removes the optional log elements for the start of data channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_start_data_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the start of data channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_end_data_channel_action">
+	<documentation>
+ Sets the log action to occur at the end of the data channel
+ connection, for the specified log profile.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_end_data_channel_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_end_data_channel_element">
+	<documentation>
+ Gets the optional log elements for the end of data channel connection.
+ Optional elements are attributes that provide additional information about
+ the connection, but is not essential for traceability.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_end_data_channel_element">
+	<documentation>
+ Adds the optional log elements for the end of data channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_end_data_channel_element">
+	<documentation>
+ Removes the optional log elements for the end of data channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_end_data_channel_elements">
+	<documentation>
+ Removes all the optional log elements from the end of data channel connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_inbound_transaction_action">
+	<documentation>
+ Sets the log action to occur for an inbound transaction event
+ to an ALG end-point for the specified log profile.  Inbound transaction log
+ entry could contain both incoming and outgoing messages.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_inbound_transaction_action">
+	<documentation>
+ Gets the log action for the specified log profile and event.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_csv_format_state">
+	<documentation>
+ Sets the states that if true, enable support for CSV log format.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_csv_format_state">
+	<documentation>
+ Gets the states that if true, enable support for CSV log format.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ALGLogProfile"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ALGLogProfile"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.ALGLogProfile">
+	<documentation>
+
+ Application level gateway (ALG) log profile controls logging for supported ALG. Currently supports
+ Profile FTP, SIP, and RTSP, the log profile allows control of events that get logged, as well as
+ the triggering action, and optional elements of log messages.
+
+        	</documentation>
+	<port name="LocalLB.ALGLogProfilePort" binding="tns:LocalLB.ALGLogProfileBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

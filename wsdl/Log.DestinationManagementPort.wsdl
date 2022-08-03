@@ -1,0 +1,570 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Log.DestinationManagementPort"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Log.LogProtocol">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="LOG_PROTOCOL_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>LOG_PROTOCOL_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LOG_PROTOCOL_TCP">
+					<xsd:annotation>
+						<xsd:documentation>LOG_PROTOCOL_TCP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="LOG_PROTOCOL_UDP">
+					<xsd:annotation>
+						<xsd:documentation>LOG_PROTOCOL_UDP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Log.LogProtocolSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Log.LogProtocol[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.PortSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPAddressSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Log.DestinationManagementPort.get_listRequest">
+</message>
+<message name="Log.DestinationManagementPort.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Log.DestinationManagementPort.createRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.IPAddressSequence"/>
+	<part name="ports" type="tns:Common.PortSequence"/>
+	<part name="protocols" type="tns:Log.LogProtocolSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.createResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.delete_management_port_destinationRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.delete_management_port_destinationResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.delete_all_management_port_destinationsRequest">
+</message>
+<message name="Log.DestinationManagementPort.delete_all_management_port_destinationsResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.set_descriptionRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.set_descriptionResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.get_descriptionRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Log.DestinationManagementPort.set_destination_addressRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.IPAddressSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.set_destination_addressResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.get_destination_addressRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.get_destination_addressResponse">
+	<part name="return" type="tns:Common.IPAddressSequence"/>
+</message>
+
+<message name="Log.DestinationManagementPort.set_destination_portRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+	<part name="ports" type="tns:Common.PortSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.set_destination_portResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.get_destination_portRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.get_destination_portResponse">
+	<part name="return" type="tns:Common.PortSequence"/>
+</message>
+
+<message name="Log.DestinationManagementPort.set_log_protocolRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+	<part name="protocols" type="tns:Log.LogProtocolSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.set_log_protocolResponse">
+</message>
+
+<message name="Log.DestinationManagementPort.get_log_protocolRequest">
+	<part name="destinations" type="tns:Common.StringSequence"/>
+</message>
+<message name="Log.DestinationManagementPort.get_log_protocolResponse">
+	<part name="return" type="tns:Log.LogProtocolSequence"/>
+</message>
+
+<message name="Log.DestinationManagementPort.get_versionRequest">
+</message>
+<message name="Log.DestinationManagementPort.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Log.DestinationManagementPortPortType">
+	<operation name="get_list">
+   	<documentation>
+ Gets the list of management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.get_listRequest"/>
+		<output message="tns:Log.DestinationManagementPort.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a management port log destination.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.createRequest"/>
+		<output message="tns:Log.DestinationManagementPort.createResponse"/>
+	</operation>
+	<operation name="delete_management_port_destination">
+	<documentation>
+ Deletes the specified management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.delete_management_port_destinationRequest"/>
+		<output message="tns:Log.DestinationManagementPort.delete_management_port_destinationResponse"/>
+	</operation>
+	<operation name="delete_all_management_port_destinations">
+	<documentation>
+ Deletes all management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.delete_all_management_port_destinationsRequest"/>
+		<output message="tns:Log.DestinationManagementPort.delete_all_management_port_destinationsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified high-speed log destinations.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.set_descriptionRequest"/>
+		<output message="tns:Log.DestinationManagementPort.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the description for the specified management port log
+ destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.get_descriptionRequest"/>
+		<output message="tns:Log.DestinationManagementPort.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_destination_address">
+	<documentation>
+ Sets the IP address assigned to the management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.set_destination_addressRequest"/>
+		<output message="tns:Log.DestinationManagementPort.set_destination_addressResponse"/>
+	</operation>
+	<operation name="get_destination_address">
+	<documentation>
+ Gets the IP address assigned to the specified management port log
+ destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.get_destination_addressRequest"/>
+		<output message="tns:Log.DestinationManagementPort.get_destination_addressResponse"/>
+	</operation>
+	<operation name="set_destination_port">
+	<documentation>
+ Sets the port for the specified management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.set_destination_portRequest"/>
+		<output message="tns:Log.DestinationManagementPort.set_destination_portResponse"/>
+	</operation>
+	<operation name="get_destination_port">
+	<documentation>
+ Gets the port for the specified management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.get_destination_portRequest"/>
+		<output message="tns:Log.DestinationManagementPort.get_destination_portResponse"/>
+	</operation>
+	<operation name="set_log_protocol">
+	<documentation>
+ Sets the log protocol used to send log messages to the specified
+ management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.set_log_protocolRequest"/>
+		<output message="tns:Log.DestinationManagementPort.set_log_protocolResponse"/>
+	</operation>
+	<operation name="get_log_protocol">
+	<documentation>
+ Gets the log protocol used to send log messages to the specified
+ management port log destinations.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.get_log_protocolRequest"/>
+		<output message="tns:Log.DestinationManagementPort.get_log_protocolResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Log.DestinationManagementPort.get_versionRequest"/>
+		<output message="tns:Log.DestinationManagementPort.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Log.DestinationManagementPortBinding" type="tns:Log.DestinationManagementPortPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the list of management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a management port log destination.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_management_port_destination">
+	<documentation>
+ Deletes the specified management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_management_port_destinations">
+	<documentation>
+ Deletes all management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for the specified high-speed log destinations.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the description for the specified management port log
+ destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_destination_address">
+	<documentation>
+ Sets the IP address assigned to the management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_destination_address">
+	<documentation>
+ Gets the IP address assigned to the specified management port log
+ destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_destination_port">
+	<documentation>
+ Sets the port for the specified management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_destination_port">
+	<documentation>
+ Gets the port for the specified management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_log_protocol">
+	<documentation>
+ Sets the log protocol used to send log messages to the specified
+ management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_log_protocol">
+	<documentation>
+ Gets the log protocol used to send log messages to the specified
+ management port log destinations.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Log/DestinationManagementPort"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Log/DestinationManagementPort"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Log.DestinationManagementPort">
+	<documentation>
+ The DestinationManagementPort interface enables you to create and modify
+ management port destinations. These are destinations that send logs
+ through the management interface of the BIG-IP. Logs will be ratelimited
+ when sent out the management interface in order to prevent denial of
+ service.
+
+ A management port log is an unformatted log message which gets sent to a
+ particular IP address and port. If a particular format is needed, use the
+ Remote Syslog, ArcSight, or Splunk destinations and set a management port
+ log destination as its forwarding destination.
+
+        	</documentation>
+	<port name="Log.DestinationManagementPortPort" binding="tns:Log.DestinationManagementPortBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

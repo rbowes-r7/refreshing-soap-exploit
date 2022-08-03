@@ -1,0 +1,519 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Classification.Category"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Classification.Category.get_listRequest">
+</message>
+<message name="Classification.Category.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.Category.createRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+	<part name="ids" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Classification.Category.createResponse">
+</message>
+
+<message name="Classification.Category.delete_categoryRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Category.delete_categoryResponse">
+</message>
+
+<message name="Classification.Category.delete_all_categoriesRequest">
+</message>
+<message name="Classification.Category.delete_all_categoriesResponse">
+</message>
+
+<message name="Classification.Category.get_idRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Category.get_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Classification.Category.set_enabled_stateRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Classification.Category.set_enabled_stateResponse">
+</message>
+
+<message name="Classification.Category.get_enabled_stateRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Category.get_enabled_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Classification.Category.set_irule_event_stateRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Classification.Category.set_irule_event_stateResponse">
+</message>
+
+<message name="Classification.Category.get_irule_event_stateRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Category.get_irule_event_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Classification.Category.set_descriptionRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Category.set_descriptionResponse">
+</message>
+
+<message name="Classification.Category.get_descriptionRequest">
+	<part name="categories" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Category.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.Category.get_versionRequest">
+</message>
+<message name="Classification.Category.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Classification.CategoryPortType">
+	<operation name="get_list">
+ 	<documentation>
+ Gets a list of all categories.
+
+        	</documentation>
+		<input message="tns:Classification.Category.get_listRequest"/>
+		<output message="tns:Classification.Category.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of classification categories.
+
+        	</documentation>
+		<input message="tns:Classification.Category.createRequest"/>
+		<output message="tns:Classification.Category.createResponse"/>
+	</operation>
+	<operation name="delete_category">
+	<documentation>
+ Deletes the specified categories.
+
+        	</documentation>
+		<input message="tns:Classification.Category.delete_categoryRequest"/>
+		<output message="tns:Classification.Category.delete_categoryResponse"/>
+	</operation>
+	<operation name="delete_all_categories">
+	<documentation>
+ Deletes all user defined categories.
+
+        	</documentation>
+		<input message="tns:Classification.Category.delete_all_categoriesRequest"/>
+		<output message="tns:Classification.Category.delete_all_categoriesResponse"/>
+	</operation>
+	<operation name="get_id">
+	<documentation>
+ Gets the ids of the specified categories.
+ Category ids cannot be modified; therefore there is no set 
+ method for it. 
+
+        	</documentation>
+		<input message="tns:Classification.Category.get_idRequest"/>
+		<output message="tns:Classification.Category.get_idResponse"/>
+	</operation>
+	<operation name="set_enabled_state">
+	<documentation>
+ Sets the states indicating if the specified categories are  
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.Category.set_enabled_stateRequest"/>
+		<output message="tns:Classification.Category.set_enabled_stateResponse"/>
+	</operation>
+	<operation name="get_enabled_state">
+	<documentation>
+ Gets the states indicating if the specified categories are  
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.Category.get_enabled_stateRequest"/>
+		<output message="tns:Classification.Category.get_enabled_stateResponse"/>
+	</operation>
+	<operation name="set_irule_event_state">
+	<documentation>
+ Sets the irule event states indicating if the irules for the   
+ specified categories are enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.Category.set_irule_event_stateRequest"/>
+		<output message="tns:Classification.Category.set_irule_event_stateResponse"/>
+	</operation>
+	<operation name="get_irule_event_state">
+	<documentation>
+ Gets the irule event states indicating if the irules for the   
+ specified categories are enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.Category.get_irule_event_stateRequest"/>
+		<output message="tns:Classification.Category.get_irule_event_stateResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of categories.
+
+        	</documentation>
+		<input message="tns:Classification.Category.set_descriptionRequest"/>
+		<output message="tns:Classification.Category.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of categories.
+
+        	</documentation>
+		<input message="tns:Classification.Category.get_descriptionRequest"/>
+		<output message="tns:Classification.Category.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Classification.Category.get_versionRequest"/>
+		<output message="tns:Classification.Category.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Classification.CategoryBinding" type="tns:Classification.CategoryPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of classification categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_category">
+	<documentation>
+ Deletes the specified categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_categories">
+	<documentation>
+ Deletes all user defined categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_id">
+	<documentation>
+ Gets the ids of the specified categories.
+ Category ids cannot be modified; therefore there is no set 
+ method for it. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_enabled_state">
+	<documentation>
+ Sets the states indicating if the specified categories are  
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_enabled_state">
+	<documentation>
+ Gets the states indicating if the specified categories are  
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_irule_event_state">
+	<documentation>
+ Sets the irule event states indicating if the irules for the   
+ specified categories are enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_irule_event_state">
+	<documentation>
+ Gets the irule event states indicating if the irules for the   
+ specified categories are enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of categories.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Category"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Category"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Classification.Category">
+	<documentation>
+ The Category interface enables you to work with attributes for 
+ categories. A category specifies a group of applications in 
+ in classification, e.g. Web, P2P, Mail, Game, etc. Based on 
+ categories, the classification engine can classify traffic to  
+ different groups. There are predefined categories like Web etc. 
+ as well as categories created by users; the system uses predefined 
+ categories for default classification, while iRules need to be  
+ used for the categories created by users.
+
+        	</documentation>
+	<port name="Classification.CategoryPort" binding="tns:Classification.CategoryBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

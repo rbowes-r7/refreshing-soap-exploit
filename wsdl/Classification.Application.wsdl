@@ -1,0 +1,517 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Classification.Application"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Classification.Application.get_listRequest">
+</message>
+<message name="Classification.Application.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.Application.createRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequence"/>
+	<part name="ids" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Classification.Application.createResponse">
+</message>
+
+<message name="Classification.Application.delete_applicationRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.delete_applicationResponse">
+</message>
+
+<message name="Classification.Application.delete_all_applicationsRequest">
+</message>
+<message name="Classification.Application.delete_all_applicationsResponse">
+</message>
+
+<message name="Classification.Application.get_idRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.get_idResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Classification.Application.set_enabled_stateRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Classification.Application.set_enabled_stateResponse">
+</message>
+
+<message name="Classification.Application.get_enabled_stateRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.get_enabled_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Classification.Application.set_categoryRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+	<part name="categories" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.set_categoryResponse">
+</message>
+
+<message name="Classification.Application.get_categoryRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.get_categoryResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.Application.set_descriptionRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.set_descriptionResponse">
+</message>
+
+<message name="Classification.Application.get_descriptionRequest">
+	<part name="applications" type="tns:Common.StringSequence"/>
+</message>
+<message name="Classification.Application.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Classification.Application.get_versionRequest">
+</message>
+<message name="Classification.Application.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Classification.ApplicationPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets a list of all applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.get_listRequest"/>
+		<output message="tns:Classification.Application.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of classification applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.createRequest"/>
+		<output message="tns:Classification.Application.createResponse"/>
+	</operation>
+	<operation name="delete_application">
+	<documentation>
+ Deletes the specified applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.delete_applicationRequest"/>
+		<output message="tns:Classification.Application.delete_applicationResponse"/>
+	</operation>
+	<operation name="delete_all_applications">
+	<documentation>
+ Deletes all user defined applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.delete_all_applicationsRequest"/>
+		<output message="tns:Classification.Application.delete_all_applicationsResponse"/>
+	</operation>
+	<operation name="get_id">
+	<documentation>
+ Gets the ids of the specified applications.
+ Application ids cannot be modified; therefore there is no set 
+ method for it. 
+
+        	</documentation>
+		<input message="tns:Classification.Application.get_idRequest"/>
+		<output message="tns:Classification.Application.get_idResponse"/>
+	</operation>
+	<operation name="set_enabled_state">
+	<documentation>
+ Sets the states indicating if the specified applications are  
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.Application.set_enabled_stateRequest"/>
+		<output message="tns:Classification.Application.set_enabled_stateResponse"/>
+	</operation>
+	<operation name="get_enabled_state">
+	<documentation>
+ Gets the states indicating if the specified applications are  
+ enabled or disabled. 
+
+        	</documentation>
+		<input message="tns:Classification.Application.get_enabled_stateRequest"/>
+		<output message="tns:Classification.Application.get_enabled_stateResponse"/>
+	</operation>
+	<operation name="set_category">
+	<documentation>
+ Sets the categories for a set of applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.set_categoryRequest"/>
+		<output message="tns:Classification.Application.set_categoryResponse"/>
+	</operation>
+	<operation name="get_category">
+	<documentation>
+ Gets the categories for a set of applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.get_categoryRequest"/>
+		<output message="tns:Classification.Application.get_categoryResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.set_descriptionRequest"/>
+		<output message="tns:Classification.Application.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of applications.
+
+        	</documentation>
+		<input message="tns:Classification.Application.get_descriptionRequest"/>
+		<output message="tns:Classification.Application.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Classification.Application.get_versionRequest"/>
+		<output message="tns:Classification.Application.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Classification.ApplicationBinding" type="tns:Classification.ApplicationPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of classification applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_application">
+	<documentation>
+ Deletes the specified applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_applications">
+	<documentation>
+ Deletes all user defined applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_id">
+	<documentation>
+ Gets the ids of the specified applications.
+ Application ids cannot be modified; therefore there is no set 
+ method for it. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_enabled_state">
+	<documentation>
+ Sets the states indicating if the specified applications are  
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_enabled_state">
+	<documentation>
+ Gets the states indicating if the specified applications are  
+ enabled or disabled. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_category">
+	<documentation>
+ Sets the categories for a set of applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_category">
+	<documentation>
+ Gets the categories for a set of applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for a set of applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of applications.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Classification/Application"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Classification/Application"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Classification.Application">
+	<documentation>
+ The Application interface enables you to work with classification 
+ categories and applications. PEM supplies predefined categories 
+ such as web, audio_video, P2P, mail, etc. Many of the categories 
+ have applications associated with them. For example, the category 
+ web defines commonly known web sites (or applications) such as 
+ apple, amazon, ebay, google, facebook, and youtube. Customers can 
+ create custom categories and applications; iRules and data groups 
+ are used to classify the traffic into custom categories and 
+ applications.
+
+        	</documentation>
+	<port name="Classification.ApplicationPort" binding="tns:Classification.ApplicationBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

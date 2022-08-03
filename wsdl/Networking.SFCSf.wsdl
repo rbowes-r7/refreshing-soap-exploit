@@ -1,0 +1,938 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.SFCSf"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.IPAddressSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.SFCSf.get_listRequest">
+</message>
+<message name="Networking.SFCSf.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCSf.createRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.createResponse">
+</message>
+
+<message name="Networking.SFCSf.delete_servicefunctionRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.delete_servicefunctionResponse">
+</message>
+
+<message name="Networking.SFCSf.delete_all_servicefunctionsRequest">
+</message>
+<message name="Networking.SFCSf.delete_all_servicefunctionsResponse">
+</message>
+
+<message name="Networking.SFCSf.set_descriptionRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.set_descriptionResponse">
+</message>
+
+<message name="Networking.SFCSf.get_descriptionRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_virtual_nameRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="virtual_name" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.set_virtual_nameResponse">
+</message>
+
+<message name="Networking.SFCSf.get_virtual_nameRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_virtual_nameResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_pool_nameRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="pool_name" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.set_pool_nameResponse">
+</message>
+
+<message name="Networking.SFCSf.get_pool_nameRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_pool_nameResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_snat_poolRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="snat_pool" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.set_snat_poolResponse">
+</message>
+
+<message name="Networking.SFCSf.get_snat_poolRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_snat_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_persistenceRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="persistence" type="tns:Common.ULongSequence"/>
+</message>
+<message name="Networking.SFCSf.set_persistenceResponse">
+</message>
+
+<message name="Networking.SFCSf.get_persistenceRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_persistenceResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_src_port_preserve_strictRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="src_port_preserve_strict" type="tns:Common.BooleanSequence"/>
+</message>
+<message name="Networking.SFCSf.set_src_port_preserve_strictResponse">
+</message>
+
+<message name="Networking.SFCSf.get_src_port_preserve_strictRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_src_port_preserve_strictResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_ip_addressRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="ip_address" type="tns:Common.IPAddressSequence"/>
+</message>
+<message name="Networking.SFCSf.set_ip_addressResponse">
+</message>
+
+<message name="Networking.SFCSf.get_ip_addressRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_ip_addressResponse">
+	<part name="return" type="tns:Common.IPAddressSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_nsh_aware_stateRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="nshawarestates" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.SFCSf.set_nsh_aware_stateResponse">
+</message>
+
+<message name="Networking.SFCSf.get_nsh_aware_stateRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_nsh_aware_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_egress_interfaceRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="interface_name" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.set_egress_interfaceResponse">
+</message>
+
+<message name="Networking.SFCSf.get_egress_interfaceRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_egress_interfaceResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.SFCSf.set_ingress_interfaceRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+	<part name="interface_name" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.set_ingress_interfaceResponse">
+</message>
+
+<message name="Networking.SFCSf.get_ingress_interfaceRequest">
+	<part name="servicefunctions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.SFCSf.get_ingress_interfaceResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.SFCSfPortType">
+	<operation name="get_list">
+	<documentation>
+ Gets the names of all SFC policies.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_listRequest"/>
+		<output message="tns:Networking.SFCSf.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.createRequest"/>
+		<output message="tns:Networking.SFCSf.createResponse"/>
+	</operation>
+	<operation name="delete_servicefunction">
+	<documentation>
+ Deletes a set of SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.delete_servicefunctionRequest"/>
+		<output message="tns:Networking.SFCSf.delete_servicefunctionResponse"/>
+	</operation>
+	<operation name="delete_all_servicefunctions">
+	<documentation>
+ Deletes all SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.delete_all_servicefunctionsRequest"/>
+		<output message="tns:Networking.SFCSf.delete_all_servicefunctionsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified SFC Service Functions.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_descriptionRequest"/>
+		<output message="tns:Networking.SFCSf.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_descriptionRequest"/>
+		<output message="tns:Networking.SFCSf.get_descriptionResponse"/>
+	</operation>
+	<operation name="set_virtual_name">
+	<documentation>
+ Sets the virtual server for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_virtual_nameRequest"/>
+		<output message="tns:Networking.SFCSf.set_virtual_nameResponse"/>
+	</operation>
+	<operation name="get_virtual_name">
+	<documentation>
+ Gets the virtual server configured for SFC Service Function.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_virtual_nameRequest"/>
+		<output message="tns:Networking.SFCSf.get_virtual_nameResponse"/>
+	</operation>
+	<operation name="set_pool_name">
+	<documentation>
+ Sets the pool for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_pool_nameRequest"/>
+		<output message="tns:Networking.SFCSf.set_pool_nameResponse"/>
+	</operation>
+	<operation name="get_pool_name">
+	<documentation>
+ Gets the pool for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_pool_nameRequest"/>
+		<output message="tns:Networking.SFCSf.get_pool_nameResponse"/>
+	</operation>
+	<operation name="set_snat_pool">
+	<documentation>
+ Sets the snatpool for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_snat_poolRequest"/>
+		<output message="tns:Networking.SFCSf.set_snat_poolResponse"/>
+	</operation>
+	<operation name="get_snat_pool">
+	<documentation>
+ Sets the snatpool for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_snat_poolRequest"/>
+		<output message="tns:Networking.SFCSf.get_snat_poolResponse"/>
+	</operation>
+	<operation name="set_persistence">
+	<documentation>
+ Sets the persistence type for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_persistenceRequest"/>
+		<output message="tns:Networking.SFCSf.set_persistenceResponse"/>
+	</operation>
+	<operation name="get_persistence">
+	<documentation>
+ Get the persistence state for SFC Service Functions
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_persistenceRequest"/>
+		<output message="tns:Networking.SFCSf.get_persistenceResponse"/>
+	</operation>
+	<operation name="set_src_port_preserve_strict">
+	<documentation>
+ Enables/disables the source port preserve for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_src_port_preserve_strictRequest"/>
+		<output message="tns:Networking.SFCSf.set_src_port_preserve_strictResponse"/>
+	</operation>
+	<operation name="get_src_port_preserve_strict">
+	<documentation>
+ Gets the state of source port preserve for SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_src_port_preserve_strictRequest"/>
+		<output message="tns:Networking.SFCSf.get_src_port_preserve_strictResponse"/>
+	</operation>
+	<operation name="set_ip_address">
+	<documentation>
+ Set the ip-address that states the Service Function.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_ip_addressRequest"/>
+		<output message="tns:Networking.SFCSf.set_ip_addressResponse"/>
+	</operation>
+	<operation name="get_ip_address">
+	<documentation>
+ Get the ip-address that states the Service Function
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_ip_addressRequest"/>
+		<output message="tns:Networking.SFCSf.get_ip_addressResponse"/>
+	</operation>
+	<operation name="set_nsh_aware_state">
+	<documentation>
+ Enables/disables the NSH aware state of SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_nsh_aware_stateRequest"/>
+		<output message="tns:Networking.SFCSf.set_nsh_aware_stateResponse"/>
+	</operation>
+	<operation name="get_nsh_aware_state">
+	<documentation>
+ Gets the currently configured enabled/disabled setting for the
+ NSH aware attribute for the specified SFC Service Functions.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_nsh_aware_stateRequest"/>
+		<output message="tns:Networking.SFCSf.get_nsh_aware_stateResponse"/>
+	</operation>
+	<operation name="set_egress_interface">
+	<documentation>
+ Sets the egress interface for Service Functions
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_egress_interfaceRequest"/>
+		<output message="tns:Networking.SFCSf.set_egress_interfaceResponse"/>
+	</operation>
+	<operation name="get_egress_interface">
+	<documentation>
+ Gets the currently configured egress interface for Service Function.
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_egress_interfaceRequest"/>
+		<output message="tns:Networking.SFCSf.get_egress_interfaceResponse"/>
+	</operation>
+	<operation name="set_ingress_interface">
+	<documentation>
+ Sets the ingress interface for Service Functions
+
+        	</documentation>
+		<input message="tns:Networking.SFCSf.set_ingress_interfaceRequest"/>
+		<output message="tns:Networking.SFCSf.set_ingress_interfaceResponse"/>
+	</operation>
+	<operation name="get_ingress_interface">
+	<documentation>
+ Get the ingress interface for Service Functions
+        	</documentation>
+		<input message="tns:Networking.SFCSf.get_ingress_interfaceRequest"/>
+		<output message="tns:Networking.SFCSf.get_ingress_interfaceResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.SFCSfBinding" type="tns:Networking.SFCSfPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the names of all SFC policies.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_servicefunction">
+	<documentation>
+ Deletes a set of SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_servicefunctions">
+	<documentation>
+ Deletes all SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified SFC Service Functions.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_virtual_name">
+	<documentation>
+ Sets the virtual server for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_virtual_name">
+	<documentation>
+ Gets the virtual server configured for SFC Service Function.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_pool_name">
+	<documentation>
+ Sets the pool for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_pool_name">
+	<documentation>
+ Gets the pool for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_snat_pool">
+	<documentation>
+ Sets the snatpool for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_snat_pool">
+	<documentation>
+ Sets the snatpool for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_persistence">
+	<documentation>
+ Sets the persistence type for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_persistence">
+	<documentation>
+ Get the persistence state for SFC Service Functions
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_src_port_preserve_strict">
+	<documentation>
+ Enables/disables the source port preserve for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_src_port_preserve_strict">
+	<documentation>
+ Gets the state of source port preserve for SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ip_address">
+	<documentation>
+ Set the ip-address that states the Service Function.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ip_address">
+	<documentation>
+ Get the ip-address that states the Service Function
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_nsh_aware_state">
+	<documentation>
+ Enables/disables the NSH aware state of SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_nsh_aware_state">
+	<documentation>
+ Gets the currently configured enabled/disabled setting for the
+ NSH aware attribute for the specified SFC Service Functions.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_egress_interface">
+	<documentation>
+ Sets the egress interface for Service Functions
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_egress_interface">
+	<documentation>
+ Gets the currently configured egress interface for Service Function.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ingress_interface">
+	<documentation>
+ Sets the ingress interface for Service Functions
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ingress_interface">
+	<documentation>
+ Get the ingress interface for Service Functions
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/SFCSf"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/SFCSf"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.SFCSf">
+	<documentation>
+ This interface configures the SFC policy components
+ to manage the egress bandwidth per policy, per session or subscriber,
+ per application and various combinations of these.
+
+        	</documentation>
+	<port name="Networking.SFCSfPort" binding="tns:Networking.SFCSfBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

@@ -1,0 +1,1086 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Security.IPIntelligenceFeedList"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Security.IPIntelligenceFeedList.IPIntelligenceAddressTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligenceFeedList.IPIntelligenceAddressTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Security.IPIntelligenceFeedList.IPIntelligenceAddressTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Security.IPIntelligenceFeedList.IPIntelligenceAddressType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Security.IPIntelligenceFeedList.IPIntelligenceAddressType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="IP_INTELLIGENCE_ADDRESS_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_ADDRESS_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_ADDRESS_TYPE_WHITELIST">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_ADDRESS_TYPE_WHITELIST</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="IP_INTELLIGENCE_ADDRESS_TYPE_BLACKLIST">
+					<xsd:annotation>
+						<xsd:documentation>IP_INTELLIGENCE_ADDRESS_TYPE_BLACKLIST</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Security.IPIntelligenceFeedList.get_listRequest">
+</message>
+<message name="Security.IPIntelligenceFeedList.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.createRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.createResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.delete_feed_listRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.delete_feed_listResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.delete_all_feed_listsRequest">
+</message>
+<message name="Security.IPIntelligenceFeedList.delete_all_feed_listsResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_descriptionResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feedRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feedResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.add_feedRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+	<part name="urls" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.add_feedResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.remove_feedRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.remove_feedResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.remove_all_feedsRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.remove_all_feedsResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_default_list_typeRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="types" type="tns:Security.IPIntelligenceFeedList.IPIntelligenceAddressTypeSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_default_list_typeResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_default_list_typeRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_default_list_typeResponse">
+	<part name="return" type="tns:Security.IPIntelligenceFeedList.IPIntelligenceAddressTypeSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_default_blacklist_categoryRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="categories" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_default_blacklist_categoryResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_default_blacklist_categoryRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_default_blacklist_categoryResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_urlRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="urls" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_urlResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_urlRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_urlResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_userRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="users" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_userResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_userRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_userResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_passwordRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="passwords" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_passwordResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_passwordRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_passwordResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_poll_intervalRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="intervals" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_poll_intervalResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_poll_intervalRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_poll_intervalResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.set_feed_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.set_feed_descriptionResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_feed_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.get_feed_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.IPIntelligenceFeedList.download_feedRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="feeds" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.IPIntelligenceFeedList.download_feedResponse">
+</message>
+
+<message name="Security.IPIntelligenceFeedList.get_versionRequest">
+</message>
+<message name="Security.IPIntelligenceFeedList.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Security.IPIntelligenceFeedListPortType">
+	<operation name="get_list">
+ 	<documentation>
+ Gets a list of all feed lists.
+ A feed list is a list of URL feeds from which files are
+ downloaded and the contents (IP Address prefixes) are compared
+ against the source IP address and/or destination IP address in
+ an IP packet by DWBL (Dynamic White/Black lists).
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_listRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.createRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.createResponse"/>
+	</operation>
+	<operation name="delete_feed_list">
+	<documentation>
+ Deletes the specified feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.delete_feed_listRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.delete_feed_listResponse"/>
+	</operation>
+	<operation name="delete_all_feed_lists">
+	<documentation>
+ Deletes all user defined feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.delete_all_feed_listsRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.delete_all_feed_listsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified feed lists.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_feed">
+	<documentation>
+ Gets feeds for the specified feed lists.
+ You can add or remove feeds for the feed lists. Each feed
+ specifies the feed list that it belongs to, the default
+ blacklist category, and the URL, and can optionally specify
+ other information.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feedRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feedResponse"/>
+	</operation>
+	<operation name="add_feed">
+	<documentation>
+ Adds a list of feeds for the specified feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.add_feedRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.add_feedResponse"/>
+	</operation>
+	<operation name="remove_feed">
+	<documentation>
+ Removes a list of feeds from the specified feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.remove_feedRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.remove_feedResponse"/>
+	</operation>
+	<operation name="remove_all_feeds">
+	<documentation>
+ Removes all feeds from the specified feed lists.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.remove_all_feedsRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.remove_all_feedsResponse"/>
+	</operation>
+	<operation name="set_feed_default_list_type">
+	<documentation>
+ Sets the default list types for the specified feeds.
+ Specifies the default list type, either blacklist or whitelist.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_default_list_typeRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_default_list_typeResponse"/>
+	</operation>
+	<operation name="get_feed_default_list_type">
+	<documentation>
+ Gets the default list types for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_default_list_typeRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_default_list_typeResponse"/>
+	</operation>
+	<operation name="set_feed_default_blacklist_category">
+	<documentation>
+ Sets the default blacklist categories for the specified feeds.
+ Specifies the default blacklist category type for all blacklist
+ entries that do not have a corresponding category string (eg.
+ Botnet, Spyware, Malware).
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_default_blacklist_categoryRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_default_blacklist_categoryResponse"/>
+	</operation>
+	<operation name="get_feed_default_blacklist_category">
+	<documentation>
+ Gets the default blacklist categories for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_default_blacklist_categoryRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_default_blacklist_categoryResponse"/>
+	</operation>
+	<operation name="set_feed_url">
+	<documentation>
+ Sets the URLs for the specified feeds.
+ Specifies the URL from which the white/black list will be
+ downloaded. Note: Route domains are not supported when
+ specifying the URL.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_urlRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_urlResponse"/>
+	</operation>
+	<operation name="get_feed_url">
+	<documentation>
+ Gets the URLs for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_urlRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_urlResponse"/>
+	</operation>
+	<operation name="set_feed_user">
+	<documentation>
+ Sets the users for the specified feeds.
+ Specifies the user which is used in the URL downloading.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_userRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_userResponse"/>
+	</operation>
+	<operation name="get_feed_user">
+	<documentation>
+ Gets the users for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_userRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_userResponse"/>
+	</operation>
+	<operation name="set_feed_password">
+	<documentation>
+ Sets the passwords for the specified feeds.
+ Specifies the password for the user.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_passwordRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_passwordResponse"/>
+	</operation>
+	<operation name="get_feed_password">
+	<documentation>
+ Gets the passwords for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_passwordRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_passwordResponse"/>
+	</operation>
+	<operation name="set_feed_poll_interval">
+	<documentation>
+ Sets the poll intervals for the specified feeds.
+ Specifies the frequency in seconds at which the URL needs to be
+ polled.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_poll_intervalRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_poll_intervalResponse"/>
+	</operation>
+	<operation name="get_feed_poll_interval">
+	<documentation>
+ Gets the poll intervals for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_poll_intervalRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_poll_intervalResponse"/>
+	</operation>
+	<operation name="set_feed_description">
+	<documentation>
+ Sets the descriptions for the specified feeds.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.set_feed_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.set_feed_descriptionResponse"/>
+	</operation>
+	<operation name="get_feed_description">
+	<documentation>
+ Gets the descriptions for the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_feed_descriptionRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_feed_descriptionResponse"/>
+	</operation>
+	<operation name="download_feed">
+	<documentation>
+ Download immediately the specified feeds.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.download_feedRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.download_feedResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Security.IPIntelligenceFeedList.get_versionRequest"/>
+		<output message="tns:Security.IPIntelligenceFeedList.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Security.IPIntelligenceFeedListBinding" type="tns:Security.IPIntelligenceFeedListPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all feed lists.
+ A feed list is a list of URL feeds from which files are
+ downloaded and the contents (IP Address prefixes) are compared
+ against the source IP address and/or destination IP address in
+ an IP packet by DWBL (Dynamic White/Black lists).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_feed_list">
+	<documentation>
+ Deletes the specified feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_feed_lists">
+	<documentation>
+ Deletes all user defined feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified feed lists.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed">
+	<documentation>
+ Gets feeds for the specified feed lists.
+ You can add or remove feeds for the feed lists. Each feed
+ specifies the feed list that it belongs to, the default
+ blacklist category, and the URL, and can optionally specify
+ other information.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_feed">
+	<documentation>
+ Adds a list of feeds for the specified feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_feed">
+	<documentation>
+ Removes a list of feeds from the specified feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_feeds">
+	<documentation>
+ Removes all feeds from the specified feed lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_default_list_type">
+	<documentation>
+ Sets the default list types for the specified feeds.
+ Specifies the default list type, either blacklist or whitelist.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_default_list_type">
+	<documentation>
+ Gets the default list types for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_default_blacklist_category">
+	<documentation>
+ Sets the default blacklist categories for the specified feeds.
+ Specifies the default blacklist category type for all blacklist
+ entries that do not have a corresponding category string (eg.
+ Botnet, Spyware, Malware).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_default_blacklist_category">
+	<documentation>
+ Gets the default blacklist categories for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_url">
+	<documentation>
+ Sets the URLs for the specified feeds.
+ Specifies the URL from which the white/black list will be
+ downloaded. Note: Route domains are not supported when
+ specifying the URL.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_url">
+	<documentation>
+ Gets the URLs for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_user">
+	<documentation>
+ Sets the users for the specified feeds.
+ Specifies the user which is used in the URL downloading.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_user">
+	<documentation>
+ Gets the users for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_password">
+	<documentation>
+ Sets the passwords for the specified feeds.
+ Specifies the password for the user.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_password">
+	<documentation>
+ Gets the passwords for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_poll_interval">
+	<documentation>
+ Sets the poll intervals for the specified feeds.
+ Specifies the frequency in seconds at which the URL needs to be
+ polled.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_poll_interval">
+	<documentation>
+ Gets the poll intervals for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_feed_description">
+	<documentation>
+ Sets the descriptions for the specified feeds.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_feed_description">
+	<documentation>
+ Gets the descriptions for the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="download_feed">
+	<documentation>
+ Download immediately the specified feeds.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/IPIntelligenceFeedList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/IPIntelligenceFeedList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Security.IPIntelligenceFeedList">
+	<documentation>
+ The FeedList interface enables you to manipulate a feed list. A
+ feed list is a list of feed objects. Each of them specifies a
+ well-formed URL pointing to a web feed which is periodically
+ downloaded according to the configured poll period. Optional
+ username and password may be configured for the feeds requiring
+ authentication. Each web feed is expected to be a CSV file each
+ line in which associates an IP address or subnet with the
+ whitelist or a blacklist. The line format is: &amp;#60IPv4/IPv6
+ address&amp;#62, &amp;#60subnet prefix&amp;#62, &amp;#60category type&amp;#62, &amp;#60blacklist category
+ name&amp;#62. All the fields but &amp;#60IP address&amp;#62 are optional. When
+ &amp;#60category type&amp;#62 and/or &amp;#60blacklist category name&amp;#62 are omitted,
+ the defaults configured in the feed object are used. The feed
+ lists are added to IP Intelligence policies which might be
+ applied globally and/or on specific network objects - route
+ domains and virtual servers.
+
+        	</documentation>
+	<port name="Security.IPIntelligenceFeedListPort" binding="tns:Security.IPIntelligenceFeedListBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

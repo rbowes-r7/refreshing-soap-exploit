@@ -1,0 +1,953 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.ProfileSPM"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.BooleanSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:boolean[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.ProfileSPM.get_listRequest">
+</message>
+<message name="LocalLB.ProfileSPM.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.createRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.createResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.delete_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.delete_profileResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.delete_all_profilesRequest">
+</message>
+<message name="LocalLB.ProfileSPM.delete_all_profilesResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.is_base_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.is_base_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.is_system_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.is_system_profileResponse">
+	<part name="return" type="tns:Common.BooleanSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.set_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="defaults" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.set_default_profileResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.get_default_profileRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.get_default_profileResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.get_high_precedence_global_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.get_high_precedence_global_policyResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.add_high_precedence_global_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.add_high_precedence_global_policyResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.remove_high_precedence_global_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.remove_high_precedence_global_policyResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.remove_all_high_precedence_global_policiesRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.remove_all_high_precedence_global_policiesResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.get_low_precedence_global_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.get_low_precedence_global_policyResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.add_low_precedence_global_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.add_low_precedence_global_policyResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.remove_low_precedence_global_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.remove_low_precedence_global_policyResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.remove_all_low_precedence_global_policiesRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.remove_all_low_precedence_global_policiesResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.get_unknown_subscriber_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.get_unknown_subscriber_policyResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.add_unknown_subscriber_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.add_unknown_subscriber_policyResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.remove_unknown_subscriber_policyRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="policies" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.remove_unknown_subscriber_policyResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.remove_all_unknown_subscriber_policiesRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.remove_all_unknown_subscriber_policiesResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.set_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.ProfileSPM.get_descriptionRequest">
+	<part name="profile_names" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.ProfileSPM.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.ProfileSPM.get_versionRequest">
+</message>
+<message name="LocalLB.ProfileSPM.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.ProfileSPMPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets a list of all SPM profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_listRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified SPM profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.createRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.createResponse"/>
+	</operation>
+	<operation name="delete_profile">
+	<documentation>
+ Deletes the specified SPM profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.delete_profileRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.delete_profileResponse"/>
+	</operation>
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all SPM profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.delete_all_profilesRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.delete_all_profilesResponse"/>
+	</operation>
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified SPM profiles are 
+   base profiles. A base profile sits at the base of the 
+   profile's inheritance tree, supplying the defaults for every 
+   profile derived from it.  (See also is_system_profile).
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.is_base_profileRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.is_base_profileResponse"/>
+	</operation>
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified SPM profiles are 
+   system profiles. A system profile is a profile pre-configured 
+   on the system, ready for use.  Non-system profiles are 
+   profiles created or modified by a user.  Note that if a system 
+   profile is modified, it is no longer considered a system 
+   profile.  (See also is_base_profile).
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.is_system_profileRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.is_system_profileResponse"/>
+	</operation>
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the names of the default profiles from which the specified 
+   profiles will derive default values for attributes.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.set_default_profileRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.set_default_profileResponse"/>
+	</operation>
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the names of the default profiles from which the specified 
+   profiles will derive default values for attributes.
+ 
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_default_profileRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_default_profileResponse"/>
+	</operation>
+	<operation name="get_high_precedence_global_policy">
+	<documentation>
+ Gets a set of global policies with high precedence for the 
+   specified profiles. This specifies global enforcement policies 
+   to apply to all subscribers in parallel with the subscriber 
+   policies. The global policy can be of high or low precedence.
+   If rules of this type in the global and subscriber policies 
+   conflict, the high precedence global policy overrides the 
+   subscriber policy.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_high_precedence_global_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_high_precedence_global_policyResponse"/>
+	</operation>
+	<operation name="add_high_precedence_global_policy">
+	<documentation>
+ Adds a set of global policies with high precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.add_high_precedence_global_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.add_high_precedence_global_policyResponse"/>
+	</operation>
+	<operation name="remove_high_precedence_global_policy">
+	<documentation>
+ Removes a set of global policies with high precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.remove_high_precedence_global_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.remove_high_precedence_global_policyResponse"/>
+	</operation>
+	<operation name="remove_all_high_precedence_global_policies">
+	<documentation>
+ Removes all global policies with high precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.remove_all_high_precedence_global_policiesRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.remove_all_high_precedence_global_policiesResponse"/>
+	</operation>
+	<operation name="get_low_precedence_global_policy">
+	<documentation>
+ Gets a set of global policies with low precedence for the 
+   specified profiles. This specifies global enforcement policies 
+   to apply to all subscribers in parallel with the subscriber 
+   policies. The global policy can be of high or low precedence.
+   If rules of this type in the global and subscriber policies 
+   conflict, the subscriber policy overrides the low precedence 
+   global policy.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_low_precedence_global_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_low_precedence_global_policyResponse"/>
+	</operation>
+	<operation name="add_low_precedence_global_policy">
+	<documentation>
+ Adds a set of global policies with low precedence for the specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.add_low_precedence_global_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.add_low_precedence_global_policyResponse"/>
+	</operation>
+	<operation name="remove_low_precedence_global_policy">
+	<documentation>
+ Removes a set of global policies with low precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.remove_low_precedence_global_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.remove_low_precedence_global_policyResponse"/>
+	</operation>
+	<operation name="remove_all_low_precedence_global_policies">
+	<documentation>
+ Removes all global policies with low precedence for the specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.remove_all_low_precedence_global_policiesRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.remove_all_low_precedence_global_policiesResponse"/>
+	</operation>
+	<operation name="get_unknown_subscriber_policy">
+	<documentation>
+ Gets a set of policies for unknown subscribers for the specified 
+   profiles. This specifies enforcement policies to apply to 
+   subscribers that do not currently have policies assigned to 
+   them either dynamically or statically. In more detail, the 
+   unknown subscribers are defined as those that are in the 
+   non-provisioned state for any reason. This might include new 
+   subscribers waiting for the provisioning response from 
+   Policy Charging Rules Function (PCRF), or established 
+   subscribers that are neither found in PCRF nor in local 
+   subscriber registry. The unknown subscriber policy operates 
+   on the subscriber session concurrently with any global policy 
+   configured in the system.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_unknown_subscriber_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_unknown_subscriber_policyResponse"/>
+	</operation>
+	<operation name="add_unknown_subscriber_policy">
+	<documentation>
+ Adds a set of policies for unknown subscribers for the specified 
+   profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.add_unknown_subscriber_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.add_unknown_subscriber_policyResponse"/>
+	</operation>
+	<operation name="remove_unknown_subscriber_policy">
+	<documentation>
+ Removes a set of policies for unknown subscribers for the specified profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.remove_unknown_subscriber_policyRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.remove_unknown_subscriber_policyResponse"/>
+	</operation>
+	<operation name="remove_all_unknown_subscriber_policies">
+	<documentation>
+ Removes all policies for unknown subscribers for the specified 
+   profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.remove_all_unknown_subscriber_policiesRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.remove_all_unknown_subscriber_policiesResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of SPM profiles.
+   This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.set_descriptionRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the description for a set of SPM profiles.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_descriptionRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.ProfileSPM.get_versionRequest"/>
+		<output message="tns:LocalLB.ProfileSPM.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.ProfileSPMBinding" type="tns:LocalLB.ProfileSPMPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all SPM profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified SPM profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_profile">
+	<documentation>
+ Deletes the specified SPM profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_profiles">
+	<documentation>
+ Deletes all SPM profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_base_profile">
+	<documentation>
+ Determines whether the specified SPM profiles are 
+   base profiles. A base profile sits at the base of the 
+   profile's inheritance tree, supplying the defaults for every 
+   profile derived from it.  (See also is_system_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="is_system_profile">
+	<documentation>
+ Determines whether the specified SPM profiles are 
+   system profiles. A system profile is a profile pre-configured 
+   on the system, ready for use.  Non-system profiles are 
+   profiles created or modified by a user.  Note that if a system 
+   profile is modified, it is no longer considered a system 
+   profile.  (See also is_base_profile).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_default_profile">
+	<documentation>
+ Sets the names of the default profiles from which the specified 
+   profiles will derive default values for attributes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_default_profile">
+	<documentation>
+ Gets the names of the default profiles from which the specified 
+   profiles will derive default values for attributes.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_high_precedence_global_policy">
+	<documentation>
+ Gets a set of global policies with high precedence for the 
+   specified profiles. This specifies global enforcement policies 
+   to apply to all subscribers in parallel with the subscriber 
+   policies. The global policy can be of high or low precedence.
+   If rules of this type in the global and subscriber policies 
+   conflict, the high precedence global policy overrides the 
+   subscriber policy.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_high_precedence_global_policy">
+	<documentation>
+ Adds a set of global policies with high precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_high_precedence_global_policy">
+	<documentation>
+ Removes a set of global policies with high precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_high_precedence_global_policies">
+	<documentation>
+ Removes all global policies with high precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_low_precedence_global_policy">
+	<documentation>
+ Gets a set of global policies with low precedence for the 
+   specified profiles. This specifies global enforcement policies 
+   to apply to all subscribers in parallel with the subscriber 
+   policies. The global policy can be of high or low precedence.
+   If rules of this type in the global and subscriber policies 
+   conflict, the subscriber policy overrides the low precedence 
+   global policy.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_low_precedence_global_policy">
+	<documentation>
+ Adds a set of global policies with low precedence for the specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_low_precedence_global_policy">
+	<documentation>
+ Removes a set of global policies with low precedence for the 
+   specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_low_precedence_global_policies">
+	<documentation>
+ Removes all global policies with low precedence for the specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_unknown_subscriber_policy">
+	<documentation>
+ Gets a set of policies for unknown subscribers for the specified 
+   profiles. This specifies enforcement policies to apply to 
+   subscribers that do not currently have policies assigned to 
+   them either dynamically or statically. In more detail, the 
+   unknown subscribers are defined as those that are in the 
+   non-provisioned state for any reason. This might include new 
+   subscribers waiting for the provisioning response from 
+   Policy Charging Rules Function (PCRF), or established 
+   subscribers that are neither found in PCRF nor in local 
+   subscriber registry. The unknown subscriber policy operates 
+   on the subscriber session concurrently with any global policy 
+   configured in the system.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_unknown_subscriber_policy">
+	<documentation>
+ Adds a set of policies for unknown subscribers for the specified 
+   profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_unknown_subscriber_policy">
+	<documentation>
+ Removes a set of policies for unknown subscribers for the specified profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_unknown_subscriber_policies">
+	<documentation>
+ Removes all policies for unknown subscribers for the specified 
+   profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of SPM profiles.
+   This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the description for a set of SPM profiles.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/ProfileSPM"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/ProfileSPM"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.ProfileSPM">
+	<documentation>
+ The ProfileSPM interface enables you to manipulate a local
+ load balancer's Subscriber Policy Manager (SPM) profile.
+ If a subscriber does not have policies assigned to it either
+ dynamically or statically, it is an unknown subscriber. Otherwise, 
+ the subscriber has its own policies. On top of that, there are 
+ global policies that can be applied to all subscribers (subscribers
+ with their own polices or unknown subscribers).
+
+        	</documentation>
+	<port name="LocalLB.ProfileSPMPort" binding="tns:LocalLB.ProfileSPMBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

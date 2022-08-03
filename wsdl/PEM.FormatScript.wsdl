@@ -1,0 +1,542 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="PEM.FormatScript"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="PEM.FormatScript.get_listRequest">
+</message>
+<message name="PEM.FormatScript.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.FormatScript.createRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.FormatScript.createResponse">
+</message>
+
+<message name="PEM.FormatScript.delete_format_scriptRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.FormatScript.delete_format_scriptResponse">
+</message>
+
+<message name="PEM.FormatScript.delete_all_format_scriptsRequest">
+</message>
+<message name="PEM.FormatScript.delete_all_format_scriptsResponse">
+</message>
+
+<message name="PEM.FormatScript.set_definitionRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="definitions" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.FormatScript.set_definitionResponse">
+</message>
+
+<message name="PEM.FormatScript.get_definitionRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.FormatScript.get_definitionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.FormatScript.set_descriptionRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.FormatScript.set_descriptionResponse">
+</message>
+
+<message name="PEM.FormatScript.get_descriptionRequest">
+	<part name="scripts" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.FormatScript.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.FormatScript.get_versionRequest">
+</message>
+<message name="PEM.FormatScript.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="PEM.FormatScriptPortType">
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all format scripts.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.get_listRequest"/>
+		<output message="tns:PEM.FormatScript.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM format scripts.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.createRequest"/>
+		<output message="tns:PEM.FormatScript.createResponse"/>
+	</operation>
+	<operation name="delete_format_script">
+	<documentation>
+ Deletes the specified format scripts.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.delete_format_scriptRequest"/>
+		<output message="tns:PEM.FormatScript.delete_format_scriptResponse"/>
+	</operation>
+	<operation name="delete_all_format_scripts">
+	<documentation>
+ Deletes all user defined format scripts.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.delete_all_format_scriptsRequest"/>
+		<output message="tns:PEM.FormatScript.delete_all_format_scriptsResponse"/>
+	</operation>
+	<operation name="set_definition">
+	<documentation>
+ Sets the definitions for the specified format scripts.
+ A definition specifies a script using TCL syntax that defines 
+ a custom format for HSL reporting applied in an enforcement 
+ policy rule. You can use session-based or flow-based reporting 
+ in the rule.
+   Session-based formats:
+     The options are:
+       (*) app-id
+         Specifies the application id of the session record.
+       (*) bytes-in
+         Specifies the aggregate incoming bytes of the session.
+       (*) bytes-out
+         Specifies the aggregate outgoing bytes of the session.
+       (*) last-send-sec
+         Specifies the value of seconds of the timestamp since 
+         the previous record was sent.
+       (*) last-send-usec
+         Specifies the value of microseconds of the timestamp 
+         since the previous record was sent.
+       (*) param-3gpp
+         Specifies the the comma-separated string of the value of 
+         imsi, imeisv, tower-id, and user-name.
+       (*) rec-reason
+         Specifies the reason for sending report.  The values are 
+         1: period time, 2: valume threshold, 
+         3: subscriber logout, 4: inactivity.
+       (*) rec-type
+         Specifies the type of the session-based record 
+         (always 3).
+       (*) subs-id
+         Specifies the subscriber id.
+       (*) subs-id-type
+         Specifies the subscriber id type (e164, imsi, nai, or 
+         private).
+       (*) timestamp-sec
+         Specifies the seconds value of the timestamp when the 
+         record was generated.  The Unix epoch is 
+         1970-01-01T00:00:00Z.
+       (*) timestamp-usec
+         Specifies the microseconds value of the timestamp 
+         when the record was generated.
+   Flow-based formats:
+     The options are:
+       (*) app-id
+         Specifies the application id of the flow record.
+       (*) bytes-in
+         Specifies the aggregate incoming bytes of the flow.
+       (*) bytes-out
+         Specifies the aggregate outgoing bytes of the flow.
+       (*) dst-ip
+         Specifies the destination ip address of the flow.
+       (*) dst-port
+         Specifies the destination port of the flow.
+       (*) flow-end-time-sec
+         Specifies the seconds value of the timestamp when the 
+         flow ends.  The Unix epoch is 1970-01-01T00:00:00Z.
+       (*) flow-end-time-usec
+         Specifies microseconds value of the timestamp when the 
+         flow ends.
+       (*) flow-start-time-sec
+         Specifies the seconds value of the timestamp when 
+         the flow starts.  The Unix epoch is 1970-01-01T00:00:00Z.
+       (*) flow-start-time-usec
+         Specifies microseconds value of the timestamp when 
+         the flow starts.
+       (*) proto
+         Specifies the protocol of the flow.
+       (*) rec-type
+         Specifies the type of the flow-based record.  The value 
+         is 0: flow init, 1: flow interim, and 2: flow end.
+       (*) src-ip
+         Specifies the source ip address of the flow.
+       (*) src-port
+         Specifies the destination port of the flow.
+       (*) subs-id
+         Specifies the subscriber id.
+       (*) subs-id-type
+         Specifies the subscriber id type (e164, imsi, nai, or 
+         private).
+       (*) timestamp-sec
+         Specifies the seconds value of the timestamp when 
+         the record was generated.  The Unix epoch is 
+         1970-01-01T00:00:00Z.
+       (*) timestamp-usec
+         Specifies the microseconds value of the timestamp when 
+         the record was generated.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.set_definitionRequest"/>
+		<output message="tns:PEM.FormatScript.set_definitionResponse"/>
+	</operation>
+	<operation name="get_definition">
+	<documentation>
+ Gets the definitions for the specified format scripts.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.get_definitionRequest"/>
+		<output message="tns:PEM.FormatScript.get_definitionResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of format scripts.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.set_descriptionRequest"/>
+		<output message="tns:PEM.FormatScript.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the description for a set of format scripts.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.get_descriptionRequest"/>
+		<output message="tns:PEM.FormatScript.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:PEM.FormatScript.get_versionRequest"/>
+		<output message="tns:PEM.FormatScript.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="PEM.FormatScriptBinding" type="tns:PEM.FormatScriptPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all format scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM format scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_format_script">
+	<documentation>
+ Deletes the specified format scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_format_scripts">
+	<documentation>
+ Deletes all user defined format scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_definition">
+	<documentation>
+ Sets the definitions for the specified format scripts.
+ A definition specifies a script using TCL syntax that defines 
+ a custom format for HSL reporting applied in an enforcement 
+ policy rule. You can use session-based or flow-based reporting 
+ in the rule.
+   Session-based formats:
+     The options are:
+       (*) app-id
+         Specifies the application id of the session record.
+       (*) bytes-in
+         Specifies the aggregate incoming bytes of the session.
+       (*) bytes-out
+         Specifies the aggregate outgoing bytes of the session.
+       (*) last-send-sec
+         Specifies the value of seconds of the timestamp since 
+         the previous record was sent.
+       (*) last-send-usec
+         Specifies the value of microseconds of the timestamp 
+         since the previous record was sent.
+       (*) param-3gpp
+         Specifies the the comma-separated string of the value of 
+         imsi, imeisv, tower-id, and user-name.
+       (*) rec-reason
+         Specifies the reason for sending report.  The values are 
+         1: period time, 2: valume threshold, 
+         3: subscriber logout, 4: inactivity.
+       (*) rec-type
+         Specifies the type of the session-based record 
+         (always 3).
+       (*) subs-id
+         Specifies the subscriber id.
+       (*) subs-id-type
+         Specifies the subscriber id type (e164, imsi, nai, or 
+         private).
+       (*) timestamp-sec
+         Specifies the seconds value of the timestamp when the 
+         record was generated.  The Unix epoch is 
+         1970-01-01T00:00:00Z.
+       (*) timestamp-usec
+         Specifies the microseconds value of the timestamp 
+         when the record was generated.
+   Flow-based formats:
+     The options are:
+       (*) app-id
+         Specifies the application id of the flow record.
+       (*) bytes-in
+         Specifies the aggregate incoming bytes of the flow.
+       (*) bytes-out
+         Specifies the aggregate outgoing bytes of the flow.
+       (*) dst-ip
+         Specifies the destination ip address of the flow.
+       (*) dst-port
+         Specifies the destination port of the flow.
+       (*) flow-end-time-sec
+         Specifies the seconds value of the timestamp when the 
+         flow ends.  The Unix epoch is 1970-01-01T00:00:00Z.
+       (*) flow-end-time-usec
+         Specifies microseconds value of the timestamp when the 
+         flow ends.
+       (*) flow-start-time-sec
+         Specifies the seconds value of the timestamp when 
+         the flow starts.  The Unix epoch is 1970-01-01T00:00:00Z.
+       (*) flow-start-time-usec
+         Specifies microseconds value of the timestamp when 
+         the flow starts.
+       (*) proto
+         Specifies the protocol of the flow.
+       (*) rec-type
+         Specifies the type of the flow-based record.  The value 
+         is 0: flow init, 1: flow interim, and 2: flow end.
+       (*) src-ip
+         Specifies the source ip address of the flow.
+       (*) src-port
+         Specifies the destination port of the flow.
+       (*) subs-id
+         Specifies the subscriber id.
+       (*) subs-id-type
+         Specifies the subscriber id type (e164, imsi, nai, or 
+         private).
+       (*) timestamp-sec
+         Specifies the seconds value of the timestamp when 
+         the record was generated.  The Unix epoch is 
+         1970-01-01T00:00:00Z.
+       (*) timestamp-usec
+         Specifies the microseconds value of the timestamp when 
+         the record was generated.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_definition">
+	<documentation>
+ Gets the definitions for the specified format scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of format scripts.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the description for a set of format scripts.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/FormatScript"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/FormatScript"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="PEM.FormatScript">
+	<documentation>
+ You can use the format script component to create scripts for 
+ High-Speed Logging (HSL) reporting. The scripts use TCL syntax and 
+ define a custom format that is applied in an enforcement policy rule. 
+ The format and fields available differ depending on whether the rule 
+ specifies session-based or flow-based reporting.
+
+        	</documentation>
+	<port name="PEM.FormatScriptPort" binding="tns:PEM.FormatScriptBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

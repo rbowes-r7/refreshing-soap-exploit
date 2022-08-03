@@ -1,0 +1,930 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="PEM.ServiceChainEndpoint"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.ServiceChainEndpoint.ServiceOptionTypeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.ServiceChainEndpoint.ServiceOptionType[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="PEM.ServiceChainEndpoint.ServiceOptionTypeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:PEM.ServiceChainEndpoint.ServiceOptionTypeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="PEM.ServiceChainEndpoint.ServiceOptionType">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="SERVICE_OPTION_TYPE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>SERVICE_OPTION_TYPE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SERVICE_OPTION_TYPE_OPTIONAL">
+					<xsd:annotation>
+						<xsd:documentation>SERVICE_OPTION_TYPE_OPTIONAL</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="SERVICE_OPTION_TYPE_MANDATORY">
+					<xsd:annotation>
+						<xsd:documentation>SERVICE_OPTION_TYPE_MANDATORY</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="PEM.ServiceChainEndpoint.get_listRequest">
+</message>
+<message name="PEM.ServiceChainEndpoint.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.createRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.createResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.delete_service_chain_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.delete_service_chain_endpointResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.delete_all_service_chain_endpointsRequest">
+</message>
+<message name="PEM.ServiceChainEndpoint.delete_all_service_chain_endpointsResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpointResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.add_service_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="vlans" type="tns:Common.StringSequenceSequence"/>
+	<part name="to_endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="orders" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.add_service_endpointResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.remove_service_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.remove_service_endpointResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.remove_all_service_endpointsRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.remove_all_service_endpointsResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_option_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="types" type="tns:PEM.ServiceChainEndpoint.ServiceOptionTypeSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_option_typeResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_option_typeRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_option_typeResponse">
+	<part name="return" type="tns:PEM.ServiceChainEndpoint.ServiceOptionTypeSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_from_vlanRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="vlans" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_from_vlanResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_from_vlanRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_from_vlanResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_to_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="to_endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_to_endpointResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_to_endpointRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_to_endpointResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_orderRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="orders" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_orderResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_orderRequest">
+	<part name="endpoints" type="tns:Common.StringSequence"/>
+	<part name="service_endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_orderResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_steering_policyRequest">
+	<part name="chains" type="tns:Common.StringSequence"/>
+	<part name="endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="values" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_steering_policyResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_steering_policyRequest">
+	<part name="chains" type="tns:Common.StringSequence"/>
+	<part name="endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_steering_policyResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_internal_virtual_serverRequest">
+	<part name="chains" type="tns:Common.StringSequence"/>
+	<part name="endpoints" type="tns:Common.StringSequenceSequence"/>
+	<part name="virtual_servers" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.set_service_endpoint_internal_virtual_serverResponse">
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_internal_virtual_serverRequest">
+	<part name="chains" type="tns:Common.StringSequence"/>
+	<part name="endpoints" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="PEM.ServiceChainEndpoint.get_service_endpoint_internal_virtual_serverResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="PEM.ServiceChainEndpoint.get_versionRequest">
+</message>
+<message name="PEM.ServiceChainEndpoint.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="PEM.ServiceChainEndpointPortType">
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_listRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.createRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.createResponse"/>
+	</operation>
+	<operation name="delete_service_chain_endpoint">
+	<documentation>
+ Deletes the specified service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.delete_service_chain_endpointRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.delete_service_chain_endpointResponse"/>
+	</operation>
+	<operation name="delete_all_service_chain_endpoints">
+	<documentation>
+ Deletes all user defined service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.delete_all_service_chain_endpointsRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.delete_all_service_chain_endpointsResponse"/>
+	</operation>
+	<operation name="get_service_endpoint">
+	<documentation>
+ Gets a set of service endpoints for the specified 
+ service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpointRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpointResponse"/>
+	</operation>
+	<operation name="add_service_endpoint">
+	<documentation>
+ Adds a set of service endpoints for the specified 
+ service chain endpoints. The orders need to be unique upon 
+ creation. An error is reported if two service endpoints are 
+ configured with the same order.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.add_service_endpointRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.add_service_endpointResponse"/>
+	</operation>
+	<operation name="remove_service_endpoint">
+	<documentation>
+ Removes the specified service endpoints for the specified  
+ service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.remove_service_endpointRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.remove_service_endpointResponse"/>
+	</operation>
+	<operation name="remove_all_service_endpoints">
+	<documentation>
+ Removes all service endpoints for the specified 
+ service chain endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.remove_all_service_endpointsRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.remove_all_service_endpointsResponse"/>
+	</operation>
+	<operation name="set_service_endpoint_option_type">
+	<documentation>
+ Sets the service option types for the specified 
+ service endpoints when a service endpoint is not available 
+ (i.e., is down). You can configure the following options: 
+ optional and mandatory. The default value is optional.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_option_typeRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_option_typeResponse"/>
+	</operation>
+	<operation name="get_service_endpoint_option_type">
+	<documentation>
+ Gets the service option types for the specified 
+ service endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_option_typeRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_option_typeResponse"/>
+	</operation>
+	<operation name="set_service_endpoint_from_vlan">
+	<documentation>
+ Sets the from-vlans for the specified service endpoints. 
+ A from-vlan specifies the vlan that the traffic comes from. 
+ Note: The vlan has to exist before you can set a from-vlan field.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_from_vlanRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_from_vlanResponse"/>
+	</operation>
+	<operation name="get_service_endpoint_from_vlan">
+	<documentation>
+ Gets the from-vlans for the specified service endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_from_vlanRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_from_vlanResponse"/>
+	</operation>
+	<operation name="set_service_endpoint_to_endpoint">
+	<documentation>
+ Sets the to-endpoints for the specified service endpoints. 
+ A to-endpoint is the actual forwarding-endpoint that the 
+ traffic goes to. Note: You have to create a valid PEM 
+ forwarding-endpoint before you can add to-endpoint to a 
+ service endpoint.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_to_endpointRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_to_endpointResponse"/>
+	</operation>
+	<operation name="get_service_endpoint_to_endpoint">
+	<documentation>
+ Gets the to-endpoints for the specified service endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_to_endpointRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_to_endpointResponse"/>
+	</operation>
+	<operation name="set_service_endpoint_order">
+	<documentation>
+ Sets the orders for the specified service endpoints. 
+ A service endpoint must have an order from 1 up to 2^32-1.
+ The lower the service endpoint order is, the higher its 
+ precedence is (i.e., traffic will pass though it before other 
+ higher order service endpoints).
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_orderRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_orderResponse"/>
+	</operation>
+	<operation name="get_service_endpoint_order">
+	<documentation>
+ Gets the orders for the specified service endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_orderRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_orderResponse"/>
+	</operation>
+	<operation name="set_service_endpoint_steering_policy">
+	<documentation>
+ Sets the steering policies for the specified service endpoints.
+ Specifies the steering policy for the service endpoint. This 
+ refers to the existing object pem policy. If the policy rule 
+ matches, the actions are applied on the intermediate flows in 
+ the service chain. The forwarding action in the steering policy 
+ can overwrite any default forwarding action configured in the 
+ service endpoint. The service chain action in a steering policy 
+ is not allowed.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_steering_policyRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_steering_policyResponse"/>
+	</operation>
+	<operation name="get_service_endpoint_steering_policy">
+	<documentation>
+ Gets the steering policies for the specified service endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_steering_policyRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_steering_policyResponse"/>
+	</operation>
+	<operation name="set_service_endpoint_internal_virtual_server">
+	<documentation>
+ Sets the internal virtual servers for the specified service 
+ endpoints.
+ Specifies the internal virtual server attribute on which icap 
+ profile is enabled. If the action is to forward to icap then the 
+ flow is forwarded to the pool members in the virtual server.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_internal_virtual_serverRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.set_service_endpoint_internal_virtual_serverResponse"/>
+	</operation>
+	<operation name="get_service_endpoint_internal_virtual_server">
+	<documentation>
+ Gets the internal virtual servers for the specified service 
+ endpoints.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_internal_virtual_serverRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_service_endpoint_internal_virtual_serverResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:PEM.ServiceChainEndpoint.get_versionRequest"/>
+		<output message="tns:PEM.ServiceChainEndpoint.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="PEM.ServiceChainEndpointBinding" type="tns:PEM.ServiceChainEndpointPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of PEM service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_service_chain_endpoint">
+	<documentation>
+ Deletes the specified service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_service_chain_endpoints">
+	<documentation>
+ Deletes all user defined service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint">
+	<documentation>
+ Gets a set of service endpoints for the specified 
+ service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_service_endpoint">
+	<documentation>
+ Adds a set of service endpoints for the specified 
+ service chain endpoints. The orders need to be unique upon 
+ creation. An error is reported if two service endpoints are 
+ configured with the same order.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_service_endpoint">
+	<documentation>
+ Removes the specified service endpoints for the specified  
+ service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_service_endpoints">
+	<documentation>
+ Removes all service endpoints for the specified 
+ service chain endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_endpoint_option_type">
+	<documentation>
+ Sets the service option types for the specified 
+ service endpoints when a service endpoint is not available 
+ (i.e., is down). You can configure the following options: 
+ optional and mandatory. The default value is optional.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint_option_type">
+	<documentation>
+ Gets the service option types for the specified 
+ service endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_endpoint_from_vlan">
+	<documentation>
+ Sets the from-vlans for the specified service endpoints. 
+ A from-vlan specifies the vlan that the traffic comes from. 
+ Note: The vlan has to exist before you can set a from-vlan field.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint_from_vlan">
+	<documentation>
+ Gets the from-vlans for the specified service endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_endpoint_to_endpoint">
+	<documentation>
+ Sets the to-endpoints for the specified service endpoints. 
+ A to-endpoint is the actual forwarding-endpoint that the 
+ traffic goes to. Note: You have to create a valid PEM 
+ forwarding-endpoint before you can add to-endpoint to a 
+ service endpoint.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint_to_endpoint">
+	<documentation>
+ Gets the to-endpoints for the specified service endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_endpoint_order">
+	<documentation>
+ Sets the orders for the specified service endpoints. 
+ A service endpoint must have an order from 1 up to 2^32-1.
+ The lower the service endpoint order is, the higher its 
+ precedence is (i.e., traffic will pass though it before other 
+ higher order service endpoints).
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint_order">
+	<documentation>
+ Gets the orders for the specified service endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_endpoint_steering_policy">
+	<documentation>
+ Sets the steering policies for the specified service endpoints.
+ Specifies the steering policy for the service endpoint. This 
+ refers to the existing object pem policy. If the policy rule 
+ matches, the actions are applied on the intermediate flows in 
+ the service chain. The forwarding action in the steering policy 
+ can overwrite any default forwarding action configured in the 
+ service endpoint. The service chain action in a steering policy 
+ is not allowed.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint_steering_policy">
+	<documentation>
+ Gets the steering policies for the specified service endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_service_endpoint_internal_virtual_server">
+	<documentation>
+ Sets the internal virtual servers for the specified service 
+ endpoints.
+ Specifies the internal virtual server attribute on which icap 
+ profile is enabled. If the action is to forward to icap then the 
+ flow is forwarded to the pool members in the virtual server.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_service_endpoint_internal_virtual_server">
+	<documentation>
+ Gets the internal virtual servers for the specified service 
+ endpoints.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:PEM/ServiceChainEndpoint"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:PEM/ServiceChainEndpoint"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="PEM.ServiceChainEndpoint">
+	<documentation>
+ You can use the service chain endpoint component to configure 
+ service chain endpoint definitions for the Policy Enforcement 
+ Manager (PEM). Each service chain endpoint consists of one or 
+ more service endpoints, where a service endpoint consists of a 
+ non-zero integer order, a valid PEM forwarding-endpoint 
+ (to-endpoint) and an existing vlan (from-vlan). When you configure 
+ a BIG-IP that has a service chain endpoint with multiple 
+ service endpoints, then the traffic will pass through these  
+ service endpoints in their given order (from low to high) before 
+ leaving the BIG-IP.
+ Note: You must create a valid forwarding-endpoint and a valid vlan 
+ before you can create a service endpoint. You must also give each 
+ service endpoint an order from 1 up to 2^32-1.
+
+        	</documentation>
+	<port name="PEM.ServiceChainEndpointPort" binding="tns:PEM.ServiceChainEndpointBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

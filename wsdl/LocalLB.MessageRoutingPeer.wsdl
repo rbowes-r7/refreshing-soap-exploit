@@ -1,0 +1,964 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.MessageRoutingPeer"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:simpleType name="LocalLB.MessageRoutingPeer.ConnectionMode">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="CONNECTION_MODE_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>CONNECTION_MODE_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CONNECTION_MODE_PER_PEER">
+					<xsd:annotation>
+						<xsd:documentation>CONNECTION_MODE_PER_PEER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CONNECTION_MODE_PER_BLADE">
+					<xsd:annotation>
+						<xsd:documentation>CONNECTION_MODE_PER_BLADE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CONNECTION_MODE_PER_TMM">
+					<xsd:annotation>
+						<xsd:documentation>CONNECTION_MODE_PER_TMM</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CONNECTION_MODE_PER_CLIENT">
+					<xsd:annotation>
+						<xsd:documentation>CONNECTION_MODE_PER_CLIENT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.MessageRoutingProtocolSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingProtocol[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.MessageRoutingPeer.ConnectionModeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.MessageRoutingPeer.ConnectionMode[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.MessageRoutingProtocol">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_NONE">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_NONE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_GENERIC_MESSAGE">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_GENERIC_MESSAGE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_SIP">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_SIP</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="MESSAGE_ROUTING_PROTOCOL_DIAMETER">
+					<xsd:annotation>
+						<xsd:documentation>MESSAGE_ROUTING_PROTOCOL_DIAMETER</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.MessageRoutingPeer.get_listRequest">
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.createRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="protocols" type="tns:LocalLB.MessageRoutingProtocolSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.createResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.delete_peerRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.delete_peerResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.delete_all_peersRequest">
+</message>
+<message name="LocalLB.MessageRoutingPeer.delete_all_peersResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_descriptionRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_descriptionRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_protocolRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_protocolResponse">
+	<part name="return" type="tns:LocalLB.MessageRoutingProtocolSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_connection_modeRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="modes" type="tns:LocalLB.MessageRoutingPeer.ConnectionModeSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_connection_modeResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_connection_modeRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_connection_modeResponse">
+	<part name="return" type="tns:LocalLB.MessageRoutingPeer.ConnectionModeSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_poolRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="pools" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_poolResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_poolRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_poolResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_transport_configRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="transport_configs" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_transport_configResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_transport_configRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_transport_configResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_number_connectionsRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_number_connectionsResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_number_connectionsRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_number_connectionsResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_ratioRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_ratioResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_ratioRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_ratioResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_automatic_initialization_stateRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_automatic_initialization_stateResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_automatic_initialization_stateRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_automatic_initialization_stateResponse">
+	<part name="return" type="tns:Common.EnabledStateSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.set_automatic_initialization_intervalRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+	<part name="values" type="tns:Common.ULongSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.set_automatic_initialization_intervalResponse">
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_automatic_initialization_intervalRequest">
+	<part name="peers" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_automatic_initialization_intervalResponse">
+	<part name="return" type="tns:Common.ULongSequence"/>
+</message>
+
+<message name="LocalLB.MessageRoutingPeer.get_versionRequest">
+</message>
+<message name="LocalLB.MessageRoutingPeer.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.MessageRoutingPeerPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets a list of all peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_listRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.createRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.createResponse"/>
+	</operation>
+	<operation name="delete_peer">
+	<documentation>
+ Deletes a specified list of peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.delete_peerRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.delete_peerResponse"/>
+	</operation>
+	<operation name="delete_all_peers">
+	<documentation>
+ Deletes all peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.delete_all_peersRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.delete_all_peersResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of peers.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_descriptionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_descriptionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_protocol">
+	<documentation>
+ Gets the message routing protocol which was set for the specified
+ peers upon creation.  See the LocalLB::MessageRoutingProtocol for
+ more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_protocolRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_protocolResponse"/>
+	</operation>
+	<operation name="set_connection_mode">
+	<documentation>
+ Sets the mode for limiting connections to the specified peers.
+ See LocalLB::MessageRoutingPeer::ConnectionMode for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_connection_modeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_connection_modeResponse"/>
+	</operation>
+	<operation name="get_connection_mode">
+	<documentation>
+ Gets the mode for limiting connections to the specified peers.
+ See LocalLB::MessageRoutingPeer::ConnectionMode for more details.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_connection_modeRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_connection_modeResponse"/>
+	</operation>
+	<operation name="set_pool">
+	<documentation>
+ Sets the pool associated with the specified peers. The message parser
+ routes messages to the specified pool.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_poolRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_poolResponse"/>
+	</operation>
+	<operation name="get_pool">
+	<documentation>
+ Gets the pools associated with the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_poolRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_poolResponse"/>
+	</operation>
+	<operation name="set_transport_config">
+	<documentation>
+ Sets the transport configs associated with the specified peers.
+ A transport_config (See LocalLB::MessageRoutingTransportConfig) is
+ used by the message router to create an outgoing connection.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_transport_configRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_transport_configResponse"/>
+	</operation>
+	<operation name="get_transport_config">
+	<documentation>
+ Gets the transport configs associated with the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_transport_configRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_transport_configResponse"/>
+	</operation>
+	<operation name="set_number_connections">
+	<documentation>
+ Sets the distribution of connections between the load balancer and a
+ remote host for the specifed peers. The default value is 1 meaning
+ that all messages through a peer will use a single connection.
+ Higher values will distribute the messages accross the specified
+ number of connections.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_number_connectionsRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_number_connectionsResponse"/>
+	</operation>
+	<operation name="get_number_connections">
+	<documentation>
+ Gets the distribution of connections between the load balancer and a
+ remote host for the specifed peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_number_connectionsRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_number_connectionsResponse"/>
+	</operation>
+	<operation name="set_ratio">
+	<documentation>
+ Sets a list of ratios for the specified peers within a route. The ratio
+ is used by the message parser for selecting peers from a list of
+ peers assigned to a route. The default value is 1.
+ See LocalLB::MessageRoutingSIPRoute::SelectionMode for further details
+ about how the ratio is used.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_ratioRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_ratioResponse"/>
+	</operation>
+	<operation name="get_ratio">
+	<documentation>
+ Gets a list of ratios for the specified peers within a route.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_ratioRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_ratioResponse"/>
+	</operation>
+	<operation name="set_automatic_initialization_state">
+	<documentation>
+ Sets the automatic initialization state for the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_automatic_initialization_stateRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_automatic_initialization_stateResponse"/>
+	</operation>
+	<operation name="get_automatic_initialization_state">
+	<documentation>
+ Gets the automatic initialization states for the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_automatic_initialization_stateRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_automatic_initialization_stateResponse"/>
+	</operation>
+	<operation name="set_automatic_initialization_interval">
+	<documentation>
+ Sets the automatic initialization interval for the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.set_automatic_initialization_intervalRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.set_automatic_initialization_intervalResponse"/>
+	</operation>
+	<operation name="get_automatic_initialization_interval">
+	<documentation>
+ Gets the automatic initialization interval for the specified peers.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_automatic_initialization_intervalRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_automatic_initialization_intervalResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.MessageRoutingPeer.get_versionRequest"/>
+		<output message="tns:LocalLB.MessageRoutingPeer.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.MessageRoutingPeerBinding" type="tns:LocalLB.MessageRoutingPeerPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_peer">
+	<documentation>
+ Deletes a specified list of peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_peers">
+	<documentation>
+ Deletes all peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of peers.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_protocol">
+	<documentation>
+ Gets the message routing protocol which was set for the specified
+ peers upon creation.  See the LocalLB::MessageRoutingProtocol for
+ more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_connection_mode">
+	<documentation>
+ Sets the mode for limiting connections to the specified peers.
+ See LocalLB::MessageRoutingPeer::ConnectionMode for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_connection_mode">
+	<documentation>
+ Gets the mode for limiting connections to the specified peers.
+ See LocalLB::MessageRoutingPeer::ConnectionMode for more details.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_pool">
+	<documentation>
+ Sets the pool associated with the specified peers. The message parser
+ routes messages to the specified pool.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_pool">
+	<documentation>
+ Gets the pools associated with the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_transport_config">
+	<documentation>
+ Sets the transport configs associated with the specified peers.
+ A transport_config (See LocalLB::MessageRoutingTransportConfig) is
+ used by the message router to create an outgoing connection.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_transport_config">
+	<documentation>
+ Gets the transport configs associated with the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_number_connections">
+	<documentation>
+ Sets the distribution of connections between the load balancer and a
+ remote host for the specifed peers. The default value is 1 meaning
+ that all messages through a peer will use a single connection.
+ Higher values will distribute the messages accross the specified
+ number of connections.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_number_connections">
+	<documentation>
+ Gets the distribution of connections between the load balancer and a
+ remote host for the specifed peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_ratio">
+	<documentation>
+ Sets a list of ratios for the specified peers within a route. The ratio
+ is used by the message parser for selecting peers from a list of
+ peers assigned to a route. The default value is 1.
+ See LocalLB::MessageRoutingSIPRoute::SelectionMode for further details
+ about how the ratio is used.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_ratio">
+	<documentation>
+ Gets a list of ratios for the specified peers within a route.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_automatic_initialization_state">
+	<documentation>
+ Sets the automatic initialization state for the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_automatic_initialization_state">
+	<documentation>
+ Gets the automatic initialization states for the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_automatic_initialization_interval">
+	<documentation>
+ Sets the automatic initialization interval for the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_automatic_initialization_interval">
+	<documentation>
+ Gets the automatic initialization interval for the specified peers.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Get the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/MessageRoutingPeer"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/MessageRoutingPeer"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.MessageRoutingPeer">
+	<documentation>
+
+ The MessageRoutingPeer interface enables you to work with the definitions
+ contained in a message routing peer.  A peer specifies the pool for the
+ message parser to use as the destination for message routes. You can
+ also use the peer component to specify how many connections the parser
+ creates to a remote host and which MessageRoutingTransportConfig the
+ parser uses to establish the connection.
+
+        	</documentation>
+	<port name="LocalLB.MessageRoutingPeerPort" binding="tns:LocalLB.MessageRoutingPeerBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

@@ -1,0 +1,655 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Networking.BWPriorityGroup"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.ULongSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.ULongSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="Common.EnabledState">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="STATE_DISABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_DISABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="STATE_ENABLED">
+					<xsd:annotation>
+						<xsd:documentation>STATE_ENABLED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.ULongSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:long[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.EnabledStateSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.EnabledState[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Networking.BWPriorityGroup.get_listRequest">
+</message>
+<message name="Networking.BWPriorityGroup.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.BWPriorityGroup.createRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="states" type="tns:Common.EnabledStateSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.createResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.delete_priority_groupRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.delete_priority_groupResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.delete_all_priority_groupsRequest">
+</message>
+<message name="Networking.BWPriorityGroup.delete_all_priority_groupsResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.set_descriptionRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.set_descriptionResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.get_descriptionRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Networking.BWPriorityGroup.get_priority_classRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.get_priority_classResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Networking.BWPriorityGroup.add_priority_classRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="classes" type="tns:Common.StringSequenceSequence"/>
+	<part name="percentages" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.add_priority_classResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.remove_priority_classRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="classes" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.remove_priority_classResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.remove_all_priority_classesRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.remove_all_priority_classesResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.set_priority_class_descriptionRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="classes" type="tns:Common.StringSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.set_priority_class_descriptionResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.get_priority_class_descriptionRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="classes" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.get_priority_class_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Networking.BWPriorityGroup.set_priority_class_weight_percentageRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="classes" type="tns:Common.StringSequenceSequence"/>
+	<part name="percentages" type="tns:Common.ULongSequenceSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.set_priority_class_weight_percentageResponse">
+</message>
+
+<message name="Networking.BWPriorityGroup.get_priority_class_weight_percentageRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="classes" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Networking.BWPriorityGroup.get_priority_class_weight_percentageResponse">
+	<part name="return" type="tns:Common.ULongSequenceSequence"/>
+</message>
+
+<message name="Networking.BWPriorityGroup.get_versionRequest">
+</message>
+<message name="Networking.BWPriorityGroup.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Networking.BWPriorityGroupPortType">
+	<operation name="get_list">
+      	<documentation>
+ Gets the list of names of all Bandwidth Priority Groups.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.get_listRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a set of Bandwidth Priority Groups.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.createRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.createResponse"/>
+	</operation>
+	<operation name="delete_priority_group">
+	<documentation>
+ Deletes a set of Bandwidth Priority Groups.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.delete_priority_groupRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.delete_priority_groupResponse"/>
+	</operation>
+	<operation name="delete_all_priority_groups">
+	<documentation>
+ Deletes all Bandwidth Priority Groups.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.delete_all_priority_groupsRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.delete_all_priority_groupsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified Bandwidth Priority Group.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.set_descriptionRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified Bandwidth Priority Group.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.get_descriptionRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_priority_class">
+	<documentation>
+ Gets the names of the Bandwidth Priority Group Classes.
+ A class is a sub-policy of a Bandwidth Priority Group.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.get_priority_classRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.get_priority_classResponse"/>
+	</operation>
+	<operation name="add_priority_class">
+	<documentation>
+ Creates a set of Bandwidth Priority Class Policy Classes with the
+ specified maximum weight percentages. Classes are a sub-policy of a
+ Bandwidth Priority Groups. The maximum weight
+ percentage is the maximum percentage of user rate of dynamically
+ enabled Bandwidth Controller policy to which this Bandwidth Priority
+ Group is mapped.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.add_priority_classRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.add_priority_classResponse"/>
+	</operation>
+	<operation name="remove_priority_class">
+	<documentation>
+ Remove Bandwidth Priority Class Policy Classes from the specified
+ Bandwidth Priority Group.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.remove_priority_classRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.remove_priority_classResponse"/>
+	</operation>
+	<operation name="remove_all_priority_classes">
+	<documentation>
+ Remove all Bandwidth Priority Class Policy Classes of the specified
+ Bandwidth Priority Group.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.remove_all_priority_classesRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.remove_all_priority_classesResponse"/>
+	</operation>
+	<operation name="set_priority_class_description">
+	<documentation>
+ Sets the descriptions for the specified Bandwidth Priority Class.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.set_priority_class_descriptionRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.set_priority_class_descriptionResponse"/>
+	</operation>
+	<operation name="get_priority_class_description">
+	<documentation>
+ Gets the descriptions for the specified Bandwidth Priority Class.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.get_priority_class_descriptionRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.get_priority_class_descriptionResponse"/>
+	</operation>
+	<operation name="set_priority_class_weight_percentage">
+	<documentation>
+ Sets the Bandwidth Priority Group Classes with the specified
+ maximum weight percentage rate.
+ The maximum weight percentage is the maximum bandwidth allowed for
+ all the flows going through this Policy Class. The weight percentage
+ cannot exceed 100 percent.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.set_priority_class_weight_percentageRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.set_priority_class_weight_percentageResponse"/>
+	</operation>
+	<operation name="get_priority_class_weight_percentage">
+	<documentation>
+ Gets the weight percentages of Bandwidth Priority Group Classes.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.get_priority_class_weight_percentageRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.get_priority_class_weight_percentageResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:Networking.BWPriorityGroup.get_versionRequest"/>
+		<output message="tns:Networking.BWPriorityGroup.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Networking.BWPriorityGroupBinding" type="tns:Networking.BWPriorityGroupPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the list of names of all Bandwidth Priority Groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a set of Bandwidth Priority Groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_priority_group">
+	<documentation>
+ Deletes a set of Bandwidth Priority Groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_priority_groups">
+	<documentation>
+ Deletes all Bandwidth Priority Groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the descriptions for the specified Bandwidth Priority Group.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for the specified Bandwidth Priority Group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_priority_class">
+	<documentation>
+ Gets the names of the Bandwidth Priority Group Classes.
+ A class is a sub-policy of a Bandwidth Priority Group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_priority_class">
+	<documentation>
+ Creates a set of Bandwidth Priority Class Policy Classes with the
+ specified maximum weight percentages. Classes are a sub-policy of a
+ Bandwidth Priority Groups. The maximum weight
+ percentage is the maximum percentage of user rate of dynamically
+ enabled Bandwidth Controller policy to which this Bandwidth Priority
+ Group is mapped.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_priority_class">
+	<documentation>
+ Remove Bandwidth Priority Class Policy Classes from the specified
+ Bandwidth Priority Group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_priority_classes">
+	<documentation>
+ Remove all Bandwidth Priority Class Policy Classes of the specified
+ Bandwidth Priority Group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_priority_class_description">
+	<documentation>
+ Sets the descriptions for the specified Bandwidth Priority Class.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_priority_class_description">
+	<documentation>
+ Gets the descriptions for the specified Bandwidth Priority Class.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_priority_class_weight_percentage">
+	<documentation>
+ Sets the Bandwidth Priority Group Classes with the specified
+ maximum weight percentage rate.
+ The maximum weight percentage is the maximum bandwidth allowed for
+ all the flows going through this Policy Class. The weight percentage
+ cannot exceed 100 percent.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_priority_class_weight_percentage">
+	<documentation>
+ Gets the weight percentages of Bandwidth Priority Group Classes.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Networking/BWPriorityGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Networking/BWPriorityGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Networking.BWPriorityGroup">
+	<documentation>
+ This interface configures the Bandwidth Priority Group components to
+ manage the egress bandwidth per Bandwidth Controller (BWC) Policy
+ instance. An instance is an in memory copy of a BWC Policy. A BWC
+ Priority Group in turn consists of multiple Bandwidth Priority Classes
+ with each one having its own priority.
+
+        	</documentation>
+	<port name="Networking.BWPriorityGroupPort" binding="tns:Networking.BWPriorityGroupBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

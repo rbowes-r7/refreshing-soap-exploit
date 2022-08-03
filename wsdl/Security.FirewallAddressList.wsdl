@@ -1,0 +1,1468 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="Security.FirewallAddressList"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.GeoLocation">
+			<xsd:sequence>
+				<xsd:element name="country_code" type="xsd:string"/>
+				<xsd:element name="state_name" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.AddressRangeSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.AddressRangeSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.NetAddressSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.NetAddressSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.GeoLocationSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.GeoLocation[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.AddressRangeSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.AddressRange[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.NetAddressSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.GeoLocationSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.GeoLocationSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="Common.AddressRange">
+			<xsd:sequence>
+				<xsd:element name="start" type="xsd:string"/>
+				<xsd:element name="end" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="Security.FirewallAddressList.get_listRequest">
+</message>
+<message name="Security.FirewallAddressList.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.createRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.NetAddressSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.createResponse">
+</message>
+
+<message name="Security.FirewallAddressList.create_with_address_rangeRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="ranges" type="tns:Common.AddressRangeSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.create_with_address_rangeResponse">
+</message>
+
+<message name="Security.FirewallAddressList.create_with_geoRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="geos" type="tns:Common.GeoLocationSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.create_with_geoResponse">
+</message>
+
+<message name="Security.FirewallAddressList.create_with_nested_address_listRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="nested_lists" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.create_with_nested_address_listResponse">
+</message>
+
+<message name="Security.FirewallAddressList.delete_address_listRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.delete_address_listResponse">
+</message>
+
+<message name="Security.FirewallAddressList.delete_all_address_listsRequest">
+</message>
+<message name="Security.FirewallAddressList.delete_all_address_listsResponse">
+</message>
+
+<message name="Security.FirewallAddressList.set_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.set_descriptionResponse">
+</message>
+
+<message name="Security.FirewallAddressList.get_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.get_addressRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_addressResponse">
+	<part name="return" type="tns:Common.NetAddressSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.add_addressRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.NetAddressSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.add_addressResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_addressRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.NetAddressSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_addressResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_all_addressesRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_all_addressesResponse">
+</message>
+
+<message name="Security.FirewallAddressList.set_address_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.NetAddressSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.set_address_descriptionResponse">
+</message>
+
+<message name="Security.FirewallAddressList.get_address_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="addresses" type="tns:Common.NetAddressSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_address_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.get_nested_address_listRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_nested_address_listResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.add_nested_address_listRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="nested_lists" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.add_nested_address_listResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_nested_address_listRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="nested_lists" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_nested_address_listResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_all_nested_address_listsRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_all_nested_address_listsResponse">
+</message>
+
+<message name="Security.FirewallAddressList.set_nested_address_list_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="nested_lists" type="tns:Common.StringSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.set_nested_address_list_descriptionResponse">
+</message>
+
+<message name="Security.FirewallAddressList.get_nested_address_list_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="nested_lists" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_nested_address_list_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.get_address_rangeRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_address_rangeResponse">
+	<part name="return" type="tns:Common.AddressRangeSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.add_address_rangeRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="ranges" type="tns:Common.AddressRangeSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.add_address_rangeResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_address_rangeRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="ranges" type="tns:Common.AddressRangeSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_address_rangeResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_all_address_rangesRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_all_address_rangesResponse">
+</message>
+
+<message name="Security.FirewallAddressList.set_address_range_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="ranges" type="tns:Common.AddressRangeSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.set_address_range_descriptionResponse">
+</message>
+
+<message name="Security.FirewallAddressList.get_address_range_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="ranges" type="tns:Common.AddressRangeSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_address_range_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.get_versionRequest">
+</message>
+<message name="Security.FirewallAddressList.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<message name="Security.FirewallAddressList.get_geoRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_geoResponse">
+	<part name="return" type="tns:Common.GeoLocationSequenceSequence"/>
+</message>
+
+<message name="Security.FirewallAddressList.add_geoRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="geos" type="tns:Common.GeoLocationSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.add_geoResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_geoRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="geos" type="tns:Common.GeoLocationSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_geoResponse">
+</message>
+
+<message name="Security.FirewallAddressList.remove_all_geosRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+</message>
+<message name="Security.FirewallAddressList.remove_all_geosResponse">
+</message>
+
+<message name="Security.FirewallAddressList.set_geo_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="geos" type="tns:Common.GeoLocationSequenceSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.set_geo_descriptionResponse">
+</message>
+
+<message name="Security.FirewallAddressList.get_geo_descriptionRequest">
+	<part name="lists" type="tns:Common.StringSequence"/>
+	<part name="geos" type="tns:Common.GeoLocationSequenceSequence"/>
+</message>
+<message name="Security.FirewallAddressList.get_geo_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<!-- portType -->
+
+<portType name="Security.FirewallAddressListPortType">
+	<operation name="get_list">
+    	<documentation>
+ Gets the list of firewall IP address lists on this device.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_listRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a firewall IP address list.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.createRequest"/>
+		<output message="tns:Security.FirewallAddressList.createResponse"/>
+	</operation>
+	<operation name="create_with_address_range">
+	<documentation>
+ Creates a firewall IP address list with address range.
+ Users can specify an IP address range as the source or
+ destination IP addresses in an AFM rule. For example, an IPv4
+ address range 10.10.10.1-10.10.10.245 will match all 245
+ addresses 10.10.10.1, 10.10.10.2, 10.10.10.3, ... 10.10.10.244,
+ 10.10.10.245.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.create_with_address_rangeRequest"/>
+		<output message="tns:Security.FirewallAddressList.create_with_address_rangeResponse"/>
+	</operation>
+	<operation name="create_with_geo">
+	<documentation>
+ Creates a firewall IP address list with geo location.
+ The geo location is a combination of country code and state name.
+ The country code is two characters long. The state name is the full
+ name of a state that belongs to the country represented by country
+ code.
+
+ By defining the geo location, the user can use the geo location
+ entry to apply it to rules in the access control lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.create_with_geoRequest"/>
+		<output message="tns:Security.FirewallAddressList.create_with_geoResponse"/>
+	</operation>
+	<operation name="create_with_nested_address_list">
+	<documentation>
+ Creates a firewall IP address list with nested address list.
+ Users can enter an address list as one of the list entries of
+ another address list. For example, users can have an address
+ list alist-1 that contains the address 10.10.10.1. Users can
+ have another address list alist-2 that contains address
+ 10.10.10.2 and alist-1 as the child list. If the address list
+ alist-2 is used in an AFM rule as source or destination address
+ list, the addresses inside the child lists will be fully
+ expanded so that the addresses AFM rule will match for alist-2
+ are 10.10.10.1 and 10.10.10.2.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.create_with_nested_address_listRequest"/>
+		<output message="tns:Security.FirewallAddressList.create_with_nested_address_listResponse"/>
+	</operation>
+	<operation name="delete_address_list">
+	<documentation>
+ Deletes a set of firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.delete_address_listRequest"/>
+		<output message="tns:Security.FirewallAddressList.delete_address_listResponse"/>
+	</operation>
+	<operation name="delete_all_address_lists">
+	<documentation>
+ Deletes all firewall IP address lists on this device.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.delete_all_address_listsRequest"/>
+		<output message="tns:Security.FirewallAddressList.delete_all_address_listsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of firewall IP address lists.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.set_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_address">
+	<documentation> 
+ This method has been deprecated. Please use get_address_range instead.
+ Firewall addresses are now supplied and stored in the form of an 
+ address range. Single addresses are converted to 
+ a corresponding one-element range where begin is equal to end; 
+ for each range, this method returns the start of the address range.
+
+ Gets the entries of the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_addressRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_addressResponse"/>
+	</operation>
+	<operation name="add_address">
+	<documentation>
+ This method has been deprecated. Please use add_address_range instead.
+ When using this method, the system will create a corresponding 
+ one-element address range where begin is equal to end.
+
+ Adds a set of IP addresses to the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.add_addressRequest"/>
+		<output message="tns:Security.FirewallAddressList.add_addressResponse"/>
+	</operation>
+	<operation name="remove_address">
+	<documentation> 
+ This method has been deprecated. Please use remove_address_range instead.
+ When using this method, the system will create a corresponding 
+ one-element address range where begin is equal to end.
+
+ Removes a set of entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_addressRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_addressResponse"/>
+	</operation>
+	<operation name="remove_all_addresses">
+	<documentation> 
+ This method has been deprecated. Please use remove_all_address_ranges instead.
+
+ Removes all entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_all_addressesRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_all_addressesResponse"/>
+	</operation>
+	<operation name="set_address_description">
+	<documentation> 
+ This method has been deprecated. Please use set_address_range_description instead.
+
+ Sets the description for a set of firewall IP address ranges.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.set_address_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.set_address_descriptionResponse"/>
+	</operation>
+	<operation name="get_address_description">
+	<documentation> 
+ This method has been deprecated. Please use get_address_range_description instead.
+
+ Gets the descriptions for a set of firewall IP address ranges.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_address_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_address_descriptionResponse"/>
+	</operation>
+	<operation name="get_nested_address_list">
+	<documentation>
+ Gets nested address lists for the specified firewall IP address 
+ lists.
+ Users can enter an address list as one of the list entries of 
+ another address list. For example, users can have an address 
+ list alist-1 that contains the address 10.10.10.1. Users can 
+ have another address list alist-2 that contains address 
+ 10.10.10.2 and alist-1 as the child list. If the address list 
+ alist-2 is used in an AFM rule as source or destination address 
+ list, the addresses inside the child lists will be fully 
+ expanded so that the addresses AFM rule will match for alist-2 
+ are 10.10.10.1 and 10.10.10.2.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_nested_address_listRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_nested_address_listResponse"/>
+	</operation>
+	<operation name="add_nested_address_list">
+	<documentation>
+ Adds a list of nested address lists for the specified firewall 
+ IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.add_nested_address_listRequest"/>
+		<output message="tns:Security.FirewallAddressList.add_nested_address_listResponse"/>
+	</operation>
+	<operation name="remove_nested_address_list">
+	<documentation>
+ Removes a list of nested address lists from the specified 
+ firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_nested_address_listRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_nested_address_listResponse"/>
+	</operation>
+	<operation name="remove_all_nested_address_lists">
+	<documentation>
+ Removes all nested address lists from the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_all_nested_address_listsRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_all_nested_address_listsResponse"/>
+	</operation>
+	<operation name="set_nested_address_list_description">
+	<documentation>
+ Sets the descriptions for the specified nested address lists.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.set_nested_address_list_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.set_nested_address_list_descriptionResponse"/>
+	</operation>
+	<operation name="get_nested_address_list_description">
+	<documentation>
+ Gets the descriptions for the specified nested address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_nested_address_list_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_nested_address_list_descriptionResponse"/>
+	</operation>
+	<operation name="get_address_range">
+	<documentation>
+ Gets address ranges for the specified firewall IP address lists.
+ Users can specify an IP address range as the source or 
+ destination IP addresses in an AFM rule. For example, an IPv4 
+ address range 10.10.10.1-10.10.10.245 will match all 245 
+ addresses 10.10.10.1, 10.10.10.2, 10.10.10.3, ... 10.10.10.244, 
+ 10.10.10.245.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_address_rangeRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_address_rangeResponse"/>
+	</operation>
+	<operation name="add_address_range">
+	<documentation>
+ Adds a list of address ranges for the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.add_address_rangeRequest"/>
+		<output message="tns:Security.FirewallAddressList.add_address_rangeResponse"/>
+	</operation>
+	<operation name="remove_address_range">
+	<documentation>
+ Removes a list of address ranges from the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_address_rangeRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_address_rangeResponse"/>
+	</operation>
+	<operation name="remove_all_address_ranges">
+	<documentation>
+ Removes all address ranges from the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_all_address_rangesRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_all_address_rangesResponse"/>
+	</operation>
+	<operation name="set_address_range_description">
+	<documentation>
+ Sets the descriptions for the specified address ranges.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.set_address_range_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.set_address_range_descriptionResponse"/>
+	</operation>
+	<operation name="get_address_range_description">
+	<documentation>
+ Gets the descriptions for the specified address ranges.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_address_range_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_address_range_descriptionResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+ 
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_versionRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_versionResponse"/>
+	</operation>
+	<operation name="get_geo">
+	<documentation>
+ Gets the geo location entries of the specified firewall IP address lists.
+
+ The geo location is a combination of country code and state name.
+ The country code is two characters long. The state name is the full
+ name of a state that belongs to the country represented by country
+ code. 
+
+ By defining the geo location, the user can use the geo location
+ entry to apply it to rules in the access control lists. 
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_geoRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_geoResponse"/>
+	</operation>
+	<operation name="add_geo">
+	<documentation>
+ Adds a set of geo locations to the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.add_geoRequest"/>
+		<output message="tns:Security.FirewallAddressList.add_geoResponse"/>
+	</operation>
+	<operation name="remove_geo">
+	<documentation>
+ Removes a set of geo location entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_geoRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_geoResponse"/>
+	</operation>
+	<operation name="remove_all_geos">
+	<documentation>
+ Removes all geo location entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.remove_all_geosRequest"/>
+		<output message="tns:Security.FirewallAddressList.remove_all_geosResponse"/>
+	</operation>
+	<operation name="set_geo_description">
+	<documentation>
+ Sets the description for a set of firewall geo location entries.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.set_geo_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.set_geo_descriptionResponse"/>
+	</operation>
+	<operation name="get_geo_description">
+	<documentation>
+ Gets the descriptions for a set of firewall IP address list entries.
+
+        	</documentation>
+		<input message="tns:Security.FirewallAddressList.get_geo_descriptionRequest"/>
+		<output message="tns:Security.FirewallAddressList.get_geo_descriptionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="Security.FirewallAddressListBinding" type="tns:Security.FirewallAddressListPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets the list of firewall IP address lists on this device.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a firewall IP address list.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create_with_address_range">
+	<documentation>
+ Creates a firewall IP address list with address range.
+ Users can specify an IP address range as the source or
+ destination IP addresses in an AFM rule. For example, an IPv4
+ address range 10.10.10.1-10.10.10.245 will match all 245
+ addresses 10.10.10.1, 10.10.10.2, 10.10.10.3, ... 10.10.10.244,
+ 10.10.10.245.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create_with_geo">
+	<documentation>
+ Creates a firewall IP address list with geo location.
+ The geo location is a combination of country code and state name.
+ The country code is two characters long. The state name is the full
+ name of a state that belongs to the country represented by country
+ code.
+
+ By defining the geo location, the user can use the geo location
+ entry to apply it to rules in the access control lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create_with_nested_address_list">
+	<documentation>
+ Creates a firewall IP address list with nested address list.
+ Users can enter an address list as one of the list entries of
+ another address list. For example, users can have an address
+ list alist-1 that contains the address 10.10.10.1. Users can
+ have another address list alist-2 that contains address
+ 10.10.10.2 and alist-1 as the child list. If the address list
+ alist-2 is used in an AFM rule as source or destination address
+ list, the addresses inside the child lists will be fully
+ expanded so that the addresses AFM rule will match for alist-2
+ are 10.10.10.1 and 10.10.10.2.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_address_list">
+	<documentation>
+ Deletes a set of firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_address_lists">
+	<documentation>
+ Deletes all firewall IP address lists on this device.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of firewall IP address lists.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_address">
+	<documentation> 
+ This method has been deprecated. Please use get_address_range instead.
+ Firewall addresses are now supplied and stored in the form of an 
+ address range. Single addresses are converted to 
+ a corresponding one-element range where begin is equal to end; 
+ for each range, this method returns the start of the address range.
+
+ Gets the entries of the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_address">
+	<documentation>
+ This method has been deprecated. Please use add_address_range instead.
+ When using this method, the system will create a corresponding 
+ one-element address range where begin is equal to end.
+
+ Adds a set of IP addresses to the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_address">
+	<documentation> 
+ This method has been deprecated. Please use remove_address_range instead.
+ When using this method, the system will create a corresponding 
+ one-element address range where begin is equal to end.
+
+ Removes a set of entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_addresses">
+	<documentation> 
+ This method has been deprecated. Please use remove_all_address_ranges instead.
+
+ Removes all entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_address_description">
+	<documentation> 
+ This method has been deprecated. Please use set_address_range_description instead.
+
+ Sets the description for a set of firewall IP address ranges.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_address_description">
+	<documentation> 
+ This method has been deprecated. Please use get_address_range_description instead.
+
+ Gets the descriptions for a set of firewall IP address ranges.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_nested_address_list">
+	<documentation>
+ Gets nested address lists for the specified firewall IP address 
+ lists.
+ Users can enter an address list as one of the list entries of 
+ another address list. For example, users can have an address 
+ list alist-1 that contains the address 10.10.10.1. Users can 
+ have another address list alist-2 that contains address 
+ 10.10.10.2 and alist-1 as the child list. If the address list 
+ alist-2 is used in an AFM rule as source or destination address 
+ list, the addresses inside the child lists will be fully 
+ expanded so that the addresses AFM rule will match for alist-2 
+ are 10.10.10.1 and 10.10.10.2.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_nested_address_list">
+	<documentation>
+ Adds a list of nested address lists for the specified firewall 
+ IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_nested_address_list">
+	<documentation>
+ Removes a list of nested address lists from the specified 
+ firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_nested_address_lists">
+	<documentation>
+ Removes all nested address lists from the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_nested_address_list_description">
+	<documentation>
+ Sets the descriptions for the specified nested address lists.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_nested_address_list_description">
+	<documentation>
+ Gets the descriptions for the specified nested address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_address_range">
+	<documentation>
+ Gets address ranges for the specified firewall IP address lists.
+ Users can specify an IP address range as the source or 
+ destination IP addresses in an AFM rule. For example, an IPv4 
+ address range 10.10.10.1-10.10.10.245 will match all 245 
+ addresses 10.10.10.1, 10.10.10.2, 10.10.10.3, ... 10.10.10.244, 
+ 10.10.10.245.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_address_range">
+	<documentation>
+ Adds a list of address ranges for the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_address_range">
+	<documentation>
+ Removes a list of address ranges from the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_address_ranges">
+	<documentation>
+ Removes all address ranges from the specified firewall IP 
+ address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_address_range_description">
+	<documentation>
+ Sets the descriptions for the specified address ranges.
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_address_range_description">
+	<documentation>
+ Gets the descriptions for the specified address ranges.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+ 
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_geo">
+	<documentation>
+ Gets the geo location entries of the specified firewall IP address lists.
+
+ The geo location is a combination of country code and state name.
+ The country code is two characters long. The state name is the full
+ name of a state that belongs to the country represented by country
+ code. 
+
+ By defining the geo location, the user can use the geo location
+ entry to apply it to rules in the access control lists. 
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_geo">
+	<documentation>
+ Adds a set of geo locations to the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_geo">
+	<documentation>
+ Removes a set of geo location entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_geos">
+	<documentation>
+ Removes all geo location entries from the specified firewall IP address lists.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_geo_description">
+	<documentation>
+ Sets the description for a set of firewall geo location entries.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_geo_description">
+	<documentation>
+ Gets the descriptions for a set of firewall IP address list entries.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:Security/FirewallAddressList"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:Security/FirewallAddressList"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="Security.FirewallAddressList">
+	<documentation>
+ The FirewallAddressList interface enables you to create and modify
+ IP address lists on which to perform firewall security actions.
+
+ Note that the addresses in all methods are type
+ Common::NetAddress, a type which allows one to specify a prefix
+ length after the address, e.g., "10.1.1.0/24".
+
+        	</documentation>
+	<port name="Security.FirewallAddressListPort" binding="tns:Security.FirewallAddressListBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>

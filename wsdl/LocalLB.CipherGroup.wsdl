@@ -1,0 +1,943 @@
+<?xml version="1.0" ?>
+<!--
+Copyright (c) 1996-2018, F5 Networks, Inc., Seattle, Washington. All rights reserved.  
+
+F5, F5 Networks, the F5 logo, BIG-IP, 3-DNS, iControl, GLOBAL-SITE, SEE-IT, EDGE-FX, FireGuard, Internet Control Architecture, IP Application Switch, iRules, PACKET VELOCITY, SYN Check, CONTROL YOUR WORLD, OneConnect, ZoneRunner, uRoam, FirePass, and TrafficShield are registered trademarks or trademarks of F5 Networks, Inc., in the U.S. and certain other countries. 
+
+All other trademarks mentioned in this document are the property of their respective owners. F5 Networks' trademarks may not be used in connection with any product or service except as permitted in writing by F5.
+
+-->
+<definitions name="LocalLB.CipherGroup"
+	targetNamespace="urn:iControl"
+	xmlns:tns="urn:iControl"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<!-- types -->
+
+<types>
+	<xsd:schema targetNamespace='urn:iControl'
+		xmlns='http://www.w3.org/2001/XMLSchema'
+		xmlns:SOAP-ENC='http://schemas.xmlsoap.org/soap/encoding/'
+		xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'>
+		<xsd:complexType name="Common.StringSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='xsd:string[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:complexType name="LocalLB.CipherGroup.CipherGroupOrderSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:LocalLB.CipherGroup.CipherGroupOrder[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:simpleType name="LocalLB.CipherGroup.CipherGroupOrder">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="CIPHER_GROUP_ORDER_UNKNOWN">
+					<xsd:annotation>
+						<xsd:documentation>CIPHER_GROUP_ORDER_UNKNOWN</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CIPHER_GROUP_ORDER_DEFAULT">
+					<xsd:annotation>
+						<xsd:documentation>CIPHER_GROUP_ORDER_DEFAULT</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CIPHER_GROUP_ORDER_SPEED">
+					<xsd:annotation>
+						<xsd:documentation>CIPHER_GROUP_ORDER_SPEED</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CIPHER_GROUP_ORDER_STRENGTH">
+					<xsd:annotation>
+						<xsd:documentation>CIPHER_GROUP_ORDER_STRENGTH</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CIPHER_GROUP_ORDER_FIPS">
+					<xsd:annotation>
+						<xsd:documentation>CIPHER_GROUP_ORDER_FIPS</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+				<xsd:enumeration value="CIPHER_GROUP_ORDER_HARDWARE">
+					<xsd:annotation>
+						<xsd:documentation>CIPHER_GROUP_ORDER_HARDWARE</xsd:documentation>
+					</xsd:annotation>
+				</xsd:enumeration>
+			</xsd:restriction>
+		</xsd:simpleType>
+		<xsd:complexType name="Common.StringSequenceSequence">
+			<xsd:complexContent>
+				<xsd:restriction base='SOAP-ENC:Array'>
+					<xsd:attribute ref='SOAP-ENC:arrayType' wsdl:arrayType='tns:Common.StringSequence[]'/>
+				</xsd:restriction>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:schema>
+</types>
+
+<!-- message -->
+
+<message name="LocalLB.CipherGroup.get_listRequest">
+</message>
+<message name="LocalLB.CipherGroup.get_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.createRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="allows" type="tns:Common.StringSequenceSequence"/>
+	<part name="excludes" type="tns:Common.StringSequenceSequence"/>
+	<part name="requires" type="tns:Common.StringSequenceSequence"/>
+	<part name="orders" type="tns:LocalLB.CipherGroup.CipherGroupOrderSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.createResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.delete_cipher_groupRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.delete_cipher_groupResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.delete_all_cipher_groupsRequest">
+</message>
+<message name="LocalLB.CipherGroup.delete_all_cipher_groupsResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.set_descriptionRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="descriptions" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.set_descriptionResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.get_descriptionRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_descriptionResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.get_allowRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_allowResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.add_allowRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.add_allowResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.remove_allowRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.remove_allowResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.get_excludeRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_excludeResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.add_excludeRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.add_excludeResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.remove_excludeRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.remove_excludeResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.remove_all_excludesRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.remove_all_excludesResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.get_requireRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_requireResponse">
+	<part name="return" type="tns:Common.StringSequenceSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.add_requireRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.add_requireResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.remove_requireRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="rules" type="tns:Common.StringSequenceSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.remove_requireResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.remove_all_requiresRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.remove_all_requiresResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.get_result_listRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_result_listResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.get_result_dh_groupsRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_result_dh_groupsResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.get_result_signature_algorithmsRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_result_signature_algorithmsResponse">
+	<part name="return" type="tns:Common.StringSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.set_orderRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+	<part name="orders" type="tns:LocalLB.CipherGroup.CipherGroupOrderSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.set_orderResponse">
+</message>
+
+<message name="LocalLB.CipherGroup.get_orderRequest">
+	<part name="groups" type="tns:Common.StringSequence"/>
+</message>
+<message name="LocalLB.CipherGroup.get_orderResponse">
+	<part name="return" type="tns:LocalLB.CipherGroup.CipherGroupOrderSequence"/>
+</message>
+
+<message name="LocalLB.CipherGroup.get_versionRequest">
+</message>
+<message name="LocalLB.CipherGroup.get_versionResponse">
+	<part name="return" type="xsd:string"/>
+</message>
+
+<!-- portType -->
+
+<portType name="LocalLB.CipherGroupPortType">
+	<operation name="get_list">
+     	<documentation>
+ Gets a list of all cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_listRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_listResponse"/>
+	</operation>
+	<operation name="create">
+	<documentation>
+ Creates a cipher group.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.createRequest"/>
+		<output message="tns:LocalLB.CipherGroup.createResponse"/>
+	</operation>
+	<operation name="delete_cipher_group">
+	<documentation>
+ Deletes the specified cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.delete_cipher_groupRequest"/>
+		<output message="tns:LocalLB.CipherGroup.delete_cipher_groupResponse"/>
+	</operation>
+	<operation name="delete_all_cipher_groups">
+	<documentation>
+ Deletes all non-system cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.delete_all_cipher_groupsRequest"/>
+		<output message="tns:LocalLB.CipherGroup.delete_all_cipher_groupsResponse"/>
+	</operation>
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of cipher groups.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.set_descriptionRequest"/>
+		<output message="tns:LocalLB.CipherGroup.set_descriptionResponse"/>
+	</operation>
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_descriptionRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_descriptionResponse"/>
+	</operation>
+	<operation name="get_allow">
+	<documentation>
+ Gets the set of all cipher rules allowed by this group. This
+ is the additive set. See get_exclude and get_require below.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_allowRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_allowResponse"/>
+	</operation>
+	<operation name="add_allow">
+	<documentation>
+ Add some allowed cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.add_allowRequest"/>
+		<output message="tns:LocalLB.CipherGroup.add_allowResponse"/>
+	</operation>
+	<operation name="remove_allow">
+	<documentation>
+ Remove some allowed cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.remove_allowRequest"/>
+		<output message="tns:LocalLB.CipherGroup.remove_allowResponse"/>
+	</operation>
+	<operation name="get_exclude">
+	<documentation>
+ Return the excluded ciphers from the set of cipher groups. Ciphers
+ defined by this rule will not be in the resulting cipher string.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_excludeRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_excludeResponse"/>
+	</operation>
+	<operation name="add_exclude">
+	<documentation>
+ Adds cipher rules to the exclude list for the set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.add_excludeRequest"/>
+		<output message="tns:LocalLB.CipherGroup.add_excludeResponse"/>
+	</operation>
+	<operation name="remove_exclude">
+	<documentation>
+ Removes cipher rules from the exclude list for the set of
+ cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.remove_excludeRequest"/>
+		<output message="tns:LocalLB.CipherGroup.remove_excludeResponse"/>
+	</operation>
+	<operation name="remove_all_excludes">
+	<documentation>
+ Removes all cipher rules from the exclude list for the set of
+ cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.remove_all_excludesRequest"/>
+		<output message="tns:LocalLB.CipherGroup.remove_all_excludesResponse"/>
+	</operation>
+	<operation name="get_require">
+	<documentation>
+ Gets the set of required cipher rules for a set of cipher groups.
+ Any cipher not in this set will be exluded from the resulting
+ cipher string.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_requireRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_requireResponse"/>
+	</operation>
+	<operation name="add_require">
+	<documentation>
+ Adds the required cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.add_requireRequest"/>
+		<output message="tns:LocalLB.CipherGroup.add_requireResponse"/>
+	</operation>
+	<operation name="remove_require">
+	<documentation>
+ Removes the required cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.remove_requireRequest"/>
+		<output message="tns:LocalLB.CipherGroup.remove_requireResponse"/>
+	</operation>
+	<operation name="remove_all_requires">
+	<documentation>
+ Removes all required cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.remove_all_requiresRequest"/>
+		<output message="tns:LocalLB.CipherGroup.remove_all_requiresResponse"/>
+	</operation>
+	<operation name="get_result_list">
+	<documentation>
+ Gets the fully expanded list of ciphers after applying the
+ allowed, excluded, and required cipher rules. To arrive at this
+ list, first anything in excluded is removed from allowed,
+ then anything in allowed that is not in required is removed.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_result_listRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_result_listResponse"/>
+	</operation>
+	<operation name="get_result_dh_groups">
+	<documentation>
+ Gets the fully expanded list of DH Groups after applying the
+ allowed, excluded, and required cipher rules. To arrive at this
+ list, first anything in excluded is removed from allowed,
+ then anything in allowed that is not in required is removed.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_result_dh_groupsRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_result_dh_groupsResponse"/>
+	</operation>
+	<operation name="get_result_signature_algorithms">
+	<documentation>
+ Gets the fully expanded list of Signature Algorithms after applying the
+ allowed, excluded, and required cipher rules. To arrive at this
+ list, first anything in excluded is removed from allowed,
+ then anything in allowed that is not in required is removed.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_result_signature_algorithmsRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_result_signature_algorithmsResponse"/>
+	</operation>
+	<operation name="set_order">
+	<documentation>
+ Sets the ordering of the cipher rules within the cipher group.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.set_orderRequest"/>
+		<output message="tns:LocalLB.CipherGroup.set_orderResponse"/>
+	</operation>
+	<operation name="get_order">
+	<documentation>
+ Gets the ordering functions for a set of cipher groups.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_orderRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_orderResponse"/>
+	</operation>
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<input message="tns:LocalLB.CipherGroup.get_versionRequest"/>
+		<output message="tns:LocalLB.CipherGroup.get_versionResponse"/>
+	</operation>
+</portType>
+
+<!-- binding -->
+
+<binding name="LocalLB.CipherGroupBinding" type="tns:LocalLB.CipherGroupPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<operation name="get_list">
+	<documentation>
+ Gets a list of all cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="create">
+	<documentation>
+ Creates a cipher group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_cipher_group">
+	<documentation>
+ Deletes the specified cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="delete_all_cipher_groups">
+	<documentation>
+ Deletes all non-system cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_description">
+	<documentation>
+ Sets the description for a set of cipher groups.
+
+ This is an arbitrary field which can be used for any purpose.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_description">
+	<documentation>
+ Gets the descriptions for a set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_allow">
+	<documentation>
+ Gets the set of all cipher rules allowed by this group. This
+ is the additive set. See get_exclude and get_require below.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_allow">
+	<documentation>
+ Add some allowed cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_allow">
+	<documentation>
+ Remove some allowed cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_exclude">
+	<documentation>
+ Return the excluded ciphers from the set of cipher groups. Ciphers
+ defined by this rule will not be in the resulting cipher string.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_exclude">
+	<documentation>
+ Adds cipher rules to the exclude list for the set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_exclude">
+	<documentation>
+ Removes cipher rules from the exclude list for the set of
+ cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_excludes">
+	<documentation>
+ Removes all cipher rules from the exclude list for the set of
+ cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_require">
+	<documentation>
+ Gets the set of required cipher rules for a set of cipher groups.
+ Any cipher not in this set will be exluded from the resulting
+ cipher string.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="add_require">
+	<documentation>
+ Adds the required cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_require">
+	<documentation>
+ Removes the required cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="remove_all_requires">
+	<documentation>
+ Removes all required cipher rules for the set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_result_list">
+	<documentation>
+ Gets the fully expanded list of ciphers after applying the
+ allowed, excluded, and required cipher rules. To arrive at this
+ list, first anything in excluded is removed from allowed,
+ then anything in allowed that is not in required is removed.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_result_dh_groups">
+	<documentation>
+ Gets the fully expanded list of DH Groups after applying the
+ allowed, excluded, and required cipher rules. To arrive at this
+ list, first anything in excluded is removed from allowed,
+ then anything in allowed that is not in required is removed.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_result_signature_algorithms">
+	<documentation>
+ Gets the fully expanded list of Signature Algorithms after applying the
+ allowed, excluded, and required cipher rules. To arrive at this
+ list, first anything in excluded is removed from allowed,
+ then anything in allowed that is not in required is removed.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="set_order">
+	<documentation>
+ Sets the ordering of the cipher rules within the cipher group.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_order">
+	<documentation>
+ Gets the ordering functions for a set of cipher groups.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+
+	<operation name="get_version">
+	<documentation>
+ Gets the version information for this interface.
+
+        	</documentation>
+		<soap:operation soapAction="urn:iControl:LocalLB/CipherGroup"/>
+		<input>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</input>
+		<output>
+			<soap:body
+				use="encoded"
+				namespace="urn:iControl:LocalLB/CipherGroup"
+				encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+		</output>
+	</operation>
+</binding>
+
+<!-- service -->
+
+<service name="LocalLB.CipherGroup">
+	<documentation>
+ The CipherGroup interface enables you to manipulate the cipher group
+ parameters. Cipher groups are collections of cipher rules that are
+ combined and ultimately result in a list of ciphers used by
+ the client-ssl and server-ssl profiles.
+
+        	</documentation>
+	<port name="LocalLB.CipherGroupPort" binding="tns:LocalLB.CipherGroupBinding">
+		<soap:address location="https://url_to_service"/>
+	</port>
+</service>
+</definitions>
